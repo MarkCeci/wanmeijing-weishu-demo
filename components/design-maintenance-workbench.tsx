@@ -8,7 +8,7 @@ import type { StylePack } from "@/lib/catalog";
 import { normalizeStyle } from "@/lib/style-theme";
 
 type StyleStatus = "draft" | "reviewing" | "published" | "deprecated";
-type MainTab = "basic" | "tokens" | "preview" | "acceptance" | "changelog" | "export";
+type MainTab = "basic" | "tokens" | "preview" | "acceptance" | "export";
 type TokenMode = "light" | "dark";
 
 type ModeColors = {
@@ -89,13 +89,17 @@ type MaintenanceStyle = {
 
 const STORAGE_KEY = "designMaintenanceStyles";
 
-const tabs: Array<{ id: MainTab; label: string; helper: string }> = [
-  { id: "basic", label: "基础信息", helper: "写清楚这个风格适合谁用" },
-  { id: "tokens", label: "视觉 Token", helper: "调整颜色、圆角、阴影和密度" },
-  { id: "preview", label: "预览设置", helper: "控制风格广场展示方式" },
-  { id: "acceptance", label: "验收清单", helper: "发布前逐项确认" },
-  { id: "changelog", label: "更新记录", helper: "记录本次修改内容" },
-  { id: "export", label: "交付给开发", helper: "复制主题代码、下载 JSON，并标记已交付" },
+const workflowSteps: Array<{
+  id: MainTab;
+  step: string;
+  label: string;
+  helper: string;
+}> = [
+  { id: "basic", step: "01", label: "填写信息", helper: "名称、定位、适合项目" },
+  { id: "tokens", step: "02", label: "调整颜色", helper: "主色、背景、文字和圆角" },
+  { id: "preview", step: "03", label: "查看预览", helper: "确认 App 和 Web 效果" },
+  { id: "acceptance", step: "04", label: "发布检查", helper: "勾选验收项并写更新记录" },
+  { id: "export", step: "05", label: "交付开发", helper: "复制代码或导出 JSON" },
 ];
 
 const statusOptions: Array<{ value: StyleStatus | "all"; label: string }> = [
@@ -289,8 +293,8 @@ export function DesignMaintenanceWorkbench({ initialStyles }: { initialStyles: S
   }
 
   return (
-    <section className="grid gap-5 xl:grid-cols-[320px_minmax(0,1fr)_360px]">
-      <aside className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
+    <section className="grid gap-5 xl:grid-cols-[360px_minmax(0,1fr)]">
+      <aside className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm xl:sticky xl:top-24 xl:self-start">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-xs font-semibold text-violet-700">风格列表</p>
@@ -369,167 +373,162 @@ export function DesignMaintenanceWorkbench({ initialStyles }: { initialStyles: S
         </div>
       </aside>
 
-      <main className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
-        <div className="flex flex-col gap-4 border-b border-slate-100 pb-4 lg:flex-row lg:items-start lg:justify-between">
-          <div>
-            <p className="text-xs font-semibold text-violet-700">设计维护台</p>
-            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-950">{selectedStyle.name}</h2>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
-              在网页里维护风格，不需要打开 Figma。先保存草稿，确认预览没问题后再发布。
+      <div className="min-w-0 space-y-5">
+        <main className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
+          <div className="flex flex-col gap-4 border-b border-slate-100 pb-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-violet-700">设计维护台</p>
+              <h2 className="mt-1 text-2xl font-semibold tracking-tight text-slate-950">{selectedStyle.name}</h2>
+              <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-500">
+                在网页里维护风格，不需要打开 Figma。按 5 步完成信息、颜色、预览、检查和交付。
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-wrap gap-2 lg:justify-end">
+              <button type="button" onClick={() => saveCurrent("draft")} className="secondary-action">
+                保存草稿
+              </button>
+              <button type="button" onClick={() => saveCurrent("reviewing")} className="secondary-action">
+                提交审核
+              </button>
+            </div>
+          </div>
+
+          {notice ? (
+            <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
+              {notice}
+            </div>
+          ) : null}
+
+          <WorkflowStepper activeTab={activeTab} onChange={setActiveTab} />
+          <p className="mt-3 rounded-2xl bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-600">
+            当前步骤：
+            <span className="font-semibold text-slate-950">
+              {workflowSteps.find((step) => step.id === activeTab)?.label}
+            </span>
+            。按 1 到 5 走完，就能发布到风格广场并交付给开发。
+          </p>
+
+          <div className="mt-5">
+            {activeTab === "basic" ? (
+              <BasicTab style={selectedStyle} onChange={updateSelected} />
+            ) : null}
+            {activeTab === "tokens" ? (
+              <TokenTab
+                style={selectedStyle}
+                mode={tokenMode}
+                onModeChange={setTokenMode}
+                onColorChange={updateTokens}
+                onSharedChange={updateSharedToken}
+                onOptimize={() => updateSelected({ tokens: optimizeTokens(selectedStyle.tokens) })}
+              />
+            ) : null}
+            {activeTab === "preview" ? (
+              <PreviewTabPanel style={selectedStyle} onChange={updatePreview} />
+            ) : null}
+            {activeTab === "acceptance" ? (
+              <AcceptanceAndChangelogTab
+                style={selectedStyle}
+                completeness={completeness}
+                onAcceptanceChange={updateAcceptance}
+                onStyleChange={updateSelected}
+              />
+            ) : null}
+            {activeTab === "export" && exportPayload ? (
+              <ExportTabPanel
+                style={selectedStyle}
+                copied={copied}
+                onDelivered={() => {
+                  updateSelected({
+                    tags: Array.from(new Set([...selectedStyle.tags, "已交付开发"])),
+                    changelog: [
+                      {
+                        title: "标记已交付开发",
+                        type: "发布更新",
+                        description: "已将主题代码交付给开发使用。",
+                        scope: "CSS Variables、Tailwind Config、Tokens JSON",
+                        owner: selectedStyle.owner,
+                        updatedAt: new Date().toISOString(),
+                        version: selectedStyle.version,
+                      },
+                      ...selectedStyle.changelog,
+                    ],
+                  });
+                  setNotice("已标记为交付给开发。");
+                }}
+                onCopy={copyText}
+              />
+            ) : null}
+          </div>
+        </main>
+
+        <section className="grid gap-5">
+          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold text-violet-700">实时预览</p>
+                <h2 className="mt-1 text-lg font-semibold text-slate-950">App 与 Web 效果</h2>
+              </div>
+              <StatusBadge status={selectedStyle.status} />
+            </div>
+            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+              <MiniAppPreview style={selectedStyle} />
+              <MiniDashboardPreview style={selectedStyle} />
+            </div>
+          </div>
+
+          <div className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-semibold text-slate-950">发布检查</h2>
+              <span className="rounded-full bg-violet-50 px-3 py-1 text-sm font-semibold text-violet-800">
+                {completeness}%
+              </span>
+            </div>
+            <Progress value={completeness} />
+            <div className="mt-4 grid gap-2">
+              {getQualityChecks(selectedStyle).map((item) => (
+                <CheckRow key={item.label} label={item.label} pass={item.pass} />
+              ))}
+            </div>
+            {missingItems.length ? (
+              <div className="mt-4 rounded-2xl bg-amber-50 p-3">
+                <p className="text-sm font-semibold text-amber-900">发布前还缺：</p>
+                <ul className="mt-2 space-y-1 text-sm leading-6 text-amber-800">
+                  {missingItems.slice(0, 5).map((item) => (
+                    <li key={item}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <div className="mt-4 rounded-2xl bg-emerald-50 p-3 text-sm font-semibold text-emerald-800">
+                已满足发布条件。
+              </div>
+            )}
+            <div className="mt-4 grid gap-2">
+              <button
+                type="button"
+                onClick={() => saveCurrent("published")}
+                disabled={completeness < 100}
+                className="rounded-xl bg-violet-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-800 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
+              >
+                发布到风格广场
+              </button>
+              <button type="button" onClick={() => saveCurrent("draft")} className="secondary-action">
+                保存草稿
+              </button>
+              <button
+                type="button"
+                onClick={() => copyText("json", exportPayload ? exportPayload.json : "")}
+                className="secondary-action"
+              >
+                {copied === "json" ? "已复制 JSON" : "导出 JSON"}
+              </button>
+            </div>
+            <p className="mt-3 text-xs leading-5 text-slate-400">
+              发布只是本地模拟。后续接数据库后，这里会变成真实审核流程。
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <button type="button" onClick={() => saveCurrent("draft")} className="secondary-action">
-              保存草稿
-            </button>
-            <button type="button" onClick={() => saveCurrent("reviewing")} className="secondary-action">
-              提交审核
-            </button>
-          </div>
-        </div>
-
-        {notice ? (
-          <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800">
-            {notice}
-          </div>
-        ) : null}
-
-        <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              type="button"
-              onClick={() => setActiveTab(tab.id)}
-              className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${
-                activeTab === tab.id
-                  ? "border-violet-200 bg-violet-50 text-violet-800"
-                  : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-        <p className="mt-1 text-sm text-slate-500">{tabs.find((tab) => tab.id === activeTab)?.helper}</p>
-
-        <div className="mt-5">
-          {activeTab === "basic" ? (
-            <BasicTab style={selectedStyle} onChange={updateSelected} />
-          ) : null}
-          {activeTab === "tokens" ? (
-            <TokenTab
-              style={selectedStyle}
-              mode={tokenMode}
-              onModeChange={setTokenMode}
-              onColorChange={updateTokens}
-              onSharedChange={updateSharedToken}
-              onOptimize={() => updateSelected({ tokens: optimizeTokens(selectedStyle.tokens) })}
-            />
-          ) : null}
-          {activeTab === "preview" ? (
-            <PreviewTabPanel style={selectedStyle} onChange={updatePreview} />
-          ) : null}
-          {activeTab === "acceptance" ? (
-            <AcceptanceTab style={selectedStyle} completeness={completeness} onChange={updateAcceptance} />
-          ) : null}
-          {activeTab === "changelog" ? (
-            <ChangelogTab style={selectedStyle} onChange={updateSelected} />
-          ) : null}
-          {activeTab === "export" && exportPayload ? (
-            <ExportTabPanel
-              style={selectedStyle}
-              copied={copied}
-              onDelivered={() => {
-                updateSelected({
-                  tags: Array.from(new Set([...selectedStyle.tags, "已交付开发"])),
-                  changelog: [
-                    {
-                      title: "标记已交付开发",
-                      type: "发布更新",
-                      description: "已将主题代码交付给开发使用。",
-                      scope: "CSS Variables、Tailwind Config、Tokens JSON",
-                      owner: selectedStyle.owner,
-                      updatedAt: new Date().toISOString(),
-                      version: selectedStyle.version,
-                    },
-                    ...selectedStyle.changelog,
-                  ],
-                });
-                setNotice("已标记为交付给开发。");
-              }}
-              onCopy={copyText}
-            />
-          ) : null}
-        </div>
-      </main>
-
-      <aside className="space-y-4">
-        <section className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold text-violet-700">实时预览</p>
-              <h2 className="mt-1 text-lg font-semibold text-slate-950">App 与 Web 效果</h2>
-            </div>
-            <StatusBadge status={selectedStyle.status} />
-          </div>
-          <div className="mt-4 grid gap-3">
-            <MiniAppPreview style={selectedStyle} />
-            <MiniDashboardPreview style={selectedStyle} />
-          </div>
         </section>
-
-        <section className="rounded-[24px] border border-slate-200 bg-white p-4 shadow-sm">
-          <div className="flex items-center justify-between">
-            <h2 className="text-base font-semibold text-slate-950">发布检查</h2>
-            <span className="rounded-full bg-violet-50 px-3 py-1 text-sm font-semibold text-violet-800">
-              {completeness}%
-            </span>
-          </div>
-          <Progress value={completeness} />
-          <div className="mt-4 grid gap-2">
-            {getQualityChecks(selectedStyle).map((item) => (
-              <CheckRow key={item.label} label={item.label} pass={item.pass} />
-            ))}
-          </div>
-          {missingItems.length ? (
-            <div className="mt-4 rounded-2xl bg-amber-50 p-3">
-              <p className="text-sm font-semibold text-amber-900">发布前还缺：</p>
-              <ul className="mt-2 space-y-1 text-sm leading-6 text-amber-800">
-                {missingItems.slice(0, 5).map((item) => (
-                  <li key={item}>• {item}</li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <div className="mt-4 rounded-2xl bg-emerald-50 p-3 text-sm font-semibold text-emerald-800">
-              已满足发布条件。
-            </div>
-          )}
-          <div className="mt-4 grid gap-2">
-            <button
-              type="button"
-              onClick={() => saveCurrent("published")}
-              disabled={completeness < 100}
-              className="rounded-xl bg-violet-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-800 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500"
-            >
-              发布到风格广场
-            </button>
-            <button type="button" onClick={() => saveCurrent("draft")} className="secondary-action">
-              保存草稿
-            </button>
-            <button
-              type="button"
-              onClick={() => copyText("json", exportPayload ? exportPayload.json : "")}
-              className="secondary-action"
-            >
-              {copied === "json" ? "已复制 JSON" : "导出 JSON"}
-            </button>
-          </div>
-          <p className="mt-3 text-xs leading-5 text-slate-400">
-            发布只是本地模拟。后续接数据库后，这里会变成真实审核流程。
-          </p>
-        </section>
-      </aside>
+      </div>
     </section>
   );
 }
@@ -562,6 +561,55 @@ function BasicTab({
         optionLabel={(value) => statusText(value as StyleStatus)}
         onChange={(value) => onChange({ status: value as StyleStatus })}
       />
+    </div>
+  );
+}
+
+function WorkflowStepper({
+  activeTab,
+  onChange,
+}: {
+  activeTab: MainTab;
+  onChange: (tab: MainTab) => void;
+}) {
+  const activeIndex = workflowSteps.findIndex((step) => step.id === activeTab);
+
+  return (
+    <div className="mt-5 rounded-[22px] border border-slate-200 bg-slate-50 p-3">
+      <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 xl:grid xl:grid-cols-5 xl:overflow-visible xl:pb-0">
+        {workflowSteps.map((item, index) => {
+          const active = item.id === activeTab;
+          const done = index < activeIndex;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => onChange(item.id)}
+              className={`group min-w-[150px] rounded-2xl border p-3 text-left transition xl:min-w-0 ${
+                active
+                  ? "border-violet-200 bg-white shadow-sm"
+                  : done
+                    ? "border-emerald-100 bg-white"
+                    : "border-transparent bg-transparent hover:border-slate-200 hover:bg-white"
+              }`}
+            >
+              <span
+                className={`inline-flex h-7 w-7 items-center justify-center rounded-xl text-xs font-bold ${
+                  active
+                    ? "bg-violet-700 text-white"
+                    : done
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "bg-white text-slate-400"
+                }`}
+              >
+                {done ? "✓" : item.step}
+              </span>
+              <span className="mt-3 block whitespace-nowrap text-sm font-semibold text-slate-950">{item.label}</span>
+              <span className="mt-1 block text-xs leading-5 text-slate-500">{item.helper}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -709,14 +757,16 @@ function PreviewTabPanel({
   );
 }
 
-function AcceptanceTab({
+function AcceptanceAndChangelogTab({
   style,
   completeness,
-  onChange,
+  onAcceptanceChange,
+  onStyleChange,
 }: {
   style: MaintenanceStyle;
   completeness: number;
-  onChange: (key: AcceptanceKey, checked: boolean) => void;
+  onAcceptanceChange: (key: AcceptanceKey, checked: boolean) => void;
+  onStyleChange: (patch: Partial<MaintenanceStyle>) => void;
 }) {
   return (
     <div className="grid gap-4">
@@ -736,7 +786,7 @@ function AcceptanceTab({
             <input
               type="checkbox"
               checked={style.acceptance[item.key]}
-              onChange={(event) => onChange(item.key, event.target.checked)}
+              onChange={(event) => onAcceptanceChange(item.key, event.target.checked)}
               className="mt-1 h-4 w-4 rounded border-slate-300 text-violet-700"
             />
             <span>
@@ -745,6 +795,15 @@ function AcceptanceTab({
             </span>
           </label>
         ))}
+      </div>
+      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+        <div className="mb-4">
+          <h3 className="text-base font-semibold text-slate-950">本次更新记录</h3>
+          <p className="mt-1 text-sm leading-6 text-slate-500">
+            发布前简单写清楚这次改了什么，后续别人就知道为什么要用这个版本。
+          </p>
+        </div>
+        <ChangelogTab style={style} onChange={onStyleChange} />
       </div>
     </div>
   );

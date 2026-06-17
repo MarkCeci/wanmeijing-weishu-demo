@@ -1,8 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { StyleCard } from "@/components/style-card";
+import { StyleFamilyView } from "@/components/style-family-view";
 import {
   colorPreferenceFilters,
   getStyleColorPreference,
@@ -10,12 +11,15 @@ import {
   normalizeStyles,
   type ColorPreference,
   type MoodFilter,
+  type NormalizedStyle,
 } from "@/lib/style-theme";
 import type { StylePack } from "@/lib/catalog";
 
 type StylesExplorerProps = {
   styles: StylePack[];
 };
+
+type ViewMode = "cards" | "families";
 
 const colorChipStyles: Record<
   Exclude<ColorPreference, "全部">,
@@ -35,7 +39,8 @@ const colorChipStyles: Record<
 export function StylesExplorer({ styles }: StylesExplorerProps) {
   const [mood, setMood] = useState<MoodFilter>("全部");
   const [colorPreference, setColorPreference] = useState<ColorPreference>("全部");
-  const [advancedOnly, setAdvancedOnly] = useState(false);
+  const [showHistoricalStyles, setShowHistoricalStyles] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("cards");
   const [localStyles, setLocalStyles] = useState<StylePack[]>([]);
 
   useEffect(() => {
@@ -51,109 +56,261 @@ export function StylesExplorer({ styles }: StylesExplorerProps) {
   }, [localStyles, styles]);
 
   const normalizedStyles = useMemo(() => normalizeStyles(allStyles), [allStyles]);
-  const filteredStyles = useMemo(() => {
-    return normalizedStyles.filter((style) => {
+  const featuredStyles = useMemo(
+    () => normalizedStyles.filter((style) => style.source.displayLevel !== "hidden"),
+    [normalizedStyles],
+  );
+  const historicalStyles = useMemo(
+    () => normalizedStyles.filter((style) => style.source.displayLevel === "hidden"),
+    [normalizedStyles],
+  );
+  const styleNameById = useMemo(
+    () => new Map(normalizedStyles.map((style) => [style.id, style.name])),
+    [normalizedStyles],
+  );
+  const matchesActiveFilters = useCallback((style: NormalizedStyle) => {
       const matchesMood = mood === "全部" || style.mood.includes(mood);
       const matchesColor =
         colorPreference === "全部" || getStyleColorPreference(style) === colorPreference;
-      const matchesAdvanced = !advancedOnly || style.source.tags.includes("advanced-v4");
-      return matchesMood && matchesColor && matchesAdvanced;
-    });
-  }, [advancedOnly, colorPreference, mood, normalizedStyles]);
+      return matchesMood && matchesColor;
+  }, [colorPreference, mood]);
+  const filteredFeaturedStyles = useMemo(
+    () => featuredStyles.filter(matchesActiveFilters),
+    [featuredStyles, matchesActiveFilters],
+  );
+  const filteredHistoricalStyles = useMemo(
+    () => (showHistoricalStyles ? historicalStyles.filter(matchesActiveFilters) : []),
+    [historicalStyles, matchesActiveFilters, showHistoricalStyles],
+  );
+  const matchingHistoricalStyles = useMemo(
+    () => historicalStyles.filter(matchesActiveFilters),
+    [historicalStyles, matchesActiveFilters],
+  );
 
-  const hasActiveFilters = mood !== "全部" || colorPreference !== "全部" || advancedOnly;
+  const hasActiveFilters = mood !== "全部" || colorPreference !== "全部";
+  const hasResults =
+    viewMode === "families"
+      ? filteredFeaturedStyles.length > 0 || matchingHistoricalStyles.length > 0
+      : filteredFeaturedStyles.length > 0 || filteredHistoricalStyles.length > 0;
+  const resultsMotionKey = `${viewMode}-${mood}-${colorPreference}-${showHistoricalStyles}-${filteredFeaturedStyles.length}-${filteredHistoricalStyles.length}-${matchingHistoricalStyles.length}`;
   const clearFilters = () => {
     setMood("全部");
     setColorPreference("全部");
-    setAdvancedOnly(false);
   };
 
   return (
-    <section className="space-y-6">
-      <div className="rounded-[20px] border border-[#E6EAF2] bg-white p-4 shadow-[0_12px_32px_rgba(15,23,42,0.06)] sm:p-5">
-        <div className="grid gap-4">
-          <MoodFilterGroup
-            label="你想要什么感觉？"
-            value={mood}
-            options={moodFilters}
-            onChange={(value) => setMood(value)}
-          />
-          <ColorFilterGroup
-            label="偏好的主色？"
-            value={colorPreference}
-            options={colorPreferenceFilters}
-            onChange={(value) => setColorPreference(value)}
-          />
-          <FilterRow label="分组入口">
-            <button
-              type="button"
-              onClick={() => setAdvancedOnly((value) => !value)}
-              className={filterChipClass(advancedOnly)}
-            >
-              高级视觉主题
-            </button>
-          </FilterRow>
-        </div>
-
-        <div className="mt-4 flex flex-col gap-3 border-t border-slate-100 pt-4 lg:flex-row lg:items-center lg:justify-between">
-          <p className="text-sm text-slate-600">
-            当前展示{" "}
-            <span className="font-semibold text-slate-950">
-              {filteredStyles.length}
-            </span>{" "}
-            / {allStyles.length} 个风格
-          </p>
+    <section className="space-y-7">
+      <div className="rounded-[var(--styles-pitch-radius-card)] border border-[var(--styles-pitch-color-border)] bg-[var(--styles-pitch-color-surface)] p-5 shadow-[var(--styles-pitch-shadow-card)] sm:p-6">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-[var(--styles-pitch-color-text-primary)]">
+              快速筛选
+            </h2>
+            <p className="mt-1 text-sm text-[var(--styles-pitch-color-text-secondary)]">
+              先按感觉和颜色缩小范围。
+            </p>
+          </div>
 
           {hasActiveFilters ? (
-            <div className="flex min-w-0 flex-1 flex-wrap gap-2 lg:justify-center">
-              <span className="py-1 text-sm font-semibold text-slate-500">已选：</span>
+            <div className="flex flex-wrap gap-2 sm:justify-end">
               {mood !== "全部" ? (
                 <SelectedPill label={formatMoodLabel(mood)} onRemove={() => setMood("全部")} />
               ) : null}
               {colorPreference !== "全部" ? (
                 <SelectedPill label={colorPreference} onRemove={() => setColorPreference("全部")} />
               ) : null}
-              {advancedOnly ? (
-                <SelectedPill label="高级视觉主题" onRemove={() => setAdvancedOnly(false)} />
-              ) : null}
             </div>
           ) : null}
+        </div>
 
-          <button
-            type="button"
-            onClick={clearFilters}
-            className="inline-flex w-fit justify-center rounded-md px-2 py-1.5 text-sm font-semibold text-slate-500 transition hover:bg-violet-50 hover:text-violet-700 disabled:cursor-not-allowed disabled:opacity-40"
-            disabled={!hasActiveFilters}
-          >
-            清空筛选
-          </button>
+        <div className="mt-5 grid gap-4">
+          <MoodFilterGroup
+            label="风格气质"
+            value={mood}
+            options={moodFilters}
+            onChange={(value) => setMood(value === mood ? "全部" : value)}
+          />
+          <ColorFilterGroup
+            label="颜色偏好"
+            value={colorPreference}
+            options={colorPreferenceFilters}
+            onChange={(value) => setColorPreference(value === colorPreference ? "全部" : value)}
+          />
+        </div>
+
+        <div className="mt-5 flex flex-col gap-3 border-t border-[var(--styles-pitch-color-border)] pt-4 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-[var(--styles-pitch-color-text-secondary)]">
+            {viewMode === "cards" ? (
+              <span>
+                正在展示{" "}
+                <span className="font-semibold text-[var(--styles-pitch-color-text-primary)]">
+                  {filteredFeaturedStyles.length}
+                </span>{" "}
+                / {allStyles.length} 个精选风格
+                {showHistoricalStyles ? (
+                  <span>
+                    ，另显示{" "}
+                    <span className="font-semibold text-[var(--styles-pitch-color-text-primary)]">
+                      {filteredHistoricalStyles.length}
+                    </span>{" "}
+                    个历史风格
+                  </span>
+                ) : null}
+              </span>
+            ) : (
+              <span>
+                正在浏览风格家族，包含{" "}
+                <span className="font-semibold text-[var(--styles-pitch-color-text-primary)]">
+                  {filteredFeaturedStyles.length}
+                </span>{" "}
+                个精选风格，历史归并风格默认折叠。
+              </span>
+            )}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-3">
+            {viewMode === "cards" ? (
+              <button
+                type="button"
+                onClick={() => setShowHistoricalStyles((value) => !value)}
+                className="inline-flex w-fit justify-center rounded-md px-1 py-1.5 text-sm font-semibold text-[var(--styles-pitch-color-text-muted)] transition hover:text-[var(--styles-pitch-color-primary)]"
+              >
+                {showHistoricalStyles ? "收起隐藏风格" : "查看隐藏风格 / 查看全部历史风格"}
+              </button>
+            ) : null}
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="inline-flex w-fit justify-center rounded-md px-1 py-1.5 text-sm font-semibold text-[var(--styles-pitch-color-text-secondary)] transition hover:text-[var(--styles-pitch-color-primary)] disabled:cursor-not-allowed disabled:opacity-40"
+              disabled={!hasActiveFilters}
+            >
+              清空筛选
+            </button>
+          </div>
         </div>
       </div>
 
-      {filteredStyles.length > 0 ? (
-        <div className="styles-gallery-grid grid gap-5 lg:grid-cols-2">
-          {filteredStyles.map((style) => (
-            <StyleCard key={style.id} normalized={style} />
-          ))}
+      <div className="rounded-[var(--styles-pitch-radius-card)] border border-[var(--styles-pitch-color-border)] bg-white p-4 shadow-[var(--styles-pitch-shadow-card)] sm:flex sm:items-center sm:justify-between sm:gap-4">
+        <div>
+          <h2 className="text-base font-semibold text-[var(--styles-pitch-color-text-primary)]">
+            浏览方式
+          </h2>
+          <p className="mt-1 text-sm text-[var(--styles-pitch-color-text-secondary)]">
+            卡片适合快速挑选，家族适合理解体系。
+          </p>
+        </div>
+        <div className="mt-3 sm:mt-0">
+          <ViewModeSwitch value={viewMode} onChange={setViewMode} />
+        </div>
+      </div>
+
+      {hasResults ? (
+        <div key={resultsMotionKey} className="styles-results-motion space-y-8">
+          {viewMode === "families" ? (
+            <StyleFamilyView
+              featuredStyles={filteredFeaturedStyles}
+              historicalStyles={matchingHistoricalStyles}
+            />
+          ) : (
+            <>
+              {filteredFeaturedStyles.length > 0 ? (
+                <section className="space-y-5">
+                  <div className="styles-gallery-grid grid gap-6 lg:grid-cols-2">
+                    {filteredFeaturedStyles.map((style) => (
+                      <StyleCard
+                        key={style.id}
+                        normalized={style}
+                        parentStyleName={getParentStyleName(style, styleNameById)}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              {showHistoricalStyles && filteredHistoricalStyles.length > 0 ? (
+                <section className="rounded-[var(--styles-pitch-radius-card)] border border-dashed border-[var(--styles-pitch-color-border)] bg-white/70 p-5 shadow-[var(--styles-pitch-shadow-card)]">
+                  <div className="mb-5">
+                    <h2 className="text-base font-semibold text-[var(--styles-pitch-color-text-primary)]">
+                      历史归并风格
+                    </h2>
+                    <p className="mt-1 text-sm text-[var(--styles-pitch-color-text-secondary)]">
+                      这些风格仍可查看详情，但默认已归并到主风格或变体体系中。
+                    </p>
+                  </div>
+                  <div className="styles-gallery-grid grid gap-6 lg:grid-cols-2">
+                    {filteredHistoricalStyles.map((style) => (
+                      <StyleCard
+                        key={style.id}
+                        normalized={style}
+                        parentStyleName={getParentStyleName(style, styleNameById)}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+            </>
+          )}
         </div>
       ) : (
-        <div className="rounded-xl border border-dashed border-slate-300 bg-white p-10 text-center shadow-sm">
-          <p className="text-lg font-semibold text-slate-950">
+        <div className="rounded-[var(--styles-pitch-radius-card)] border border-dashed border-[var(--styles-pitch-color-border)] bg-white p-8 text-center shadow-[var(--styles-pitch-shadow-card)] sm:p-12">
+          <p className="text-lg font-semibold text-[var(--styles-pitch-color-text-primary)]">
             暂时没有匹配的风格
           </p>
-          <p className="mt-2 text-sm leading-6 text-slate-500">
+          <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[var(--styles-pitch-color-text-secondary)]">
             换一个气质或主色，就能继续浏览风格货架。
           </p>
           <button
             type="button"
             onClick={clearFilters}
-            className="mt-5 rounded-md bg-violet-700 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-violet-800"
+            className="mt-5 rounded-[var(--styles-pitch-radius-button)] border border-[var(--styles-pitch-color-border)] bg-white px-4 py-2.5 text-sm font-semibold text-[var(--styles-pitch-color-text-primary)] transition hover:border-[var(--styles-pitch-color-primary)] hover:text-[var(--styles-pitch-color-primary)]"
           >
             查看全部风格
           </button>
         </div>
       )}
     </section>
+  );
+}
+
+function getParentStyleName(
+  style: NormalizedStyle,
+  styleNameById: Map<string, string>,
+) {
+  const parentStyleId = style.source.parentStyleId;
+  if (!parentStyleId || parentStyleId === style.id) return undefined;
+  return styleNameById.get(parentStyleId) ?? parentStyleId;
+}
+
+function ViewModeSwitch({
+  value,
+  onChange,
+}: {
+  value: ViewMode;
+  onChange: (value: ViewMode) => void;
+}) {
+  return (
+    <div className="inline-flex w-full rounded-full border border-[var(--styles-pitch-color-border)] bg-[var(--styles-pitch-color-surface-muted)] p-1 shadow-[var(--styles-pitch-shadow-card)] sm:w-fit">
+      {[
+        { id: "cards", label: "卡片视图" },
+        { id: "families", label: "家族视图" },
+      ].map((option) => {
+        const active = option.id === value;
+        return (
+          <button
+            key={option.id}
+            type="button"
+            onClick={() => onChange(option.id as ViewMode)}
+            className={`min-w-0 flex-1 rounded-full px-4 py-2 text-sm font-semibold transition sm:flex-none ${
+              active
+                ? "bg-[var(--styles-pitch-color-primary-soft)] text-[var(--styles-pitch-color-primary)]"
+                : "text-[var(--styles-pitch-color-text-secondary)] hover:bg-[var(--styles-pitch-color-surface-muted)] hover:text-[var(--styles-pitch-color-text-primary)]"
+            }`}
+          >
+            {option.label}
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
@@ -226,8 +383,8 @@ function FilterRow({
   children: ReactNode;
 }) {
   return (
-    <div className="grid gap-2.5 lg:grid-cols-[140px_1fr] lg:items-center">
-      <p className="text-sm font-semibold text-slate-800">{label}</p>
+    <div className="grid gap-2.5 lg:grid-cols-[92px_1fr] lg:items-start">
+      <p className="pt-2 text-sm font-semibold text-[var(--styles-pitch-color-text-primary)]">{label}</p>
       <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
         {children}
       </div>
@@ -265,7 +422,7 @@ function SelectedPill({ label, onRemove }: { label: string; onRemove: () => void
     <button
       type="button"
       onClick={onRemove}
-      className="rounded-full border border-violet-200 bg-violet-50 px-2.5 py-1 text-xs font-semibold text-violet-700 transition hover:border-violet-300 hover:bg-violet-100"
+      className="rounded-[var(--styles-pitch-radius-chip)] border border-[var(--styles-pitch-color-border)] bg-[var(--styles-pitch-color-surface-muted)] px-2.5 py-1 text-xs font-semibold text-[var(--styles-pitch-color-text-secondary)] transition hover:border-[var(--styles-pitch-color-primary-soft)] hover:text-[var(--styles-pitch-color-primary)]"
     >
       {label} ×
     </button>
@@ -274,10 +431,10 @@ function SelectedPill({ label, onRemove }: { label: string; onRemove: () => void
 
 function filterChipClass(active: boolean) {
   return [
-    "inline-flex h-9 shrink-0 items-center gap-2 rounded-full border px-3.5 text-sm font-semibold transition",
+    "styles-filter-chip inline-flex h-9 shrink-0 items-center gap-2 rounded-[var(--styles-pitch-radius-chip)] border px-3 text-sm font-semibold transition",
     active
-      ? "border-[#C4B5FD] bg-[#F1E8FF] text-[#6D28D9]"
-      : "border-slate-200 bg-white text-slate-600 hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700",
+      ? "border-[var(--styles-pitch-color-primary-soft)] bg-[var(--styles-pitch-color-primary-soft)] text-[var(--styles-pitch-color-primary)]"
+      : "border-[var(--styles-pitch-color-border)] bg-white text-[var(--styles-pitch-color-text-secondary)] hover:border-[var(--styles-pitch-color-primary)] hover:text-[var(--styles-pitch-color-primary)]",
   ].join(" ");
 }
 

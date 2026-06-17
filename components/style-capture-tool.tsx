@@ -388,173 +388,175 @@ export function StyleCaptureTool() {
         </div>
       </section>
 
-      <div className="grid gap-5 xl:grid-cols-[0.88fr_1fr_1.18fr]">
-        <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
-          <SectionTitle title="1. 上传图片" helper="支持 png、jpg、jpeg、webp。" />
-          <label className="mt-4 flex min-h-[220px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-violet-200 bg-violet-50/50 p-5 text-center transition hover:bg-violet-50">
-            <input
-              type="file"
-              accept="image/png,image/jpeg,image/jpg,image/webp"
-              className="sr-only"
-              onChange={(event) => handleUpload(event.target.files?.[0])}
-            />
-            {imageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={imageUrl}
-                alt={imageName || "上传图片预览"}
-                className="max-h-64 w-full rounded-2xl object-contain"
+      <div className="grid gap-5 2xl:grid-cols-[minmax(360px,0.92fr)_minmax(560px,1.08fr)]">
+        <div className="grid min-w-0 gap-5">
+          <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+            <SectionTitle title="1. 上传图片" helper="支持 png、jpg、jpeg、webp。" />
+            <label className="mt-4 flex min-h-[220px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-violet-200 bg-violet-50/50 p-5 text-center transition hover:bg-violet-50">
+              <input
+                type="file"
+                accept="image/png,image/jpeg,image/jpg,image/webp"
+                className="sr-only"
+                onChange={(event) => handleUpload(event.target.files?.[0])}
               />
-            ) : (
-              <>
-                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-violet-700 shadow-sm">
-                  <Icon icon="layers" size={22} color="currentColor" />
-                </span>
-                <span className="mt-4 text-base font-semibold text-slate-950">点击上传截图</span>
-                <span className="mt-2 text-sm leading-6 text-slate-500">
-                  例如产品截图、品牌海报、竞品页面或视觉参考图。
-                </span>
-              </>
-            )}
-          </label>
-          {imageName ? <p className="mt-3 truncate text-xs font-medium text-slate-500">{imageName}</p> : null}
-          <StatusMessage status={status} message={message} />
-          <PalettePanel palette={palette} />
-        </section>
+              {imageUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={imageUrl}
+                  alt={imageName || "上传图片预览"}
+                  className="max-h-64 w-full rounded-2xl object-contain"
+                />
+              ) : (
+                <>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-violet-700 shadow-sm">
+                    <Icon icon="layers" size={22} color="currentColor" />
+                  </span>
+                  <span className="mt-4 text-base font-semibold text-slate-950">点击上传截图</span>
+                  <span className="mt-2 text-sm leading-6 text-slate-500">
+                    例如产品截图、品牌海报、竞品页面或视觉参考图。
+                  </span>
+                </>
+              )}
+            </label>
+            {imageName ? <p className="mt-3 truncate text-xs font-medium text-slate-500">{imageName}</p> : null}
+            <StatusMessage status={status} message={message} />
+            <PalettePanel palette={palette} />
+          </section>
 
-        <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
-          <SectionTitle title="2. 调整主题" helper="颜色可以手动微调，右侧预览会实时变化。" />
-          <div className="mt-4 rounded-2xl border border-violet-100 bg-violet-50 p-3">
-            <p className="text-sm font-semibold text-violet-900">
-              当前正在编辑：{options.mode === "light" ? "浅色模式" : "深色模式"}
-            </p>
-            <p className="mt-1 text-xs leading-5 text-violet-700">
-              主色、辅助色、强调色会同步保持同一风格基因；背景、卡片和文字色只影响当前模式。
-            </p>
-          </div>
-          <label className="mt-4 block">
-            <span className="text-sm font-semibold text-slate-700">风格名称</span>
-            <input
-              value={styleName}
-              onChange={(event) => setStyleName(event.target.value)}
-              className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 outline-none transition focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+          <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+            <SectionTitle title="2. 调整主题" helper="颜色可以手动微调，右侧预览会实时变化。" />
+            <div className="mt-4 rounded-2xl border border-violet-100 bg-violet-50 p-3">
+              <p className="text-sm font-semibold text-violet-900">
+                当前正在编辑：{options.mode === "light" ? "浅色模式" : "深色模式"}
+              </p>
+              <p className="mt-1 text-xs leading-5 text-violet-700">
+                主色、辅助色、强调色会同步保持同一风格基因；背景、卡片和文字色只影响当前模式。
+              </p>
+            </div>
+            <label className="mt-4 block">
+              <span className="text-sm font-semibold text-slate-700">风格名称</span>
+              <input
+                value={styleName}
+                onChange={(event) => setStyleName(event.target.value)}
+                className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-950 outline-none transition focus:border-violet-300 focus:ring-4 focus:ring-violet-100"
+              />
+            </label>
+            <ColorGroup
+              title="品牌色"
+              helper="影响按钮、关键数字、图标和品牌识别。"
+              fields={[
+                ["primary", "主色"],
+                ["secondary", "辅助色"],
+                ["accent", "强调色"],
+                ["textAccent", "文字主色"],
+              ]}
+              colors={activeColors}
+              onChange={updateManualColor}
             />
-          </label>
-          <ColorGroup
-            title="品牌色"
-            helper="影响按钮、关键数字、图标和品牌识别。"
-            fields={[
-              ["primary", "主色"],
-              ["secondary", "辅助色"],
-              ["accent", "强调色"],
-              ["textAccent", "文字主色"],
-            ]}
-            colors={activeColors}
-            onChange={updateManualColor}
-          />
-          <ColorGroup
-            title="界面底色"
-            helper="背景和卡片只调整当前模式，避免深色模式变成简单反色。"
-            fields={[
-              ["background", "页面背景"],
-              ["surface", "卡片背景"],
-              ["surfaceMuted", "弱背景"],
-              ["border", "边框色"],
-            ]}
-            colors={activeColors}
-            onChange={updateManualColor}
-          />
-          <ColorGroup
-            title="文字色"
-            helper="主文字、次文字和反白文字分别控制可读性。"
-            fields={[
-              ["textPrimary", "主文字"],
-              ["textSecondary", "次文字"],
-              ["textInverse", "反白文字"],
-            ]}
-            colors={activeColors}
-            onChange={updateManualColor}
-          />
+            <ColorGroup
+              title="界面底色"
+              helper="背景和卡片只调整当前模式，避免深色模式变成简单反色。"
+              fields={[
+                ["background", "页面背景"],
+                ["surface", "卡片背景"],
+                ["surfaceMuted", "弱背景"],
+                ["border", "边框色"],
+              ]}
+              colors={activeColors}
+              onChange={updateManualColor}
+            />
+            <ColorGroup
+              title="文字色"
+              helper="主文字、次文字和反白文字分别控制可读性。"
+              fields={[
+                ["textPrimary", "主文字"],
+                ["textSecondary", "次文字"],
+                ["textInverse", "反白文字"],
+              ]}
+              colors={activeColors}
+              onChange={updateManualColor}
+            />
 
-          <div className="mt-5 grid gap-4">
-            <OptionGroup
-              label="模式"
-              value={options.mode}
-              options={[
-                ["light", "浅色"],
-                ["dark", "深色"],
-              ]}
-              onChange={(value) => updateOption("mode", value as ThemeMode)}
-            />
-            <OptionGroup
-              label="风格"
-              value={options.style}
-              options={[
-                ["normal", "普通"],
-                ["gradient", "渐变"],
-                ["glass", "玻璃"],
-                ["linear", "线性"],
-                ["glow", "微光"],
-              ]}
-              onChange={(value) => updateOption("style", value as ThemeStyle)}
-            />
-            <OptionGroup
-              label="圆角"
-              value={options.radius}
-              options={[
-                ["restrained", "克制"],
-                ["soft", "柔和"],
-                ["rounded", "大圆角"],
-              ]}
-              onChange={(value) => updateOption("radius", value as RadiusMode)}
-            />
-            <OptionGroup
-              label="阴影"
-              value={options.shadow}
-              options={[
-                ["none", "无"],
-                ["light", "轻"],
-                ["medium", "中"],
-              ]}
-              onChange={(value) => updateOption("shadow", value as ShadowMode)}
-            />
-            <OptionGroup
-              label="密度"
-              value={options.density}
-              options={[
-                ["comfortable", "舒适"],
-                ["compact", "紧凑"],
-              ]}
-              onChange={(value) => updateOption("density", value as DensityMode)}
-            />
-          </div>
-          <div className="mt-5 flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={syncOtherMode}
-              className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-sm font-semibold text-violet-800 transition hover:bg-violet-100"
-            >
-              同步生成另一模式
-            </button>
-            <button
-              type="button"
-              onClick={optimizeCurrentMode}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-            >
-              一键优化当前模式
-            </button>
-            <button
-              type="button"
-              onClick={optimizeBothModes}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-            >
-              一键优化双模式
-            </button>
-          </div>
-          <QualityPanel checks={qualityChecks} />
-        </section>
+            <div className="mt-5 grid gap-4">
+              <OptionGroup
+                label="模式"
+                value={options.mode}
+                options={[
+                  ["light", "浅色"],
+                  ["dark", "深色"],
+                ]}
+                onChange={(value) => updateOption("mode", value as ThemeMode)}
+              />
+              <OptionGroup
+                label="风格"
+                value={options.style}
+                options={[
+                  ["normal", "普通"],
+                  ["gradient", "渐变"],
+                  ["glass", "玻璃"],
+                  ["linear", "线性"],
+                  ["glow", "微光"],
+                ]}
+                onChange={(value) => updateOption("style", value as ThemeStyle)}
+              />
+              <OptionGroup
+                label="圆角"
+                value={options.radius}
+                options={[
+                  ["restrained", "克制"],
+                  ["soft", "柔和"],
+                  ["rounded", "大圆角"],
+                ]}
+                onChange={(value) => updateOption("radius", value as RadiusMode)}
+              />
+              <OptionGroup
+                label="阴影"
+                value={options.shadow}
+                options={[
+                  ["none", "无"],
+                  ["light", "轻"],
+                  ["medium", "中"],
+                ]}
+                onChange={(value) => updateOption("shadow", value as ShadowMode)}
+              />
+              <OptionGroup
+                label="密度"
+                value={options.density}
+                options={[
+                  ["comfortable", "舒适"],
+                  ["compact", "紧凑"],
+                ]}
+                onChange={(value) => updateOption("density", value as DensityMode)}
+              />
+            </div>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={syncOtherMode}
+                className="rounded-xl border border-violet-200 bg-violet-50 px-3 py-2 text-sm font-semibold text-violet-800 transition hover:bg-violet-100"
+              >
+                同步生成另一模式
+              </button>
+              <button
+                type="button"
+                onClick={optimizeCurrentMode}
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                一键优化当前模式
+              </button>
+              <button
+                type="button"
+                onClick={optimizeBothModes}
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                一键优化双模式
+              </button>
+            </div>
+            <QualityPanel checks={qualityChecks} />
+          </section>
+        </div>
 
-        <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
+        <section className="min-w-0 rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm 2xl:sticky 2xl:top-24 2xl:self-start">
           <SectionTitle title="3. 实时预览" helper="预览是真实业务页面，会跟随 Token 变化。" />
           <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
             {previewTabs.map(([id, label]) => (

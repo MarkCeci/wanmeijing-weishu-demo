@@ -49,7 +49,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-001-modern-saas-clean&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-001-modern-saas-clean&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "标准版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 92,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hero",
+      "displayReason": "通用性最高，可作为风格广场基础主风格。",
+      "isMainStyle": true
     },
     {
       "id": "style-002-enterprise-classic-table",
@@ -96,7 +119,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-002-enterprise-classic-table&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-002-enterprise-classic-table&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-002-enterprise-classic-table",
+      "variantName": "标准版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "蓝白灰秩序感、密集信息、传统企业软件可信气质。",
+      "layoutMechanism": "表格优先，配合筛选栏、批量操作、分页和状态列。",
+      "componentMechanism": "密集表格、工具栏、状态标签、二级筛选和批量操作按钮。",
+      "motionMechanism": "行 hover、筛选反馈、状态更新轻提示。",
+      "suitableFor": [
+        "ERP",
+        "CRM",
+        "运营后台",
+        "数据管理系统"
+      ],
+      "notSuitableFor": [
+        "品牌展示",
+        "年轻消费 App",
+        "沉浸式大屏"
+      ],
+      "differentiationScore": 91,
+      "duplicateGroupId": "grp-enterprise-table",
+      "displayLevel": "hero",
+      "displayReason": "企业后台高频刚需，适合作为默认主风格。",
+      "isMainStyle": true
     },
     {
       "id": "style-003-fluent-office-collab",
@@ -143,7 +189,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-003-fluent-office-collab&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-003-fluent-office-collab&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-advanced-linear-blue-white-001",
+      "variantName": "办公协作版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "1px 线性边框、低阴影、极克制专业感。",
+      "layoutMechanism": "列表、Issue、任务、文档、设置和轻后台布局。",
+      "componentMechanism": "线性按钮、细分割、密集列表、轻状态标签。",
+      "motionMechanism": "快速 hover、状态切换、无炫技动效。",
+      "suitableFor": [
+        "项目管理",
+        "Issue 系统",
+        "研发工具",
+        "轻后台"
+      ],
+      "notSuitableFor": [
+        "强品牌展示",
+        "活动页",
+        "沉浸式大屏"
+      ],
+      "differentiationScore": 67,
+      "duplicateGroupId": "grp-linear-professional",
+      "displayLevel": "hidden",
+      "displayReason": "协作效率归入线性专业体系。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-004-carbon-data-enterprise",
@@ -190,7 +259,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-004-carbon-data-enterprise&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-004-carbon-data-enterprise&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-004-carbon-data-enterprise",
+      "variantName": "标准版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "理性深蓝灰、工程化、低装饰，强调数据密度。",
+      "layoutMechanism": "多面板指标、数据表、图表和详情检查器组合。",
+      "componentMechanism": "高密度表格、数据卡、图表容器、清晰分割线。",
+      "motionMechanism": "状态切换、图表加载和列表刷新保持克制。",
+      "suitableFor": [
+        "BI 平台",
+        "数据产品",
+        "云平台",
+        "企业分析系统"
+      ],
+      "notSuitableFor": [
+        "轻消费 App",
+        "强品牌营销页",
+        "儿童教育"
+      ],
+      "differentiationScore": 84,
+      "duplicateGroupId": "grp-carbon-data",
+      "displayLevel": "normal",
+      "displayReason": "场景明确但偏专业，作为正常展示主风格。",
+      "isMainStyle": true
     },
     {
       "id": "style-005-crm-salesforce-lightning",
@@ -237,7 +329,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-005-crm-salesforce-lightning&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-005-crm-salesforce-lightning&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "CRM 商务版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "CRM 是现代 SaaS 常见业务变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-006-atlassian-teamwork",
@@ -284,7 +399,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-006-atlassian-teamwork&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-006-atlassian-teamwork&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-advanced-linear-blue-white-001",
+      "variantName": "项目协作版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "1px 线性边框、低阴影、极克制专业感。",
+      "layoutMechanism": "列表、Issue、任务、文档、设置和轻后台布局。",
+      "componentMechanism": "线性按钮、细分割、密集列表、轻状态标签。",
+      "motionMechanism": "快速 hover、状态切换、无炫技动效。",
+      "suitableFor": [
+        "项目管理",
+        "Issue 系统",
+        "研发工具",
+        "轻后台"
+      ],
+      "notSuitableFor": [
+        "强品牌展示",
+        "活动页",
+        "沉浸式大屏"
+      ],
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-linear-professional",
+      "displayLevel": "hidden",
+      "displayReason": "线性专业的协作变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-007-sap-process-enterprise",
@@ -331,7 +469,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-007-sap-process-enterprise&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-007-sap-process-enterprise&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-007-sap-process-enterprise",
+      "variantName": "标准版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "稳重蓝灰、流程感、正式企业气质。",
+      "layoutMechanism": "步骤流、审批流、时间线、流程节点和对象详情页。",
+      "componentMechanism": "流程卡、节点状态、审批标签、时间线和表单区块。",
+      "motionMechanism": "步骤推进、节点状态变化和轻量确认反馈。",
+      "suitableFor": [
+        "ERP",
+        "OA",
+        "审批流",
+        "合规审计",
+        "政企流程"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "纯视觉展示"
+      ],
+      "differentiationScore": 80,
+      "duplicateGroupId": "grp-process-enterprise",
+      "displayLevel": "normal",
+      "displayReason": "流程型后台有独立价值，但不需要主推。",
+      "isMainStyle": true
     },
     {
       "id": "style-008-polars-merchant-ops",
@@ -378,7 +540,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-008-polars-merchant-ops&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-008-polars-merchant-ops&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "标准版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 82,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "normal",
+      "displayReason": "业务场景明确，适合作为行业主风格。",
+      "isMainStyle": true
     },
     {
       "id": "style-009-material-cross-platform",
@@ -423,7 +608,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-009-material-cross-platform&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-009-material-cross-platform&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-030-mobile-first-enterprise",
+      "variantName": "Material 跨端版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "轻量蓝白、移动效率感、跨端一致。",
+      "layoutMechanism": "移动首页、审批、消息、任务列表和底部导航。",
+      "componentMechanism": "列表卡、底部导航、快捷操作、状态标签。",
+      "motionMechanism": "页面切换、按钮反馈、列表轻过渡。",
+      "suitableFor": [
+        "企业 App",
+        "外勤",
+        "OA",
+        "移动 CRM",
+        "轻办公"
+      ],
+      "notSuitableFor": [
+        "复杂大屏",
+        "高密度表格编辑",
+        "Web3 终端"
+      ],
+      "differentiationScore": 68,
+      "duplicateGroupId": "grp-mobile-enterprise-office",
+      "displayLevel": "normal",
+      "displayReason": "移动优先的跨端变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-010-apple-premium-mobile",
@@ -468,7 +677,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-010-apple-premium-mobile&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-010-apple-premium-mobile&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-030-mobile-first-enterprise",
+      "variantName": "iOS 高质感移动版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "轻量蓝白、移动效率感、跨端一致。",
+      "layoutMechanism": "移动首页、审批、消息、任务列表和底部导航。",
+      "componentMechanism": "列表卡、底部导航、快捷操作、状态标签。",
+      "motionMechanism": "页面切换、按钮反馈、列表轻过渡。",
+      "suitableFor": [
+        "企业 App",
+        "外勤",
+        "OA",
+        "移动 CRM",
+        "轻办公"
+      ],
+      "notSuitableFor": [
+        "复杂大屏",
+        "高密度表格编辑",
+        "Web3 终端"
+      ],
+      "differentiationScore": 58,
+      "duplicateGroupId": "grp-mobile-enterprise-office",
+      "displayLevel": "hidden",
+      "displayReason": "移动端特征明显但企业后台适配较弱。",
+      "isMainStyle": false
     },
     {
       "id": "style-011-fintech-trust",
@@ -513,7 +746,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-011-fintech-trust&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-011-fintech-trust&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-011-fintech-trust",
+      "variantName": "标准版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "蓝白可信、精确、金融安全感。",
+      "layoutMechanism": "账户、资产、交易、风控和详情页。",
+      "componentMechanism": "金额卡、风险标签、交易列表、资产图表。",
+      "motionMechanism": "数字变化、状态切换、确认反馈。",
+      "suitableFor": [
+        "金融",
+        "支付",
+        "资产管理",
+        "保险",
+        "企业财务"
+      ],
+      "notSuitableFor": [
+        "儿童教育",
+        "生活方式社区",
+        "强娱乐产品"
+      ],
+      "differentiationScore": 90,
+      "duplicateGroupId": "grp-fintech-trust",
+      "displayLevel": "hero",
+      "displayReason": "高价值行业主风格，适合默认展示。",
+      "isMainStyle": true
     },
     {
       "id": "style-012-risk-compliance",
@@ -558,7 +815,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-012-risk-compliance&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-012-risk-compliance&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-007-sap-process-enterprise",
+      "variantName": "合规审计版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "稳重蓝灰、流程感、正式企业气质。",
+      "layoutMechanism": "步骤流、审批流、时间线、流程节点和对象详情页。",
+      "componentMechanism": "流程卡、节点状态、审批标签、时间线和表单区块。",
+      "motionMechanism": "步骤推进、节点状态变化和轻量确认反馈。",
+      "suitableFor": [
+        "ERP",
+        "OA",
+        "审批流",
+        "合规审计",
+        "政企流程"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "纯视觉展示"
+      ],
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-process-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "流程审计场景偏窄，归入流程管理。",
+      "isMainStyle": false
     },
     {
       "id": "style-013-healthcare-clean",
@@ -603,7 +884,32 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-013-healthcare-clean&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-013-healthcare-clean&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "医疗清洁基础版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 72,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "normal",
+      "displayReason": "医疗健康早期版本，作为变体保留。",
+      "isMainStyle": false
     },
     {
       "id": "style-014-education-learning",
@@ -648,7 +954,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-014-education-learning&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-014-education-learning&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-014-education-learning",
+      "variantName": "标准版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "清爽亲和、进度感、学习秩序。",
+      "layoutMechanism": "课程、学习路径、练习、进度和知识库。",
+      "componentMechanism": "课程卡、进度条、学习状态、任务列表和测验卡。",
+      "motionMechanism": "进度动画、完成反馈、模块切换。",
+      "suitableFor": [
+        "在线教育",
+        "企业培训",
+        "知识平台",
+        "学习管理系统"
+      ],
+      "notSuitableFor": [
+        "金融交易",
+        "SOC",
+        "Web3",
+        "高端奢华服务"
+      ],
+      "differentiationScore": 74,
+      "duplicateGroupId": "grp-education-learning",
+      "displayLevel": "normal",
+      "displayReason": "可落地但不是当前默认主推方向。",
+      "isMainStyle": true
     },
     {
       "id": "style-015-government-stable",
@@ -693,7 +1023,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-015-government-stable&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-015-government-stable&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-007-sap-process-enterprise",
+      "variantName": "政企流程版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "稳重蓝灰、流程感、正式企业气质。",
+      "layoutMechanism": "步骤流、审批流、时间线、流程节点和对象详情页。",
+      "componentMechanism": "流程卡、节点状态、审批标签、时间线和表单区块。",
+      "motionMechanism": "步骤推进、节点状态变化和轻量确认反馈。",
+      "suitableFor": [
+        "ERP",
+        "OA",
+        "审批流",
+        "合规审计",
+        "政企流程"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "纯视觉展示"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-process-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "政企风格过窄，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-016-industrial-iot",
@@ -738,7 +1092,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-016-industrial-iot&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-016-industrial-iot&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-advanced-dark-ops-monitor-001",
+      "variantName": "工业 IoT 监控版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "暗灰底、红绿蓝状态语义、运维监控气质。",
+      "layoutMechanism": "日志列表、服务状态、资源监控和告警面板。",
+      "componentMechanism": "终端列表、状态 pill、告警卡、时间线和资源条。",
+      "motionMechanism": "实时刷新、行状态变化、告警轻闪。",
+      "suitableFor": [
+        "DevOps",
+        "SRE",
+        "云服务监控",
+        "安全运营"
+      ],
+      "notSuitableFor": [
+        "高端品牌",
+        "本地生活",
+        "教育课程"
+      ],
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-night-ops-monitor",
+      "displayLevel": "hidden",
+      "displayReason": "工业监控归入夜间运维监控。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-017-logistics-ops",
@@ -783,7 +1160,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-017-logistics-ops&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-017-logistics-ops&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "物流调度版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 57,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "物流运营较窄，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-018-marketing-growth",
@@ -828,7 +1229,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-018-marketing-growth&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-018-marketing-growth&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "营销增长版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 65,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "normal",
+      "displayReason": "电商增长运营变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-019-cms-media",
@@ -873,7 +1297,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-019-cms-media&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-019-cms-media&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "内容管理版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "内容管理可由现代 SaaS 覆盖。",
+      "isMainStyle": false
     },
     {
       "id": "style-020-hr-organization",
@@ -918,7 +1365,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-020-hr-organization&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-020-hr-organization&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "HR 组织版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "HR 后台可由现代 SaaS 覆盖。",
+      "isMainStyle": false
     },
     {
       "id": "style-021-ai-copilot-workspace",
@@ -963,7 +1433,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-021-ai-copilot-workspace&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-021-ai-copilot-workspace&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-021-ai-copilot-workspace",
+      "variantName": "标准版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "浅色 AI 工作台、轻科技感、智能推荐氛围。",
+      "layoutMechanism": "会话区、任务区、结果卡、推荐问题和引用面板组合。",
+      "componentMechanism": "Prompt 输入框、智能建议卡、任务卡、结果摘要和引用标签。",
+      "motionMechanism": "输入聚焦、生成中状态、结果卡淡入和轻微流动反馈。",
+      "suitableFor": [
+        "AI 助手",
+        "Agent 平台",
+        "知识库",
+        "企业智能办公"
+      ],
+      "notSuitableFor": [
+        "纯 CRUD 后台",
+        "金融交易终端",
+        "政务系统"
+      ],
+      "differentiationScore": 93,
+      "duplicateGroupId": "grp-ai-copilot-workspace",
+      "displayLevel": "hero",
+      "displayReason": "AI 方向核心主风格，适合当前产品趋势。",
+      "isMainStyle": true
     },
     {
       "id": "style-022-agent-automation-canvas",
@@ -1008,7 +1501,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-022-agent-automation-canvas&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-022-agent-automation-canvas&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-021-ai-copilot-workspace",
+      "variantName": "Agent 编排版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "浅色 AI 工作台、轻科技感、智能推荐氛围。",
+      "layoutMechanism": "会话区、任务区、结果卡、推荐问题和引用面板组合。",
+      "componentMechanism": "Prompt 输入框、智能建议卡、任务卡、结果摘要和引用标签。",
+      "motionMechanism": "输入聚焦、生成中状态、结果卡淡入和轻微流动反馈。",
+      "suitableFor": [
+        "AI 助手",
+        "Agent 平台",
+        "知识库",
+        "企业智能办公"
+      ],
+      "notSuitableFor": [
+        "纯 CRUD 后台",
+        "金融交易终端",
+        "政务系统"
+      ],
+      "differentiationScore": 70,
+      "duplicateGroupId": "grp-ai-copilot-workspace",
+      "displayLevel": "normal",
+      "displayReason": "AI 工作台流程变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-023-lowcode-builder",
@@ -1053,7 +1569,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-023-lowcode-builder&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-023-lowcode-builder&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-advanced-linear-blue-white-001",
+      "variantName": "低代码工具版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "1px 线性边框、低阴影、极克制专业感。",
+      "layoutMechanism": "列表、Issue、任务、文档、设置和轻后台布局。",
+      "componentMechanism": "线性按钮、细分割、密集列表、轻状态标签。",
+      "motionMechanism": "快速 hover、状态切换、无炫技动效。",
+      "suitableFor": [
+        "项目管理",
+        "Issue 系统",
+        "研发工具",
+        "轻后台"
+      ],
+      "notSuitableFor": [
+        "强品牌展示",
+        "活动页",
+        "沉浸式大屏"
+      ],
+      "differentiationScore": 64,
+      "duplicateGroupId": "grp-linear-professional",
+      "displayLevel": "hidden",
+      "displayReason": "工具搭建器适合线性专业体系。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-024-dark-dataviz-dashboard",
@@ -1100,7 +1639,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-024-dark-dataviz-dashboard&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-024-dark-dataviz-dashboard&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-024-dark-dataviz-dashboard",
+      "variantName": "标准版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "深色背景、高对比图表、实时数据大屏感。",
+      "layoutMechanism": "大屏指标、地图、趋势图、实时状态和多区块面板。",
+      "componentMechanism": "KPI 卡、图表容器、状态灯、数据看板和告警区。",
+      "motionMechanism": "数字滚动、图表入场、实时状态轻刷新。",
+      "suitableFor": [
+        "数据大屏",
+        "监控中心",
+        "经营驾驶舱",
+        "态势展示"
+      ],
+      "notSuitableFor": [
+        "日常办公表单",
+        "移动端复杂编辑",
+        "教育平台"
+      ],
+      "differentiationScore": 90,
+      "duplicateGroupId": "grp-dark-dataviz",
+      "displayLevel": "hero",
+      "displayReason": "深色数据方向代表主风格，视觉差异强。",
+      "isMainStyle": true
     },
     {
       "id": "style-025-cybersecurity-soc",
@@ -1145,7 +1707,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-025-cybersecurity-soc&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-025-cybersecurity-soc&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-advanced-dark-ops-monitor-001",
+      "variantName": "SOC 安全版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "暗灰底、红绿蓝状态语义、运维监控气质。",
+      "layoutMechanism": "日志列表、服务状态、资源监控和告警面板。",
+      "componentMechanism": "终端列表、状态 pill、告警卡、时间线和资源条。",
+      "motionMechanism": "实时刷新、行状态变化、告警轻闪。",
+      "suitableFor": [
+        "DevOps",
+        "SRE",
+        "云服务监控",
+        "安全运营"
+      ],
+      "notSuitableFor": [
+        "高端品牌",
+        "本地生活",
+        "教育课程"
+      ],
+      "differentiationScore": 68,
+      "duplicateGroupId": "grp-night-ops-monitor",
+      "displayLevel": "normal",
+      "displayReason": "安全运营属于夜间监控变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-026-cloud-finops",
@@ -1190,7 +1775,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-026-cloud-finops&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-026-cloud-finops&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-004-carbon-data-enterprise",
+      "variantName": "云资源成本版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "理性深蓝灰、工程化、低装饰，强调数据密度。",
+      "layoutMechanism": "多面板指标、数据表、图表和详情检查器组合。",
+      "componentMechanism": "高密度表格、数据卡、图表容器、清晰分割线。",
+      "motionMechanism": "状态切换、图表加载和列表刷新保持克制。",
+      "suitableFor": [
+        "BI 平台",
+        "数据产品",
+        "云平台",
+        "企业分析系统"
+      ],
+      "notSuitableFor": [
+        "轻消费 App",
+        "强品牌营销页",
+        "儿童教育"
+      ],
+      "differentiationScore": 64,
+      "duplicateGroupId": "grp-carbon-data",
+      "displayLevel": "hidden",
+      "displayReason": "云成本属于数据密集后台变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-027-developer-console-api",
@@ -1235,7 +1843,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-027-developer-console-api&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-027-developer-console-api&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-027-developer-console-api",
+      "variantName": "标准版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "工程化、低装饰、代码与文档感。",
+      "layoutMechanism": "文档导航、API Key、日志、状态监控和控制台布局。",
+      "componentMechanism": "Code block、状态 badge、侧栏导航、参数表和日志行。",
+      "motionMechanism": "命令反馈、日志刷新、复制成功提示。",
+      "suitableFor": [
+        "API 平台",
+        "SDK 文档",
+        "开发者工具",
+        "模型部署平台"
+      ],
+      "notSuitableFor": [
+        "生活服务",
+        "教育儿童",
+        "高端品牌展示"
+      ],
+      "differentiationScore": 83,
+      "duplicateGroupId": "grp-developer-console",
+      "displayLevel": "normal",
+      "displayReason": "技术产品刚需，和通用后台有明确差异。",
+      "isMainStyle": true
     },
     {
       "id": "style-028-marketplace-plugin",
@@ -1280,7 +1911,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-028-marketplace-plugin&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-028-marketplace-plugin&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "插件市场版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "更像页面场景而非独立视觉风格。",
+      "isMainStyle": false
     },
     {
       "id": "style-029-white-label-multitenant",
@@ -1325,7 +1979,30 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-029-white-label-multitenant&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-029-white-label-multitenant&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "白标多租户版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 63,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "多租户适合作为 SaaS 变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-030-mobile-first-enterprise",
@@ -1372,7 +2049,31 @@
       "figma_component_url": "https://figma.example.com/file/ui-template-library?node=style-030-mobile-first-enterprise&kind=style-component",
       "figma_page_url": "https://figma.example.com/file/ui-template-library?node=style-030-mobile-first-enterprise&kind=style-page",
       "figma_last_updated": "2026-06-04",
-      "figma_owner": "Design Platform Core"
+      "figma_owner": "Design Platform Core",
+      "parentStyleId": "style-030-mobile-first-enterprise",
+      "variantName": "标准版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "轻量蓝白、移动效率感、跨端一致。",
+      "layoutMechanism": "移动首页、审批、消息、任务列表和底部导航。",
+      "componentMechanism": "列表卡、底部导航、快捷操作、状态标签。",
+      "motionMechanism": "页面切换、按钮反馈、列表轻过渡。",
+      "suitableFor": [
+        "企业 App",
+        "外勤",
+        "OA",
+        "移动 CRM",
+        "轻办公"
+      ],
+      "notSuitableFor": [
+        "复杂大屏",
+        "高密度表格编辑",
+        "Web3 终端"
+      ],
+      "differentiationScore": 89,
+      "duplicateGroupId": "grp-mobile-enterprise-office",
+      "displayLevel": "hero",
+      "displayReason": "明确覆盖移动端，符合风格广场目标。",
+      "isMainStyle": true
     },
     {
       "id": "style_liquid_glass_aqua",
@@ -1565,7 +2266,30 @@
         "--shadow-card": "0 20px 60px rgba(78,140,255,0.16)",
         "--glass-blur": "blur(24px) saturate(1.4)",
         "--glass-highlight": "inset 0 1px 0 rgba(255,255,255,.72)"
-      }
+      },
+      "parentStyleId": "style-advanced-glass-liquid-enterprise-001",
+      "variantName": "液体玻璃系统版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "半透明玻璃、柔和折射、轻空间感。",
+      "layoutMechanism": "层叠面板、卡片工作台、轻量仪表盘和会员模块。",
+      "componentMechanism": "玻璃卡片、模糊背景、细边界、柔和高光。",
+      "motionMechanism": "轻浮动、柔和过渡、层叠卡片淡入。",
+      "suitableFor": [
+        "高端 SaaS",
+        "AI 工具",
+        "会员中心",
+        "系统工具"
+      ],
+      "notSuitableFor": [
+        "数据密集表格",
+        "低性能设备",
+        "严肃政务"
+      ],
+      "differentiationScore": 68,
+      "duplicateGroupId": "grp-liquid-glass-enterprise",
+      "displayLevel": "normal",
+      "displayReason": "玻璃机制一致，保留为变体。",
+      "isMainStyle": false
     },
     {
       "id": "style_local_life_meituan_yellow",
@@ -1757,7 +2481,31 @@
         "--radius-card": "16px",
         "--radius-button": "999px",
         "--shadow-card": "0 8px 24px rgba(255,177,0,0.14)"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "标准版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 78,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "normal",
+      "displayReason": "本地生活独立，但不作为企业后台主推。",
+      "isMainStyle": true
     },
     {
       "id": "style_bright_iridescent_dream",
@@ -1947,7 +2695,30 @@
         "--radius-card": "24px",
         "--radius-button": "999px",
         "--shadow-card": "0 16px 40px rgba(124,92,255,0.14)"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "幻彩柔光版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 61,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "渐变视觉变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_dopamine_pop_candy",
@@ -2139,7 +2910,30 @@
         "--radius-card": "24px",
         "--radius-button": "20px",
         "--shadow-card": "6px 8px 0 rgba(35,22,34,0.12)"
-      }
+      },
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "多巴胺活动版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 48,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "活动感强，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_neobrutalism_yellow_black",
@@ -2327,7 +3121,30 @@
         "--radius-card": "6px",
         "--radius-button": "6px",
         "--shadow-card": "8px 8px 0 #111111"
-      }
+      },
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "实验粗野版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 45,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "实验性强，不适合默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_fresh_mint_health",
@@ -2515,7 +3332,32 @@
         "--radius-card": "22px",
         "--radius-button": "16px",
         "--shadow-card": "0 12px 32px rgba(35,207,167,0.12)"
-      }
+      },
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "薄荷健康版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "健康轻医疗变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_modern_guochao_red_gold",
@@ -2706,7 +3548,30 @@
         "--radius-card": "18px",
         "--radius-button": "14px",
         "--shadow-card": "0 12px 36px rgba(198,40,40,0.12)"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "现代国潮版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 52,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "国潮偏品牌活动，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_dark_ai_cyber_saas",
@@ -2898,7 +3763,30 @@
         "--radius-card": "18px",
         "--radius-button": "12px",
         "--shadow-card": "0 0 32px rgba(0,229,255,0.10)"
-      }
+      },
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "通用归档版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "未能形成独立主风格，归入现代 SaaS 并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_warm_clay_lifestyle",
@@ -3086,7 +3974,31 @@
         "--radius-card": "22px",
         "--radius-button": "16px",
         "--shadow-card": "0 12px 32px rgba(96,52,30,0.10)"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "生活方式暖陶版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "生活方式调性偏窄，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_japanese_muji_minimal",
@@ -3271,7 +4183,30 @@
         "--radius-card": "12px",
         "--radius-button": "10px",
         "--shadow-card": "0 4px 16px rgba(51,43,35,0.05)"
-      }
+      },
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "日系极简版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "极简机制可由现代 SaaS 覆盖。",
+      "isMainStyle": false
     },
     {
       "id": "style_enterprise_blue_clean",
@@ -3455,7 +4390,30 @@
         "--radius-card": "12px",
         "--radius-button": "8px",
         "--shadow-card": "0 4px 16px rgba(16,24,40,0.06)"
-      }
+      },
+      "parentStyleId": "style-002-enterprise-classic-table",
+      "variantName": "可信蓝白企业版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "蓝白灰秩序感、密集信息、传统企业软件可信气质。",
+      "layoutMechanism": "表格优先，配合筛选栏、批量操作、分页和状态列。",
+      "componentMechanism": "密集表格、工具栏、状态标签、二级筛选和批量操作按钮。",
+      "motionMechanism": "行 hover、筛选反馈、状态更新轻提示。",
+      "suitableFor": [
+        "ERP",
+        "CRM",
+        "运营后台",
+        "数据管理系统"
+      ],
+      "notSuitableFor": [
+        "品牌展示",
+        "年轻消费 App",
+        "沉浸式大屏"
+      ],
+      "differentiationScore": 64,
+      "duplicateGroupId": "grp-enterprise-table",
+      "displayLevel": "normal",
+      "displayReason": "企业蓝白和表格后台接近。",
+      "isMainStyle": false
     },
     {
       "id": "style_nature_camping_earth",
@@ -3643,7 +4601,31 @@
         "--radius-card": "20px",
         "--radius-button": "14px",
         "--shadow-card": "0 10px 28px rgba(47,107,69,0.10)"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "自然露营版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 49,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "更像品牌主题，不适合后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_cyberpunk_neon_night",
@@ -3834,7 +4816,31 @@
         "--radius-card": "14px",
         "--radius-button": "10px",
         "--shadow-card": "0 0 36px rgba(255,43,214,0.20)"
-      }
+      },
+      "parentStyleId": "style-advanced-web3-wallet-console-001",
+      "variantName": "赛博夜城版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "深色链上感、高对比资产卡、Web3 专属语义。",
+      "layoutMechanism": "钱包资产、链上活动、治理、身份和数据分析模块。",
+      "componentMechanism": "资产卡、链路图、凭证标签、交易列表和投票进度。",
+      "motionMechanism": "数据刷新、状态脉冲、资产变化反馈。",
+      "suitableFor": [
+        "Web3",
+        "钱包",
+        "Crypto",
+        "链上数据",
+        "身份凭证"
+      ],
+      "notSuitableFor": [
+        "普通企业 OA",
+        "医疗教育",
+        "本地生活服务"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-web3-wallet-console",
+      "displayLevel": "hidden",
+      "displayReason": "装饰性和娱乐性偏强，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_soft_neumorphism_cloud",
@@ -4020,7 +5026,30 @@
         "--radius-card": "24px",
         "--radius-button": "20px",
         "--shadow-card": "8px 8px 18px rgba(163,177,198,.42), -8px -8px 18px rgba(255,255,255,.88)"
-      }
+      },
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "软拟态轻工具版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 47,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "软拟态落地风险高，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_bento_pastel_showcase",
@@ -4207,7 +5236,30 @@
         "--radius-card": "24px",
         "--radius-button": "14px",
         "--shadow-card": "0 12px 32px rgba(15,23,42,0.06)"
-      }
+      },
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "Bento 展示版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "可作为现代 SaaS 的展示型变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_luxury_editorial_black_gold",
@@ -4392,7 +5444,30 @@
         "--radius-card": "10px",
         "--radius-button": "4px",
         "--shadow-card": "0 24px 60px rgba(0,0,0,0.38)"
-      }
+      },
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "标准版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "suitableFor": [
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
+      ],
+      "notSuitableFor": [
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
+      ],
+      "differentiationScore": 78,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "normal",
+      "displayReason": "高级感明确但适用面窄。",
+      "isMainStyle": true
     },
     {
       "id": "style_medical_clean_azure",
@@ -4580,7 +5655,32 @@
         "--radius-card": "16px",
         "--radius-button": "12px",
         "--shadow-card": "0 8px 28px rgba(14,165,233,0.08)"
-      }
+      },
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "标准版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 90,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hero",
+      "displayReason": "行业明确且商业落地强。",
+      "isMainStyle": true
     },
     {
       "id": "style_fintech_dark_emerald_gold",
@@ -4764,7 +5864,31 @@
         "--radius-card": "18px",
         "--radius-button": "12px",
         "--shadow-card": "0 16px 40px rgba(0,0,0,0.28)"
-      }
+      },
+      "parentStyleId": "style-011-fintech-trust",
+      "variantName": "暗绿金资产版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "蓝白可信、精确、金融安全感。",
+      "layoutMechanism": "账户、资产、交易、风控和详情页。",
+      "componentMechanism": "金额卡、风险标签、交易列表、资产图表。",
+      "motionMechanism": "数字变化、状态切换、确认反馈。",
+      "suitableFor": [
+        "金融",
+        "支付",
+        "资产管理",
+        "保险",
+        "企业财务"
+      ],
+      "notSuitableFor": [
+        "儿童教育",
+        "生活方式社区",
+        "强娱乐产品"
+      ],
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-fintech-trust",
+      "displayLevel": "hidden",
+      "displayReason": "金融资产暗色变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_xiaohongshu_seed_content",
@@ -4948,7 +6072,30 @@
         "--radius-card": "14px",
         "--radius-button": "999px",
         "--shadow-card": "0 4px 14px rgba(0,0,0,0.05)"
-      }
+      },
+      "parentStyleId": "style-001-modern-saas-clean",
+      "variantName": "内容社区版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "白底轻边框、高留白、低装饰，强调现代 SaaS 的清爽与可读性。",
+      "layoutMechanism": "Dashboard 卡片、列表、表单和设置页并重，适合通用管理后台。",
+      "componentMechanism": "轻卡片、弱阴影、清晰 CTA、状态标签和基础数据模块。",
+      "motionMechanism": "淡入、轻 hover、按钮聚焦反馈，避免强动效。",
+      "suitableFor": [
+        "通用 SaaS",
+        "企业工具后台",
+        "CRM",
+        "轻量运营系统"
+      ],
+      "notSuitableFor": [
+        "强视觉营销页",
+        "深色数据大屏",
+        "高密度表格系统"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-modern-saas-minimal",
+      "displayLevel": "hidden",
+      "displayReason": "内容社区不是后台主风格。",
+      "isMainStyle": false
     },
     {
       "id": "style_spatial_3d_soft_ui",
@@ -5136,7 +6283,30 @@
         "--radius-card": "26px",
         "--radius-button": "18px",
         "--shadow-card": "0 24px 60px rgba(124,92,255,0.14)"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-cyan-fluid-001",
+      "variantName": "空间 3D 科技版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "青蓝流体、清爽科技、低饱和未来感。",
+      "layoutMechanism": "卡片、图表、节点关系和产品展示模块结合。",
+      "componentMechanism": "透明感卡片、细线连接、科技图标和轻状态标签。",
+      "motionMechanism": "流体过渡、节点轻浮动和卡片淡入。",
+      "suitableFor": [
+        "科技官网",
+        "AI 数据平台",
+        "智能硬件",
+        "研发平台"
+      ],
+      "notSuitableFor": [
+        "金融交易",
+        "法律合规",
+        "传统表格后台"
+      ],
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-cyan-fluid-tech",
+      "displayLevel": "hidden",
+      "displayReason": "同属科技空间感变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_business_stable_boardroom_navy",
@@ -5385,7 +6555,31 @@
         "--gradient-main": "linear-gradient(135deg, #0B1F33 0%, #173B57 100%)",
         "--pattern-type": "subtle-boardroom-grid",
         "--effect-highlight": "古金细线强调关键指标"
-      }
+      },
+      "parentStyleId": "style-007-sap-process-enterprise",
+      "variantName": "商务稳重变体",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "稳重蓝灰、流程感、正式企业气质。",
+      "layoutMechanism": "步骤流、审批流、时间线、流程节点和对象详情页。",
+      "componentMechanism": "流程卡、节点状态、审批标签、时间线和表单区块。",
+      "motionMechanism": "步骤推进、节点状态变化和轻量确认反馈。",
+      "suitableFor": [
+        "ERP",
+        "OA",
+        "审批流",
+        "合规审计",
+        "政企流程"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "纯视觉展示"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-process-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "商务稳重风格包同质化，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_business_stable_legal_graphite",
@@ -5634,7 +6828,31 @@
         "--gradient-main": "linear-gradient(180deg, #FBFAF7 0%, #F1EFE7 100%)",
         "--pattern-type": "document-lines",
         "--effect-highlight": "印章红用于异常和审批驳回"
-      }
+      },
+      "parentStyleId": "style-007-sap-process-enterprise",
+      "variantName": "商务稳重变体",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "稳重蓝灰、流程感、正式企业气质。",
+      "layoutMechanism": "步骤流、审批流、时间线、流程节点和对象详情页。",
+      "componentMechanism": "流程卡、节点状态、审批标签、时间线和表单区块。",
+      "motionMechanism": "步骤推进、节点状态变化和轻量确认反馈。",
+      "suitableFor": [
+        "ERP",
+        "OA",
+        "审批流",
+        "合规审计",
+        "政企流程"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "纯视觉展示"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-process-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "商务稳重风格包同质化，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_business_stable_research_silver_blue",
@@ -5883,7 +7101,30 @@
         "--gradient-main": "linear-gradient(135deg, #1D4E89 0%, #6B8FB4 100%)",
         "--pattern-type": "research-grid",
         "--effect-highlight": "铜棕用于批注和目标线"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-glacier-blue-001",
+      "variantName": "银蓝投研报告版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "冷静蓝白、微渐变、高可信专业感。",
+      "layoutMechanism": "清爽 Dashboard、报告页、表单和指标模块。",
+      "componentMechanism": "白卡片、蓝色重点、低阴影和专业标签。",
+      "motionMechanism": "轻 hover、模块淡入、无强装饰动效。",
+      "suitableFor": [
+        "咨询报告",
+        "医疗报告",
+        "企业管理",
+        "专业服务平台"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "强娱乐产品"
+      ],
+      "differentiationScore": 63,
+      "duplicateGroupId": "grp-glacier-blue-professional",
+      "displayLevel": "hidden",
+      "displayReason": "专业报告方向变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_business_stable_urban_civic_portal",
@@ -6133,7 +7374,31 @@
         "--gradient-main": "linear-gradient(135deg, #234E70 0%, #3E6F91 100%)",
         "--pattern-type": "city-block-grid",
         "--effect-highlight": "砖橙只用于重点办事和提醒"
-      }
+      },
+      "parentStyleId": "style-007-sap-process-enterprise",
+      "variantName": "商务稳重变体",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "稳重蓝灰、流程感、正式企业气质。",
+      "layoutMechanism": "步骤流、审批流、时间线、流程节点和对象详情页。",
+      "componentMechanism": "流程卡、节点状态、审批标签、时间线和表单区块。",
+      "motionMechanism": "步骤推进、节点状态变化和轻量确认反馈。",
+      "suitableFor": [
+        "ERP",
+        "OA",
+        "审批流",
+        "合规审计",
+        "政企流程"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "纯视觉展示"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-process-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "商务稳重风格包同质化，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_business_stable_annual_report_mono",
@@ -6382,7 +7647,31 @@
         "--gradient-main": "linear-gradient(180deg, #FAFAF7 0%, #F0EEE6 100%)",
         "--pattern-type": "editorial-columns",
         "--effect-highlight": "琥珀色只用于结论和关键页码"
-      }
+      },
+      "parentStyleId": "style-007-sap-process-enterprise",
+      "variantName": "商务稳重变体",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "稳重蓝灰、流程感、正式企业气质。",
+      "layoutMechanism": "步骤流、审批流、时间线、流程节点和对象详情页。",
+      "componentMechanism": "流程卡、节点状态、审批标签、时间线和表单区块。",
+      "motionMechanism": "步骤推进、节点状态变化和轻量确认反馈。",
+      "suitableFor": [
+        "ERP",
+        "OA",
+        "审批流",
+        "合规审计",
+        "政企流程"
+      ],
+      "notSuitableFor": [
+        "潮流活动",
+        "Web3",
+        "纯视觉展示"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-process-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "商务稳重风格包同质化，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_tech_ai_aurora_neural",
@@ -6633,7 +7922,30 @@
         "--gradient-main": "linear-gradient(135deg, #6EE7F9 0%, #A78BFA 50%, #34D399 100%)",
         "--pattern-type": "neural-nodes",
         "--effect-highlight": "青紫发光边缘"
-      }
+      },
+      "parentStyleId": "style-advanced-glow-ai-blue-purple-001",
+      "variantName": "科技 AI 变体",
+      "styleFamily": "AI科技",
+      "visualMechanism": "蓝紫微光、柔和渐变和克制科技感。",
+      "layoutMechanism": "AI 工作台卡片、推荐模块、输入区和数据洞察面板。",
+      "componentMechanism": "微光边框、渐变强调、智能卡片、清晰状态标签。",
+      "motionMechanism": "轻 glow、卡片 hover 上浮、筛选和结果淡入。",
+      "suitableFor": [
+        "AI SaaS",
+        "智能分析",
+        "模型平台",
+        "企业 AI 工作流"
+      ],
+      "notSuitableFor": [
+        "严肃政务",
+        "高密度表格",
+        "传统 ERP"
+      ],
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-ai-glow-blue-purple",
+      "displayLevel": "hidden",
+      "displayReason": "AI 科技风格包过度细分，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_tech_ai_agent_lab_white",
@@ -6883,7 +8195,30 @@
         "--gradient-main": "linear-gradient(135deg, #EAF2FF 0%, #E6FFFB 100%)",
         "--pattern-type": "lab-dots",
         "--effect-highlight": "蓝绿紫状态点"
-      }
+      },
+      "parentStyleId": "style-021-ai-copilot-workspace",
+      "variantName": "白底智能体实验室版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "浅色 AI 工作台、轻科技感、智能推荐氛围。",
+      "layoutMechanism": "会话区、任务区、结果卡、推荐问题和引用面板组合。",
+      "componentMechanism": "Prompt 输入框、智能建议卡、任务卡、结果摘要和引用标签。",
+      "motionMechanism": "输入聚焦、生成中状态、结果卡淡入和轻微流动反馈。",
+      "suitableFor": [
+        "AI 助手",
+        "Agent 平台",
+        "知识库",
+        "企业智能办公"
+      ],
+      "notSuitableFor": [
+        "纯 CRUD 后台",
+        "金融交易终端",
+        "政务系统"
+      ],
+      "differentiationScore": 69,
+      "duplicateGroupId": "grp-ai-copilot-workspace",
+      "displayLevel": "normal",
+      "displayReason": "适合 AI 工作台的浅色变体。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_tech_ai_quantum_console_blue",
@@ -7132,7 +8467,30 @@
         "--gradient-main": "linear-gradient(135deg, #3B82F6 0%, #7C3AED 64%, #22D3EE 100%)",
         "--pattern-type": "quantum-orbits",
         "--effect-highlight": "冷蓝描边和轨道线"
-      }
+      },
+      "parentStyleId": "style-advanced-glow-ai-blue-purple-001",
+      "variantName": "科技 AI 变体",
+      "styleFamily": "AI科技",
+      "visualMechanism": "蓝紫微光、柔和渐变和克制科技感。",
+      "layoutMechanism": "AI 工作台卡片、推荐模块、输入区和数据洞察面板。",
+      "componentMechanism": "微光边框、渐变强调、智能卡片、清晰状态标签。",
+      "motionMechanism": "轻 glow、卡片 hover 上浮、筛选和结果淡入。",
+      "suitableFor": [
+        "AI SaaS",
+        "智能分析",
+        "模型平台",
+        "企业 AI 工作流"
+      ],
+      "notSuitableFor": [
+        "严肃政务",
+        "高密度表格",
+        "传统 ERP"
+      ],
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-ai-glow-blue-purple",
+      "displayLevel": "hidden",
+      "displayReason": "AI 科技风格包过度细分，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_tech_ai_vision_annotation",
@@ -7382,7 +8740,30 @@
         "--gradient-main": "linear-gradient(135deg, #E6FFFB 0%, #EFF6FF 100%)",
         "--pattern-type": "annotation-grid",
         "--effect-highlight": "识别框描边和标注气泡"
-      }
+      },
+      "parentStyleId": "style-advanced-glow-ai-blue-purple-001",
+      "variantName": "科技 AI 变体",
+      "styleFamily": "AI科技",
+      "visualMechanism": "蓝紫微光、柔和渐变和克制科技感。",
+      "layoutMechanism": "AI 工作台卡片、推荐模块、输入区和数据洞察面板。",
+      "componentMechanism": "微光边框、渐变强调、智能卡片、清晰状态标签。",
+      "motionMechanism": "轻 glow、卡片 hover 上浮、筛选和结果淡入。",
+      "suitableFor": [
+        "AI SaaS",
+        "智能分析",
+        "模型平台",
+        "企业 AI 工作流"
+      ],
+      "notSuitableFor": [
+        "严肃政务",
+        "高密度表格",
+        "传统 ERP"
+      ],
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-ai-glow-blue-purple",
+      "displayLevel": "hidden",
+      "displayReason": "AI 科技风格包过度细分，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_tech_ai_training_terminal",
@@ -7631,7 +9012,30 @@
         "--gradient-main": "linear-gradient(135deg, #10B981 0%, #60A5FA 100%)",
         "--pattern-type": "terminal-scanlines",
         "--effect-highlight": "绿色光标和黄色 checkpoint"
-      }
+      },
+      "parentStyleId": "style-027-developer-console-api",
+      "variantName": "模型训练终端版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "工程化、低装饰、代码与文档感。",
+      "layoutMechanism": "文档导航、API Key、日志、状态监控和控制台布局。",
+      "componentMechanism": "Code block、状态 badge、侧栏导航、参数表和日志行。",
+      "motionMechanism": "命令反馈、日志刷新、复制成功提示。",
+      "suitableFor": [
+        "API 平台",
+        "SDK 文档",
+        "开发者工具",
+        "模型部署平台"
+      ],
+      "notSuitableFor": [
+        "生活服务",
+        "教育儿童",
+        "高端品牌展示"
+      ],
+      "differentiationScore": 65,
+      "duplicateGroupId": "grp-developer-console",
+      "displayLevel": "hidden",
+      "displayReason": "工程终端方向归入开发者控制台。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_youth_vivid_juice_orange_bubbles",
@@ -7880,7 +9284,30 @@
         "--gradient-main": "linear-gradient(135deg, #FF7A1A 0%, #FFD166 100%)",
         "--pattern-type": "juice-bubbles",
         "--effect-highlight": "气泡和果汁高光"
-      }
+      },
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "年轻活动营销版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 52,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "偏活动营销，不适合企业后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_youth_vivid_acid_rave",
@@ -8129,7 +9556,30 @@
         "--gradient-main": "linear-gradient(135deg, #B6FF00 0%, #FF2BD6 52%, #00E5FF 100%)",
         "--pattern-type": "acid-stickers",
         "--effect-highlight": "酸绿粗描边和错位阴影"
-      }
+      },
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "年轻活动营销版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 52,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "偏活动营销，不适合企业后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_youth_vivid_scrapbook_sticker",
@@ -8378,7 +9828,30 @@
         "--gradient-main": "linear-gradient(135deg, #FF5C8A 0%, #FFD93D 48%, #4D96FF 100%)",
         "--pattern-type": "sticker-stars",
         "--effect-highlight": "贴纸阴影和手绘描边"
-      }
+      },
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "年轻活动营销版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 52,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "偏活动营销，不适合企业后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_youth_vivid_sports_energy",
@@ -8627,7 +10100,30 @@
         "--gradient-main": "linear-gradient(135deg, #0EA5E9 0%, #22C55E 100%)",
         "--pattern-type": "speed-lines",
         "--effect-highlight": "橙红成绩和冲刺线"
-      }
+      },
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "年轻活动营销版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 52,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "偏活动营销，不适合企业后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_youth_vivid_y2k_silver_pink",
@@ -8876,7 +10372,30 @@
         "--gradient-main": "linear-gradient(135deg, #FF4FD8 0%, #8B5CF6 50%, #7DD3FC 100%)",
         "--pattern-type": "sparkle-ovals",
         "--effect-highlight": "银粉星芒和镜面高光"
-      }
+      },
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "年轻活动营销版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "suitableFor": [
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
+      ],
+      "notSuitableFor": [
+        "政企流程",
+        "医疗报告",
+        "法律合规"
+      ],
+      "differentiationScore": 52,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "偏活动营销，不适合企业后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_premium_luxury_pearl_boutique",
@@ -9126,7 +10645,30 @@
         "--gradient-main": "linear-gradient(135deg, #FFFDF8 0%, #F2E6D4 100%)",
         "--pattern-type": "subtle-pearl",
         "--effect-highlight": "珠光柔亮边缘"
-      }
+      },
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "轻奢变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "suitableFor": [
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
+      ],
+      "notSuitableFor": [
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "hidden",
+      "displayReason": "轻奢风格包过度细分，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_premium_luxury_champagne_copper",
@@ -9376,7 +10918,30 @@
         "--gradient-main": "linear-gradient(135deg, #FFF8F1 0%, #E8C7A1 100%)",
         "--pattern-type": "thin-copper-lines",
         "--effect-highlight": "铜色细线和卡券压纹"
-      }
+      },
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "轻奢变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "suitableFor": [
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
+      ],
+      "notSuitableFor": [
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "hidden",
+      "displayReason": "轻奢风格包过度细分，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_premium_luxury_obsidian_silent",
@@ -9626,7 +11191,30 @@
         "--gradient-main": "linear-gradient(135deg, #0D0D0F 0%, #202024 100%)",
         "--pattern-type": "none",
         "--effect-highlight": "低亮亚光金边"
-      }
+      },
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "黑曜石静奢版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "suitableFor": [
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
+      ],
+      "notSuitableFor": [
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
+      ],
+      "differentiationScore": 64,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "hidden",
+      "displayReason": "黑金轻奢的暗色变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_premium_luxury_jade_porcelain",
@@ -9876,7 +11464,30 @@
         "--gradient-main": "linear-gradient(135deg, #FFFCF5 0%, #E7F4F0 100%)",
         "--pattern-type": "jade-soft-lines",
         "--effect-highlight": "浅金细线和玉色高光"
-      }
+      },
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "轻奢变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "suitableFor": [
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
+      ],
+      "notSuitableFor": [
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "hidden",
+      "displayReason": "轻奢风格包过度细分，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_premium_luxury_velvet_burgundy",
@@ -10125,7 +11736,30 @@
         "--gradient-main": "linear-gradient(135deg, #7F1D1D 0%, #B45309 100%)",
         "--pattern-type": "soft-curtain-folds",
         "--effect-highlight": "柔金边和焦糖按钮"
-      }
+      },
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "轻奢变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "suitableFor": [
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
+      ],
+      "notSuitableFor": [
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "hidden",
+      "displayReason": "轻奢风格包过度细分，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_medical_health_lavender_therapy",
@@ -10375,7 +12009,32 @@
         "--gradient-main": "linear-gradient(135deg, #F8F5FF 0%, #EDE9FE 48%, #ECFDF5 100%)",
         "--pattern-type": "breathing-circles",
         "--effect-highlight": "柔和薰衣草光圈"
-      }
+      },
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "医疗健康变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 57,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "医疗健康风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_medical_health_pediatric_playful",
@@ -10624,7 +12283,32 @@
         "--gradient-main": "linear-gradient(135deg, #E0F7FF 0%, #FFF4CC 100%)",
         "--pattern-type": "friendly-dots",
         "--effect-highlight": "奶黄和珊瑚提醒"
-      }
+      },
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "医疗健康变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 57,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "医疗健康风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_medical_health_rehab_energy",
@@ -10874,7 +12558,32 @@
         "--gradient-main": "linear-gradient(135deg, #16A34A 0%, #0EA5E9 100%)",
         "--pattern-type": "motion-progress",
         "--effect-highlight": "橙色里程碑点"
-      }
+      },
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "医疗健康变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 57,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "医疗健康风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_medical_health_radiology_cold_light",
@@ -11123,7 +12832,32 @@
         "--gradient-main": "linear-gradient(135deg, #0C1A2A 0%, #123A55 100%)",
         "--pattern-type": "scan-grid",
         "--effect-highlight": "冷光描边和荧光病灶标记"
-      }
+      },
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "医疗健康变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 57,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "医疗健康风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_medical_health_chronic_calendar",
@@ -11372,7 +13106,32 @@
         "--gradient-main": "linear-gradient(135deg, #EAF2FF 0%, #ECFDF5 100%)",
         "--pattern-type": "calendar-grid",
         "--effect-highlight": "用药提醒黄点"
-      }
+      },
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "医疗健康变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "suitableFor": [
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
+      ],
+      "notSuitableFor": [
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
+      ],
+      "differentiationScore": 57,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "医疗健康风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_local_life_night_market_fire",
@@ -11621,7 +13380,31 @@
         "--gradient-main": "linear-gradient(135deg, #FF5A1F 0%, #F59E0B 100%)",
         "--pattern-type": "warm-lantern-dots",
         "--effect-highlight": "橙红灯牌发光"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "本地生活变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "本地生活风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_local_life_fresh_community_grocery",
@@ -11870,7 +13653,31 @@
         "--gradient-main": "linear-gradient(135deg, #16A34A 0%, #84CC16 100%)",
         "--pattern-type": "leaf-dots",
         "--effect-highlight": "橙色价格和新鲜角标"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "社区团购鲜蔬版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "本地生活生鲜变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_local_life_rider_dispatch_blue",
@@ -12120,7 +13927,31 @@
         "--gradient-main": "linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%)",
         "--pattern-type": "map-route",
         "--effect-highlight": "橙色时效和异常提醒"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "本地生活变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "本地生活风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_local_life_appointment_coral",
@@ -12369,7 +14200,31 @@
         "--gradient-main": "linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%)",
         "--pattern-type": "booking-slots",
         "--effect-highlight": "可预约时段高亮"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "到店预约珊瑚版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 63,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "本地生活服务变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_local_life_family_local_rainbow",
@@ -12618,7 +14473,31 @@
         "--gradient-main": "linear-gradient(135deg, #7C3AED 0%, #22C55E 48%, #F97316 100%)",
         "--pattern-type": "rainbow-arches",
         "--effect-highlight": "彩虹拱形和活动贴纸"
-      }
+      },
+      "parentStyleId": "style_local_life_meituan_yellow",
+      "variantName": "本地生活变体",
+      "styleFamily": "行业业务",
+      "visualMechanism": "暖色、亲切、服务感和促销效率。",
+      "layoutMechanism": "服务列表、门店、订单、优惠和预约流程。",
+      "componentMechanism": "优惠券、门店卡、服务状态、订单卡和评分组件。",
+      "motionMechanism": "卡片反馈、进度变化、轻量促销动效。",
+      "suitableFor": [
+        "到店",
+        "外卖",
+        "团购",
+        "家政",
+        "美业服务"
+      ],
+      "notSuitableFor": [
+        "严肃企业后台",
+        "金融终端",
+        "安全监控"
+      ],
+      "differentiationScore": 55,
+      "duplicateGroupId": "grp-local-life-service",
+      "displayLevel": "hidden",
+      "displayReason": "本地生活风格包细分较多，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_chinese_culture_green_mountain",
@@ -12868,7 +14747,30 @@
         "--gradient-main": "linear-gradient(135deg, #DDEFE5 0%, #B8DCCF 50%, #F3F7F1 100%)",
         "--pattern-type": "mountain-contour",
         "--effect-highlight": "金色小印章点缀"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "国潮文化版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "偏品牌文化展示，不适合后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_chinese_culture_song_dynasty_paper",
@@ -13118,7 +15020,30 @@
         "--gradient-main": "linear-gradient(180deg, #FFFDF7 0%, #F0E5CF 100%)",
         "--pattern-type": "book-columns",
         "--effect-highlight": "朱砂小印和页签"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "国潮文化版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "偏品牌文化展示，不适合后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_chinese_culture_dunhuang_mineral",
@@ -13368,7 +15293,30 @@
         "--gradient-main": "linear-gradient(135deg, #C2410C 0%, #D6A84F 46%, #2563A8 100%)",
         "--pattern-type": "dunhuang-curves",
         "--effect-highlight": "矿金线条和壁画颗粒"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "国潮文化版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "偏品牌文化展示，不适合后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_chinese_culture_blue_white_porcelain",
@@ -13618,7 +15566,30 @@
         "--gradient-main": "linear-gradient(135deg, #FFFFFF 0%, #EAF2FF 100%)",
         "--pattern-type": "blue-white-floral",
         "--effect-highlight": "青花纹样边角"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "国潮文化版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "偏品牌文化展示，不适合后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_chinese_culture_brocade_pattern",
@@ -13868,7 +15839,30 @@
         "--gradient-main": "linear-gradient(135deg, #7C2D12 0%, #D97706 100%)",
         "--pattern-type": "brocade-border",
         "--effect-highlight": "琥珀纹样高光"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "国潮文化版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 50,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "偏品牌文化展示，不适合后台默认展示。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dark_cool_deep_space_violet",
@@ -14118,7 +16112,30 @@
         "--gradient-main": "linear-gradient(135deg, #8B5CF6 0%, #22D3EE 100%)",
         "--pattern-type": "space-dust",
         "--effect-highlight": "紫电边缘光"
-      }
+      },
+      "parentStyleId": "style-024-dark-dataviz-dashboard",
+      "variantName": "紫电控制台版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "深色背景、高对比图表、实时数据大屏感。",
+      "layoutMechanism": "大屏指标、地图、趋势图、实时状态和多区块面板。",
+      "componentMechanism": "KPI 卡、图表容器、状态灯、数据看板和告警区。",
+      "motionMechanism": "数字滚动、图表入场、实时状态轻刷新。",
+      "suitableFor": [
+        "数据大屏",
+        "监控中心",
+        "经营驾驶舱",
+        "态势展示"
+      ],
+      "notSuitableFor": [
+        "日常办公表单",
+        "移动端复杂编辑",
+        "教育平台"
+      ],
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-dark-dataviz",
+      "displayLevel": "hidden",
+      "displayReason": "深色大屏视觉变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dark_cool_hacker_green_terminal",
@@ -14367,7 +16384,30 @@
         "--gradient-main": "linear-gradient(135deg, #39FF88 0%, #00D1FF 100%)",
         "--pattern-type": "matrix-code",
         "--effect-highlight": "光标和命令行高亮"
-      }
+      },
+      "parentStyleId": "style-024-dark-dataviz-dashboard",
+      "variantName": "暗色酷炫变体",
+      "styleFamily": "深色数据",
+      "visualMechanism": "深色背景、高对比图表、实时数据大屏感。",
+      "layoutMechanism": "大屏指标、地图、趋势图、实时状态和多区块面板。",
+      "componentMechanism": "KPI 卡、图表容器、状态灯、数据看板和告警区。",
+      "motionMechanism": "数字滚动、图表入场、实时状态轻刷新。",
+      "suitableFor": [
+        "数据大屏",
+        "监控中心",
+        "经营驾驶舱",
+        "态势展示"
+      ],
+      "notSuitableFor": [
+        "日常办公表单",
+        "移动端复杂编辑",
+        "教育平台"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-dark-dataviz",
+      "displayLevel": "hidden",
+      "displayReason": "暗色酷炫风格包装饰性偏强，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dark_cool_red_alert_command",
@@ -14616,7 +16656,30 @@
         "--gradient-main": "linear-gradient(135deg, #EF4444 0%, #F97316 100%)",
         "--pattern-type": "alert-diagonal-lines",
         "--effect-highlight": "警戒黄和红色闪烁边"
-      }
+      },
+      "parentStyleId": "style-advanced-dark-space-command-001",
+      "variantName": "应急告警版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "深蓝黑、克制发光、空间指挥中心气质。",
+      "layoutMechanism": "指挥中心多面板、告警、状态、图表和指令区。",
+      "componentMechanism": "高对比卡片、状态灯、告警模块、控制按钮和图表容器。",
+      "motionMechanism": "状态脉冲、轻扫描线、告警变化反馈。",
+      "suitableFor": [
+        "应急指挥",
+        "安全态势",
+        "运营监控",
+        "智能调度"
+      ],
+      "notSuitableFor": [
+        "白底 SaaS",
+        "内容社区",
+        "轻办公"
+      ],
+      "differentiationScore": 65,
+      "duplicateGroupId": "grp-space-command-center",
+      "displayLevel": "hidden",
+      "displayReason": "指挥中心告警场景变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dark_cool_ice_metal_mecha",
@@ -14866,7 +16929,30 @@
         "--gradient-main": "linear-gradient(135deg, #38BDF8 0%, #94A3B8 100%)",
         "--pattern-type": "mecha-panels",
         "--effect-highlight": "冰蓝边缘光和金属切角"
-      }
+      },
+      "parentStyleId": "style-024-dark-dataviz-dashboard",
+      "variantName": "暗色酷炫变体",
+      "styleFamily": "深色数据",
+      "visualMechanism": "深色背景、高对比图表、实时数据大屏感。",
+      "layoutMechanism": "大屏指标、地图、趋势图、实时状态和多区块面板。",
+      "componentMechanism": "KPI 卡、图表容器、状态灯、数据看板和告警区。",
+      "motionMechanism": "数字滚动、图表入场、实时状态轻刷新。",
+      "suitableFor": [
+        "数据大屏",
+        "监控中心",
+        "经营驾驶舱",
+        "态势展示"
+      ],
+      "notSuitableFor": [
+        "日常办公表单",
+        "移动端复杂编辑",
+        "教育平台"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-dark-dataviz",
+      "displayLevel": "hidden",
+      "displayReason": "暗色酷炫风格包装饰性偏强，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dark_cool_violet_music_night",
@@ -15115,7 +17201,30 @@
         "--gradient-main": "linear-gradient(135deg, #A855F7 0%, #EC4899 55%, #22D3EE 100%)",
         "--pattern-type": "audio-wave",
         "--effect-highlight": "声波发光和专辑卡阴影"
-      }
+      },
+      "parentStyleId": "style-024-dark-dataviz-dashboard",
+      "variantName": "暗色酷炫变体",
+      "styleFamily": "深色数据",
+      "visualMechanism": "深色背景、高对比图表、实时数据大屏感。",
+      "layoutMechanism": "大屏指标、地图、趋势图、实时状态和多区块面板。",
+      "componentMechanism": "KPI 卡、图表容器、状态灯、数据看板和告警区。",
+      "motionMechanism": "数字滚动、图表入场、实时状态轻刷新。",
+      "suitableFor": [
+        "数据大屏",
+        "监控中心",
+        "经营驾驶舱",
+        "态势展示"
+      ],
+      "notSuitableFor": [
+        "日常办公表单",
+        "移动端复杂编辑",
+        "教育平台"
+      ],
+      "differentiationScore": 54,
+      "duplicateGroupId": "grp-dark-dataviz",
+      "displayLevel": "hidden",
+      "displayReason": "暗色酷炫风格包装饰性偏强，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dream_gradient_aurora_pink_blue_mist",
@@ -15365,7 +17474,30 @@
         "--gradient-main": "linear-gradient(135deg, #60A5FA 0%, #F0ABFC 55%, #99F6E4 100%)",
         "--pattern-type": "soft-mist",
         "--effect-highlight": "柔雾光斑和透明高光"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "梦幻渐变变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 51,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "梦幻渐变偏视觉主题，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dream_gradient_coral_sunset",
@@ -15614,7 +17746,30 @@
         "--gradient-main": "linear-gradient(135deg, #FF6B6B 0%, #FFB86B 60%, #7DD3FC 100%)",
         "--pattern-type": "sunset-waves",
         "--effect-highlight": "日落圆形光晕"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "梦幻渐变变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 51,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "梦幻渐变偏视觉主题，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dream_gradient_sea_salt_bubble",
@@ -15863,7 +18018,30 @@
         "--gradient-main": "linear-gradient(135deg, #38BDF8 0%, #5EEAD4 55%, #C4B5FD 100%)",
         "--pattern-type": "water-bubbles",
         "--effect-highlight": "泡泡高光和水面反射"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "梦幻渐变变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 51,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "梦幻渐变偏视觉主题，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dream_gradient_starry_marshmallow",
@@ -16112,7 +18290,30 @@
         "--gradient-main": "linear-gradient(135deg, #F0ABFC 0%, #93C5FD 55%, #FDE68A 100%)",
         "--pattern-type": "tiny-stars",
         "--effect-highlight": "柔黄星点和粉蓝光晕"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "梦幻渐变变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 51,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "梦幻渐变偏视觉主题，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style_v3_dream_gradient_mother_of_pearl",
@@ -16361,7 +18562,30 @@
         "--gradient-main": "linear-gradient(135deg, #FFFFFF 0%, #E9D5FF 32%, #FBCFE8 62%, #CFFAFE 100%)",
         "--pattern-type": "iridescent-shell",
         "--effect-highlight": "虹彩柔光和珠贝纹理"
-      }
+      },
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "梦幻渐变变体",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "suitableFor": [
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
+      ],
+      "notSuitableFor": [
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
+      ],
+      "differentiationScore": 51,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "梦幻渐变偏视觉主题，默认隐藏。",
+      "isMainStyle": false
     }
   ]
 }

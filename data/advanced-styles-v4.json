@@ -53,17 +53,15 @@
       "tokens": "light / adaptive / comfortable / advanced-v4",
       "positioning": "AI SaaS、智能工作台、数据分析平台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "企业 SaaS",
+        "AI 工作流",
+        "现代官网后台",
+        "展示型后台"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "纯表格密集系统",
+        "金融交易终端",
+        "政务流程"
       ],
       "visualKeywords": [
         "蓝紫青极光渐变",
@@ -211,7 +209,19 @@
         "浅色背景",
         "轻微渐变边框",
         "低饱和蓝紫按钮"
-      ]
+      ],
+      "parentStyleId": "style-advanced-gradient-aurora-001",
+      "variantName": "标准版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "浅色背景、蓝紫青极光渐变、轻科技感。",
+      "layoutMechanism": "SaaS 卡片、统计、任务流、AI 工作流和展示区。",
+      "componentMechanism": "渐变强调、轻卡片、清晰状态标签和柔和边框。",
+      "motionMechanism": "渐变 hover、模块淡入、轻微上浮。",
+      "differentiationScore": 93,
+      "duplicateGroupId": "grp-aurora-gradient-enterprise",
+      "displayLevel": "hero",
+      "displayReason": "现代审美强，适合作为高级视觉主推。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-gradient-sunrise-growth-001",
@@ -253,17 +263,15 @@
       "tokens": "light / adaptive / comfortable / advanced-v4",
       "positioning": "电商运营、增长后台、本地生活商家端",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "政企流程",
+        "医疗报告",
+        "法律合规"
       ],
       "visualKeywords": [
         "橙金微渐变",
@@ -411,7 +419,19 @@
         "温暖光感",
         "增长数据卡",
         "运营图表"
-      ]
+      ],
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "日出增长版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "differentiationScore": 63,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "增长运营视觉变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-gradient-cyan-fluid-001",
@@ -452,17 +472,15 @@
       "tokens": "light / adaptive / comfortable / advanced-v4",
       "positioning": "科技公司、IoT、数据平台、SaaS 工具",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "科技官网",
+        "AI 数据平台",
+        "智能硬件",
+        "研发平台"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "金融交易",
+        "法律合规",
+        "传统表格后台"
       ],
       "visualKeywords": [
         "青蓝深海流体渐变",
@@ -607,7 +625,19 @@
         "青蓝深海流体渐变",
         "渐变边线",
         "清爽科技 App"
-      ]
+      ],
+      "parentStyleId": "style-advanced-gradient-cyan-fluid-001",
+      "variantName": "标准版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "青蓝流体、清爽科技、低饱和未来感。",
+      "layoutMechanism": "卡片、图表、节点关系和产品展示模块结合。",
+      "componentMechanism": "透明感卡片、细线连接、科技图标和轻状态标签。",
+      "motionMechanism": "流体过渡、节点轻浮动和卡片淡入。",
+      "differentiationScore": 82,
+      "duplicateGroupId": "grp-cyan-fluid-tech",
+      "displayLevel": "normal",
+      "displayReason": "视觉差异明显，但落地面略窄。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-gradient-purple-pink-ai-001",
@@ -649,17 +679,15 @@
       "tokens": "light / adaptive / comfortable / advanced-v4",
       "positioning": "AI 助手、内容创作、团队协作工具",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "AI SaaS",
+        "智能分析",
+        "模型平台",
+        "企业 AI 工作流"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "严肃政务",
+        "高密度表格",
+        "传统 ERP"
       ],
       "visualKeywords": [
         "紫粉低饱和渐变",
@@ -807,7 +835,19 @@
         "AI 输入框",
         "Prompt 卡片",
         "协作推荐"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glow-ai-blue-purple-001",
+      "variantName": "紫粉智能协作版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "蓝紫微光、柔和渐变和克制科技感。",
+      "layoutMechanism": "AI 工作台卡片、推荐模块、输入区和数据洞察面板。",
+      "componentMechanism": "微光边框、渐变强调、智能卡片、清晰状态标签。",
+      "motionMechanism": "轻 glow、卡片 hover 上浮、筛选和结果淡入。",
+      "differentiationScore": 64,
+      "duplicateGroupId": "grp-ai-glow-blue-purple",
+      "displayLevel": "normal",
+      "displayReason": "AI 协作渐变变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-gradient-glacier-blue-001",
@@ -849,17 +889,15 @@
       "tokens": "light / adaptive / comfortable / advanced-v4",
       "positioning": "医疗、金融、企业报告、管理系统",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "咨询报告",
+        "医疗报告",
+        "企业管理",
+        "专业服务平台"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "潮流活动",
+        "Web3",
+        "强娱乐产品"
       ],
       "visualKeywords": [
         "蓝白微渐变",
@@ -1007,7 +1045,19 @@
         "高留白",
         "可信冷静",
         "报告详情和审批流程"
-      ]
+      ],
+      "parentStyleId": "style-advanced-gradient-glacier-blue-001",
+      "variantName": "标准版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "冷静蓝白、微渐变、高可信专业感。",
+      "layoutMechanism": "清爽 Dashboard、报告页、表单和指标模块。",
+      "componentMechanism": "白卡片、蓝色重点、低阴影和专业标签。",
+      "motionMechanism": "轻 hover、模块淡入、无强装饰动效。",
+      "differentiationScore": 81,
+      "duplicateGroupId": "grp-glacier-blue-professional",
+      "displayLevel": "normal",
+      "displayReason": "专业可信方向清晰，可作为正常展示。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-gradient-forest-oxygen-001",
@@ -1048,17 +1098,17 @@
       "tokens": "light / adaptive / comfortable / advanced-v4",
       "positioning": "医疗健康、环保、本地生活、服务平台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
       ],
       "visualKeywords": [
         "绿色到青色自然渐变",
@@ -1203,7 +1253,19 @@
         "绿色到青色自然渐变",
         "柔和背景",
         "轻阴影健康报告"
-      ]
+      ],
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "森林绿氧气版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "differentiationScore": 63,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "健康自然变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-dark-space-command-001",
@@ -1245,17 +1307,15 @@
       "tokens": "dark-first / adaptive / compact / advanced-v4",
       "positioning": "数据大屏、监控中心、指挥调度",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "应急指挥",
+        "安全态势",
+        "运营监控",
+        "智能调度"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "白底 SaaS",
+        "内容社区",
+        "轻办公"
       ],
       "visualKeywords": [
         "深蓝黑背景",
@@ -1403,7 +1463,19 @@
         "KPI 大数字",
         "克制发光边框",
         "高对比图表"
-      ]
+      ],
+      "parentStyleId": "style-advanced-dark-space-command-001",
+      "variantName": "标准版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "深蓝黑、克制发光、空间指挥中心气质。",
+      "layoutMechanism": "指挥中心多面板、告警、状态、图表和指令区。",
+      "componentMechanism": "高对比卡片、状态灯、告警模块、控制按钮和图表容器。",
+      "motionMechanism": "状态脉冲、轻扫描线、告警变化反馈。",
+      "differentiationScore": 91,
+      "duplicateGroupId": "grp-space-command-center",
+      "displayLevel": "hero",
+      "displayReason": "指挥中心场景强，适合保留主推。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-dark-saas-pro-001",
@@ -1444,17 +1516,15 @@
       "tokens": "dark-first / adaptive / compact / advanced-v4",
       "positioning": "开发者平台、AI 工具、企业控制台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "B2B SaaS",
+        "技术工具",
+        "夜间模式",
+        "专业工作台"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "政务公共服务",
+        "儿童教育",
+        "暖色消费活动"
       ],
       "visualKeywords": [
         "暗灰背景",
@@ -1599,7 +1669,19 @@
         "暗灰背景",
         "低饱和蓝紫高亮",
         "暗色表格表单可读"
-      ]
+      ],
+      "parentStyleId": "style-advanced-dark-saas-pro-001",
+      "variantName": "标准版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "暗灰非纯黑、低饱和高亮、专业暗色 SaaS。",
+      "layoutMechanism": "标准 SaaS 后台暗色版，覆盖表格、表单、详情和设置。",
+      "componentMechanism": "暗色卡片、表格、输入框、清晰焦点态和状态标签。",
+      "motionMechanism": "轻 hover、暗色焦点反馈、模块淡入。",
+      "differentiationScore": 92,
+      "duplicateGroupId": "grp-dark-saas-pro",
+      "displayLevel": "hero",
+      "displayReason": "比大屏更适合真实产品落地，主推。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-dark-black-gold-finance-001",
@@ -1641,17 +1723,15 @@
       "tokens": "dark-first / adaptive / compact / advanced-v4",
       "positioning": "金融、资产、风控、投顾后台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
       ],
       "visualKeywords": [
         "黑色深蓝金色点缀",
@@ -1799,7 +1879,19 @@
         "资产卡",
         "交易列表",
         "风险提醒"
-      ]
+      ],
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "黑金金融终端版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "differentiationScore": 67,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "hidden",
+      "displayReason": "黑金轻奢与金融交叉变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-dark-medical-imaging-001",
@@ -1840,17 +1932,17 @@
       "tokens": "dark-first / adaptive / compact / advanced-v4",
       "positioning": "医疗检测、影像分析、AI 诊断工作台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
       ],
       "visualKeywords": [
         "深灰蓝背景",
@@ -1995,7 +2087,19 @@
         "深灰蓝背景",
         "青绿状态",
         "报告卡和图像区清晰"
-      ]
+      ],
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "暗色医疗影像版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "differentiationScore": 65,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "医疗影像暗色变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-dark-ops-monitor-001",
@@ -2037,17 +2141,15 @@
       "tokens": "dark-first / adaptive / compact / advanced-v4",
       "positioning": "运维平台、告警中心、系统监控",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "DevOps",
+        "SRE",
+        "云服务监控",
+        "安全运营"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "高端品牌",
+        "本地生活",
+        "教育课程"
       ],
       "visualKeywords": [
         "暗色控制台",
@@ -2195,7 +2297,19 @@
         "红绿蓝状态",
         "日志时间线",
         "高信息密度"
-      ]
+      ],
+      "parentStyleId": "style-advanced-dark-ops-monitor-001",
+      "variantName": "标准版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "暗灰底、红绿蓝状态语义、运维监控气质。",
+      "layoutMechanism": "日志列表、服务状态、资源监控和告警面板。",
+      "componentMechanism": "终端列表、状态 pill、告警卡、时间线和资源条。",
+      "motionMechanism": "实时刷新、行状态变化、告警轻闪。",
+      "differentiationScore": 79,
+      "duplicateGroupId": "grp-night-ops-monitor",
+      "displayLevel": "normal",
+      "displayReason": "运维场景独立，但适用面偏技术。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-dark-minimal-office-001",
@@ -2236,17 +2350,15 @@
       "tokens": "dark-first / adaptive / compact / advanced-v4",
       "positioning": "企业内部工具、任务协作、审批系统",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "B2B SaaS",
+        "技术工具",
+        "夜间模式",
+        "专业工作台"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "政务公共服务",
+        "儿童教育",
+        "暖色消费活动"
       ],
       "visualKeywords": [
         "暗灰非纯黑",
@@ -2391,7 +2503,19 @@
         "暗灰非纯黑",
         "克制卡片边界",
         "清晰文字层级"
-      ]
+      ],
+      "parentStyleId": "style-advanced-dark-saas-pro-001",
+      "variantName": "暗色极简办公版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "暗灰非纯黑、低饱和高亮、专业暗色 SaaS。",
+      "layoutMechanism": "标准 SaaS 后台暗色版，覆盖表格、表单、详情和设置。",
+      "componentMechanism": "暗色卡片、表格、输入框、清晰焦点态和状态标签。",
+      "motionMechanism": "轻 hover、暗色焦点反馈、模块淡入。",
+      "differentiationScore": 68,
+      "duplicateGroupId": "grp-dark-saas-pro",
+      "displayLevel": "hidden",
+      "displayReason": "暗色 SaaS 的办公变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glow-ai-blue-purple-001",
@@ -2432,17 +2556,15 @@
       "tokens": "light-dark / glow-accent / comfortable / advanced-v4",
       "positioning": "AI Copilot、智能助手、知识库",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "AI SaaS",
+        "智能分析",
+        "模型平台",
+        "企业 AI 工作流"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "严肃政务",
+        "高密度表格",
+        "传统 ERP"
       ],
       "visualKeywords": [
         "蓝紫微光",
@@ -2587,7 +2709,19 @@
         "蓝紫微光",
         "输入框和推荐卡轻 glow",
         "企业可读"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glow-ai-blue-purple-001",
+      "variantName": "标准版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "蓝紫微光、柔和渐变和克制科技感。",
+      "layoutMechanism": "AI 工作台卡片、推荐模块、输入区和数据洞察面板。",
+      "componentMechanism": "微光边框、渐变强调、智能卡片、清晰状态标签。",
+      "motionMechanism": "轻 glow、卡片 hover 上浮、筛选和结果淡入。",
+      "differentiationScore": 94,
+      "duplicateGroupId": "grp-ai-glow-blue-purple",
+      "displayLevel": "hero",
+      "displayReason": "高级科技感强且仍可落地，适合作为主推。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-glow-data-insight-001",
@@ -2628,17 +2762,15 @@
       "tokens": "light-dark / glow-accent / comfortable / advanced-v4",
       "positioning": "BI、数据分析、增长看板",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "AI SaaS",
+        "智能分析",
+        "模型平台",
+        "企业 AI 工作流"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "严肃政务",
+        "高密度表格",
+        "传统 ERP"
       ],
       "visualKeywords": [
         "轻量荧光图表线",
@@ -2783,7 +2915,19 @@
         "轻量荧光图表线",
         "卡片边缘微光",
         "语义色清晰"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glow-ai-blue-purple-001",
+      "variantName": "数据洞察荧光版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "蓝紫微光、柔和渐变和克制科技感。",
+      "layoutMechanism": "AI 工作台卡片、推荐模块、输入区和数据洞察面板。",
+      "componentMechanism": "微光边框、渐变强调、智能卡片、清晰状态标签。",
+      "motionMechanism": "轻 glow、卡片 hover 上浮、筛选和结果淡入。",
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-ai-glow-blue-purple",
+      "displayLevel": "hidden",
+      "displayReason": "AI 微光数据变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glow-industrial-lightline-001",
@@ -2824,17 +2968,15 @@
       "tokens": "light-dark / glow-accent / comfortable / advanced-v4",
       "positioning": "制造业、工业 IoT、设备管理",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "DevOps",
+        "SRE",
+        "云服务监控",
+        "安全运营"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "高端品牌",
+        "本地生活",
+        "教育课程"
       ],
       "visualKeywords": [
         "深蓝灰背景",
@@ -2979,7 +3121,19 @@
         "深蓝灰背景",
         "光轨线条",
         "设备状态和产线监控"
-      ]
+      ],
+      "parentStyleId": "style-advanced-dark-ops-monitor-001",
+      "variantName": "智能制造光轨版",
+      "styleFamily": "深色数据",
+      "visualMechanism": "暗灰底、红绿蓝状态语义、运维监控气质。",
+      "layoutMechanism": "日志列表、服务状态、资源监控和告警面板。",
+      "componentMechanism": "终端列表、状态 pill、告警卡、时间线和资源条。",
+      "motionMechanism": "实时刷新、行状态变化、告警轻闪。",
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-night-ops-monitor",
+      "displayLevel": "hidden",
+      "displayReason": "工业监控变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glow-cloud-energy-001",
@@ -3020,17 +3174,15 @@
       "tokens": "light-dark / glow-accent / comfortable / advanced-v4",
       "positioning": "云平台、API 平台、开发者后台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "BI 平台",
+        "数据产品",
+        "云平台",
+        "企业分析系统"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "轻消费 App",
+        "强品牌营销页",
+        "儿童教育"
       ],
       "visualKeywords": [
         "青蓝光效",
@@ -3175,7 +3327,19 @@
         "青蓝光效",
         "节点连接",
         "资源卡和日志列表"
-      ]
+      ],
+      "parentStyleId": "style-004-carbon-data-enterprise",
+      "variantName": "云服务能量光版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "理性深蓝灰、工程化、低装饰，强调数据密度。",
+      "layoutMechanism": "多面板指标、数据表、图表和详情检查器组合。",
+      "componentMechanism": "高密度表格、数据卡、图表容器、清晰分割线。",
+      "motionMechanism": "状态切换、图表加载和列表刷新保持克制。",
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-carbon-data",
+      "displayLevel": "hidden",
+      "displayReason": "云平台数据变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glow-growth-warm-001",
@@ -3216,17 +3380,15 @@
       "tokens": "light-dark / glow-accent / comfortable / advanced-v4",
       "positioning": "运营后台、电商增长、活动管理",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "电商后台",
+        "商家运营",
+        "活动运营",
+        "增长工具"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "政企流程",
+        "医疗报告",
+        "法律合规"
       ],
       "visualKeywords": [
         "橙粉暖光",
@@ -3371,7 +3533,19 @@
         "橙粉暖光",
         "转化率订单活动进度",
         "轻活力专业"
-      ]
+      ],
+      "parentStyleId": "style-008-polars-merchant-ops",
+      "variantName": "增长暖光版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "电商运营感、清晰交易状态、增长导向。",
+      "layoutMechanism": "商品、订单、库存、活动和转化漏斗。",
+      "componentMechanism": "商品卡、订单表、活动卡、转化指标和库存状态。",
+      "motionMechanism": "数据增长反馈、订单状态变化、轻弹性反馈。",
+      "differentiationScore": 65,
+      "duplicateGroupId": "grp-commerce-growth",
+      "displayLevel": "hidden",
+      "displayReason": "运营增长视觉变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glow-brand-soft-001",
@@ -3412,17 +3586,15 @@
       "tokens": "light-dark / glow-accent / comfortable / advanced-v4",
       "positioning": "企业门户、客户后台、多品牌换肤",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "AI SaaS",
+        "智能分析",
+        "模型平台",
+        "企业 AI 工作流"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "严肃政务",
+        "高密度表格",
+        "传统 ERP"
       ],
       "visualKeywords": [
         "品牌主色微光",
@@ -3567,7 +3739,19 @@
         "品牌主色微光",
         "重点模块强调",
         "多租户可换肤"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glow-ai-blue-purple-001",
+      "variantName": "企业品牌微光版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "蓝紫微光、柔和渐变和克制科技感。",
+      "layoutMechanism": "AI 工作台卡片、推荐模块、输入区和数据洞察面板。",
+      "componentMechanism": "微光边框、渐变强调、智能卡片、清晰状态标签。",
+      "motionMechanism": "轻 glow、卡片 hover 上浮、筛选和结果淡入。",
+      "differentiationScore": 58,
+      "duplicateGroupId": "grp-ai-glow-blue-purple",
+      "displayLevel": "hidden",
+      "displayReason": "差异主要是品牌强调，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-linear-blue-white-001",
@@ -3609,17 +3793,15 @@
       "tokens": "light / dense-ready / compact / advanced-v4",
       "positioning": "标准后台、CRM、ERP、B2B SaaS",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "项目管理",
+        "Issue 系统",
+        "研发工具",
+        "轻后台"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "强品牌展示",
+        "活动页",
+        "沉浸式大屏"
       ],
       "visualKeywords": [
         "线性边框",
@@ -3767,7 +3949,19 @@
         "少阴影",
         "蓝白灰",
         "信息区块清楚"
-      ]
+      ],
+      "parentStyleId": "style-advanced-linear-blue-white-001",
+      "variantName": "标准版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "1px 线性边框、低阴影、极克制专业感。",
+      "layoutMechanism": "列表、Issue、任务、文档、设置和轻后台布局。",
+      "componentMechanism": "线性按钮、细分割、密集列表、轻状态标签。",
+      "motionMechanism": "快速 hover、状态切换、无炫技动效。",
+      "differentiationScore": 93,
+      "duplicateGroupId": "grp-linear-professional",
+      "displayLevel": "hero",
+      "displayReason": "当下 UI 审美强，可落地性高，主推。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-linear-data-table-001",
@@ -3809,17 +4003,15 @@
       "tokens": "light / dense-ready / compact / advanced-v4",
       "positioning": "复杂数据表格、订单、用户、权限管理",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "ERP",
+        "CRM",
+        "运营后台",
+        "数据管理系统"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "品牌展示",
+        "年轻消费 App",
+        "沉浸式大屏"
       ],
       "visualKeywords": [
         "1px 分割线",
@@ -3967,7 +4159,19 @@
         "高信息密度",
         "克制状态标签",
         "后台主力模板"
-      ]
+      ],
+      "parentStyleId": "style-002-enterprise-classic-table",
+      "variantName": "数据表格增强版",
+      "styleFamily": "企业后台基础",
+      "visualMechanism": "蓝白灰秩序感、密集信息、传统企业软件可信气质。",
+      "layoutMechanism": "表格优先，配合筛选栏、批量操作、分页和状态列。",
+      "componentMechanism": "密集表格、工具栏、状态标签、二级筛选和批量操作按钮。",
+      "motionMechanism": "行 hover、筛选反馈、状态更新轻提示。",
+      "differentiationScore": 72,
+      "duplicateGroupId": "grp-enterprise-table",
+      "displayLevel": "normal",
+      "displayReason": "表格机制强，但和企业表格主风格重复。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-linear-mobile-office-001",
@@ -4009,17 +4213,16 @@
       "tokens": "light / dense-ready / compact / advanced-v4",
       "positioning": "移动审批、轻办公、任务协同",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "企业 App",
+        "外勤",
+        "OA",
+        "移动 CRM",
+        "轻办公"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "复杂大屏",
+        "高密度表格编辑",
+        "Web3 终端"
       ],
       "visualKeywords": [
         "线性图标",
@@ -4167,7 +4370,19 @@
         "扁平卡片",
         "底部导航清晰",
         "双端统一"
-      ]
+      ],
+      "parentStyleId": "style-030-mobile-first-enterprise",
+      "variantName": "线性移动办公版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "轻量蓝白、移动效率感、跨端一致。",
+      "layoutMechanism": "移动首页、审批、消息、任务列表和底部导航。",
+      "componentMechanism": "列表卡、底部导航、快捷操作、状态标签。",
+      "motionMechanism": "页面切换、按钮反馈、列表轻过渡。",
+      "differentiationScore": 70,
+      "duplicateGroupId": "grp-mobile-enterprise-office",
+      "displayLevel": "hidden",
+      "displayReason": "移动办公的线性变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-linear-medical-report-001",
@@ -4209,17 +4424,17 @@
       "tokens": "light / dense-ready / compact / advanced-v4",
       "positioning": "报告详情、体检系统、医疗 SaaS",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
       ],
       "visualKeywords": [
         "蓝绿线性视觉",
@@ -4367,7 +4582,19 @@
         "报告指标",
         "风险标签",
         "分组详情"
-      ]
+      ],
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "线性医疗报告版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "differentiationScore": 70,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "normal",
+      "displayReason": "医疗报告变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-linear-finance-manage-001",
@@ -4409,17 +4636,16 @@
       "tokens": "light / dense-ready / compact / advanced-v4",
       "positioning": "账户管理、财务系统、交易记录",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "金融",
+        "支付",
+        "资产管理",
+        "保险",
+        "企业财务"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "儿童教育",
+        "生活方式社区",
+        "强娱乐产品"
       ],
       "visualKeywords": [
         "深蓝线性",
@@ -4567,7 +4793,19 @@
         "克制边框",
         "可信精确",
         "财务表格"
-      ]
+      ],
+      "parentStyleId": "style-011-fintech-trust",
+      "variantName": "线性金融管理版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "蓝白可信、精确、金融安全感。",
+      "layoutMechanism": "账户、资产、交易、风控和详情页。",
+      "componentMechanism": "金额卡、风险标签、交易列表、资产图表。",
+      "motionMechanism": "数字变化、状态切换、确认反馈。",
+      "differentiationScore": 70,
+      "duplicateGroupId": "grp-fintech-trust",
+      "displayLevel": "normal",
+      "displayReason": "金融管理变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-linear-ai-tool-001",
@@ -4609,17 +4847,15 @@
       "tokens": "light / dense-ready / compact / advanced-v4",
       "positioning": "AI 输入、Prompt 管理、知识库后台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "AI 助手",
+        "Agent 平台",
+        "知识库",
+        "企业智能办公"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "纯 CRUD 后台",
+        "金融交易终端",
+        "政务系统"
       ],
       "visualKeywords": [
         "线性卡片",
@@ -4767,7 +5003,19 @@
         "AI 输入框",
         "推荐问题",
         "轻量状态"
-      ]
+      ],
+      "parentStyleId": "style-021-ai-copilot-workspace",
+      "variantName": "线性 AI 工具版",
+      "styleFamily": "AI科技",
+      "visualMechanism": "浅色 AI 工作台、轻科技感、智能推荐氛围。",
+      "layoutMechanism": "会话区、任务区、结果卡、推荐问题和引用面板组合。",
+      "componentMechanism": "Prompt 输入框、智能建议卡、任务卡、结果摘要和引用标签。",
+      "motionMechanism": "输入聚焦、生成中状态、结果卡淡入和轻微流动反馈。",
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-ai-copilot-workspace",
+      "displayLevel": "hidden",
+      "displayReason": "AI 工作台线性变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-web3-wallet-console-001",
@@ -4809,17 +5057,16 @@
       "tokens": "dark / high-contrast / compact / advanced-v4",
       "positioning": "钱包、资产、链上数据、Web3 后台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "Web3",
+        "钱包",
+        "Crypto",
+        "链上数据",
+        "身份凭证"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通企业 OA",
+        "医疗教育",
+        "本地生活服务"
       ],
       "visualKeywords": [
         "暗色深紫",
@@ -4967,7 +5214,19 @@
         "钱包资产卡",
         "链上活动",
         "克制霓虹"
-      ]
+      ],
+      "parentStyleId": "style-advanced-web3-wallet-console-001",
+      "variantName": "标准版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "深色链上感、高对比资产卡、Web3 专属语义。",
+      "layoutMechanism": "钱包资产、链上活动、治理、身份和数据分析模块。",
+      "componentMechanism": "资产卡、链路图、凭证标签、交易列表和投票进度。",
+      "motionMechanism": "数据刷新、状态脉冲、资产变化反馈。",
+      "differentiationScore": 76,
+      "duplicateGroupId": "grp-web3-wallet-console",
+      "displayLevel": "normal",
+      "displayReason": "机制特殊但小众，保留为正常展示。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-web3-crypto-terminal-001",
@@ -5009,17 +5268,16 @@
       "tokens": "dark / high-contrast / compact / advanced-v4",
       "positioning": "交易数据、行情分析、资产风控",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "Web3",
+        "钱包",
+        "Crypto",
+        "链上数据",
+        "身份凭证"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通企业 OA",
+        "医疗教育",
+        "本地生活服务"
       ],
       "visualKeywords": [
         "深色金融终端",
@@ -5167,7 +5425,19 @@
         "涨跌语义",
         "K 线趋势",
         "高密度可读"
-      ]
+      ],
+      "parentStyleId": "style-advanced-web3-wallet-console-001",
+      "variantName": "Crypto 交易终端版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "深色链上感、高对比资产卡、Web3 专属语义。",
+      "layoutMechanism": "钱包资产、链上活动、治理、身份和数据分析模块。",
+      "componentMechanism": "资产卡、链路图、凭证标签、交易列表和投票进度。",
+      "motionMechanism": "数据刷新、状态脉冲、资产变化反馈。",
+      "differentiationScore": 65,
+      "duplicateGroupId": "grp-web3-wallet-console",
+      "displayLevel": "normal",
+      "displayReason": "Web3 金融终端变体。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-web3-dao-governance-001",
@@ -5209,17 +5479,16 @@
       "tokens": "dark / high-contrast / compact / advanced-v4",
       "positioning": "社区治理、投票、成员管理",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "Web3",
+        "钱包",
+        "Crypto",
+        "链上数据",
+        "身份凭证"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通企业 OA",
+        "医疗教育",
+        "本地生活服务"
       ],
       "visualKeywords": [
         "提案卡片",
@@ -5367,7 +5636,19 @@
         "投票进度",
         "成员身份",
         "紫蓝科技感"
-      ]
+      ],
+      "parentStyleId": "style-advanced-web3-wallet-console-001",
+      "variantName": "DAO 治理版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "深色链上感、高对比资产卡、Web3 专属语义。",
+      "layoutMechanism": "钱包资产、链上活动、治理、身份和数据分析模块。",
+      "componentMechanism": "资产卡、链路图、凭证标签、交易列表和投票进度。",
+      "motionMechanism": "数据刷新、状态脉冲、资产变化反馈。",
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-web3-wallet-console",
+      "displayLevel": "hidden",
+      "displayReason": "Web3 细分过窄，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-web3-nft-asset-001",
@@ -5409,17 +5690,16 @@
       "tokens": "dark / high-contrast / compact / advanced-v4",
       "positioning": "数字藏品、资产管理、内容库",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "Web3",
+        "钱包",
+        "Crypto",
+        "链上数据",
+        "身份凭证"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通企业 OA",
+        "医疗教育",
+        "本地生活服务"
       ],
       "visualKeywords": [
         "网格卡片",
@@ -5567,7 +5847,19 @@
         "资产状态",
         "稀有度标签",
         "后台管理导向"
-      ]
+      ],
+      "parentStyleId": "style-advanced-web3-wallet-console-001",
+      "variantName": "NFT 资产版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "深色链上感、高对比资产卡、Web3 专属语义。",
+      "layoutMechanism": "钱包资产、链上活动、治理、身份和数据分析模块。",
+      "componentMechanism": "资产卡、链路图、凭证标签、交易列表和投票进度。",
+      "motionMechanism": "数据刷新、状态脉冲、资产变化反馈。",
+      "differentiationScore": 48,
+      "duplicateGroupId": "grp-web3-wallet-console",
+      "displayLevel": "hidden",
+      "displayReason": "NFT 主题偏窄且装饰性强，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-web3-chain-analytics-001",
@@ -5609,17 +5901,16 @@
       "tokens": "dark / high-contrast / compact / advanced-v4",
       "positioning": "链上数据、节点监控、风险分析",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "Web3",
+        "钱包",
+        "Crypto",
+        "链上数据",
+        "身份凭证"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通企业 OA",
+        "医疗教育",
+        "本地生活服务"
       ],
       "visualKeywords": [
         "节点图",
@@ -5767,7 +6058,19 @@
         "数据图表",
         "交易列表",
         "暗色深蓝微光"
-      ]
+      ],
+      "parentStyleId": "style-advanced-web3-wallet-console-001",
+      "variantName": "链上分析版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "深色链上感、高对比资产卡、Web3 专属语义。",
+      "layoutMechanism": "钱包资产、链上活动、治理、身份和数据分析模块。",
+      "componentMechanism": "资产卡、链路图、凭证标签、交易列表和投票进度。",
+      "motionMechanism": "数据刷新、状态脉冲、资产变化反馈。",
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-web3-wallet-console",
+      "displayLevel": "hidden",
+      "displayReason": "Web3 数据分析变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-web3-identity-pass-001",
@@ -5809,17 +6112,16 @@
       "tokens": "dark / high-contrast / compact / advanced-v4",
       "positioning": "账户身份、会员权益、凭证管理",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "Web3",
+        "钱包",
+        "Crypto",
+        "链上数据",
+        "身份凭证"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通企业 OA",
+        "医疗教育",
+        "本地生活服务"
       ],
       "visualKeywords": [
         "身份卡",
@@ -5967,7 +6269,19 @@
         "权益标签",
         "凭证列表",
         "玻璃深色结合"
-      ]
+      ],
+      "parentStyleId": "style-advanced-web3-wallet-console-001",
+      "variantName": "Web3 身份通行证版",
+      "styleFamily": "特殊机制",
+      "visualMechanism": "深色链上感、高对比资产卡、Web3 专属语义。",
+      "layoutMechanism": "钱包资产、链上活动、治理、身份和数据分析模块。",
+      "componentMechanism": "资产卡、链路图、凭证标签、交易列表和投票进度。",
+      "motionMechanism": "数据刷新、状态脉冲、资产变化反馈。",
+      "differentiationScore": 56,
+      "duplicateGroupId": "grp-web3-wallet-console",
+      "displayLevel": "hidden",
+      "displayReason": "Web3 细分场景，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glass-liquid-enterprise-001",
@@ -6008,17 +6322,15 @@
       "tokens": "light-dark / glass / comfortable / advanced-v4",
       "positioning": "AI 工具、高端 SaaS、智能分析平台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "高端 SaaS",
+        "AI 工具",
+        "会员中心",
+        "系统工具"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "数据密集表格",
+        "低性能设备",
+        "严肃政务"
       ],
       "visualKeywords": [
         "半透明玻璃卡",
@@ -6163,7 +6475,19 @@
         "半透明玻璃卡",
         "柔和渐变",
         "内容可读优先"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glass-liquid-enterprise-001",
+      "variantName": "标准版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "半透明玻璃、柔和折射、轻空间感。",
+      "layoutMechanism": "层叠面板、卡片工作台、轻量仪表盘和会员模块。",
+      "componentMechanism": "玻璃卡片、模糊背景、细边界、柔和高光。",
+      "motionMechanism": "轻浮动、柔和过渡、层叠卡片淡入。",
+      "differentiationScore": 91,
+      "duplicateGroupId": "grp-liquid-glass-enterprise",
+      "displayLevel": "hero",
+      "displayReason": "高级视觉代表，创意与落地性平衡。",
+      "isMainStyle": true
     },
     {
       "id": "style-advanced-glass-crystal-medical-001",
@@ -6205,17 +6529,17 @@
       "tokens": "light-dark / glass / comfortable / advanced-v4",
       "positioning": "医疗健康、检测报告、智能诊断",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "医疗",
+        "体检",
+        "医美报告",
+        "健康管理",
+        "医院系统"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "游戏",
+        "潮牌",
+        "Web3",
+        "重营销活动"
       ],
       "visualKeywords": [
         "冰蓝透明卡",
@@ -6363,7 +6687,19 @@
         "健康指标",
         "报告列表",
         "专业清洁"
-      ]
+      ],
+      "parentStyleId": "style_medical_clean_azure",
+      "variantName": "冰晶玻璃医疗版",
+      "styleFamily": "行业业务",
+      "visualMechanism": "医疗蓝绿、洁净、安全、专业。",
+      "layoutMechanism": "指标、报告、预约、健康档案和检查结果页。",
+      "componentMechanism": "检测报告卡、风险标签、预约卡、时间线和指标图。",
+      "motionMechanism": "平稳切换、状态反馈、报告模块淡入。",
+      "differentiationScore": 62,
+      "duplicateGroupId": "grp-healthcare-clean",
+      "displayLevel": "hidden",
+      "displayReason": "医疗健康玻璃变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glass-aurora-data-001",
@@ -6405,17 +6741,15 @@
       "tokens": "light-dark / glass / comfortable / advanced-v4",
       "positioning": "数据分析、监控平台、AI Dashboard",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "高端 SaaS",
+        "AI 工具",
+        "会员中心",
+        "系统工具"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "数据密集表格",
+        "低性能设备",
+        "严肃政务"
       ],
       "visualKeywords": [
         "极光背景",
@@ -6563,7 +6897,19 @@
         "玻璃卡片",
         "KPI 图表",
         "暗浅切换"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glass-liquid-enterprise-001",
+      "variantName": "极光玻璃数据版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "半透明玻璃、柔和折射、轻空间感。",
+      "layoutMechanism": "层叠面板、卡片工作台、轻量仪表盘和会员模块。",
+      "componentMechanism": "玻璃卡片、模糊背景、细边界、柔和高光。",
+      "motionMechanism": "轻浮动、柔和过渡、层叠卡片淡入。",
+      "differentiationScore": 64,
+      "duplicateGroupId": "grp-liquid-glass-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "玻璃数据变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glass-luxury-black-gold-001",
@@ -6604,17 +6950,15 @@
       "tokens": "light-dark / glass / comfortable / advanced-v4",
       "positioning": "高端会员、金融、品牌管理后台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "高端医美",
+        "金融会员",
+        "精品酒店",
+        "奢侈品服务"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "普通办公后台",
+        "教育平台",
+        "本地生活促销"
       ],
       "visualKeywords": [
         "黑金玻璃",
@@ -6759,7 +7103,19 @@
         "黑金玻璃",
         "高级克制",
         "资产权益会员数据"
-      ]
+      ],
+      "parentStyleId": "style_luxury_editorial_black_gold",
+      "variantName": "玻璃黑金版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "黑金、低饱和、高留白和精品杂志感。",
+      "layoutMechanism": "会员权益、资产展示、品牌故事和精品服务模块。",
+      "componentMechanism": "金色细线、精品卡片、权益标签和高级按钮。",
+      "motionMechanism": "慢速淡入、细节 hover、克制高光。",
+      "differentiationScore": 66,
+      "duplicateGroupId": "grp-luxury-black-gold",
+      "displayLevel": "hidden",
+      "displayReason": "轻奢黑金机制变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glass-spatial-layer-001",
@@ -6801,17 +7157,15 @@
       "tokens": "light-dark / glass / comfortable / advanced-v4",
       "positioning": "未来感后台、智能硬件、XR / IoT 管理",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "高端 SaaS",
+        "AI 工具",
+        "会员中心",
+        "系统工具"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "数据密集表格",
+        "低性能设备",
+        "严肃政务"
       ],
       "visualKeywords": [
         "层叠面板",
@@ -6959,7 +7313,19 @@
         "轻微透视",
         "空间感",
         "3D 克制"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glass-liquid-enterprise-001",
+      "variantName": "空间层叠版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "半透明玻璃、柔和折射、轻空间感。",
+      "layoutMechanism": "层叠面板、卡片工作台、轻量仪表盘和会员模块。",
+      "componentMechanism": "玻璃卡片、模糊背景、细边界、柔和高光。",
+      "motionMechanism": "轻浮动、柔和过渡、层叠卡片淡入。",
+      "differentiationScore": 57,
+      "duplicateGroupId": "grp-liquid-glass-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "视觉偏概念，默认隐藏。",
+      "isMainStyle": false
     },
     {
       "id": "style-advanced-glass-soft-rainbow-collab-001",
@@ -7001,17 +7367,15 @@
       "tokens": "light-dark / glass / comfortable / advanced-v4",
       "positioning": "协作工具、团队空间、AI 创作平台",
       "suitableFor": [
-        "后台系统",
-        "移动端 App",
-        "Web 管理端",
-        "企业内部工具",
-        "AI 工作流页面",
-        "数据看板或业务详情页"
+        "高端 SaaS",
+        "AI 工具",
+        "会员中心",
+        "系统工具"
       ],
       "notSuitableFor": [
-        "纯活动海报页",
-        "只展示品牌概念的官网首屏",
-        "无业务数据承载的装饰型页面"
+        "数据密集表格",
+        "低性能设备",
+        "严肃政务"
       ],
       "visualKeywords": [
         "柔和多彩渐变",
@@ -7159,7 +7523,19 @@
         "半透明模块",
         "协作卡片",
         "移动亲和"
-      ]
+      ],
+      "parentStyleId": "style-advanced-glass-liquid-enterprise-001",
+      "variantName": "柔光幻彩协作版",
+      "styleFamily": "高级视觉",
+      "visualMechanism": "半透明玻璃、柔和折射、轻空间感。",
+      "layoutMechanism": "层叠面板、卡片工作台、轻量仪表盘和会员模块。",
+      "componentMechanism": "玻璃卡片、模糊背景、细边界、柔和高光。",
+      "motionMechanism": "轻浮动、柔和过渡、层叠卡片淡入。",
+      "differentiationScore": 61,
+      "duplicateGroupId": "grp-liquid-glass-enterprise",
+      "displayLevel": "hidden",
+      "displayReason": "玻璃协作变体。 为控制默认精选数量，已归并为变体并默认隐藏。",
+      "isMainStyle": false
     }
   ]
 }

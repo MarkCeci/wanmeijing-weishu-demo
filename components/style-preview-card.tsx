@@ -1,11 +1,7 @@
 import Link from "next/link";
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { EnterpriseStyleCover } from "@/components/enterprise-style-cover";
-import {
-  getPrimaryScenario,
-  getStyleCoverVariant,
-  getVisualKeywords,
-} from "@/components/style-showroom-cover";
+import { getStyleCoverVariant } from "@/components/style-showroom-cover";
 import {
   applyTheme,
   getPreviewPattern,
@@ -17,9 +13,10 @@ import type { StylePack } from "@/lib/catalog";
 type StylePreviewCardProps = {
   style?: StylePack;
   normalized?: NormalizedStyle;
+  parentStyleName?: string;
 };
 
-export function StylePreviewCard({ style, normalized }: StylePreviewCardProps) {
+export function StylePreviewCard({ style, normalized, parentStyleName }: StylePreviewCardProps) {
   const viewModel = normalized ?? (style ? normalizeStyle(style) : null);
 
   if (!viewModel) {
@@ -28,13 +25,18 @@ export function StylePreviewCard({ style, normalized }: StylePreviewCardProps) {
 
   const pattern = getPreviewPattern(viewModel);
   const variant = getStyleCoverVariant(viewModel);
-  const projectTags = getSelectionTags(viewModel, variant).slice(0, 3);
-  const visualTags = getVisualKeywords(viewModel, variant);
+  const projectTags = getProjectTags(viewModel);
+  const mechanismTags = getMechanismTags(viewModel, variant);
+  const positionText = getPositionText(viewModel);
   const previewVars = {
     ...applyTheme(viewModel),
     "--pattern-type": pattern,
   } as CSSProperties;
   const isLocalPublished = viewModel.source.tags.includes("本地发布");
+  const isMergedVariant = viewModel.source.displayLevel === "hidden";
+  const isVariant = !viewModel.source.isMainStyle;
+  const displayBadge = viewModel.source.displayLevel === "hero" ? "主推" : isVariant ? "变体" : "主风格";
+  const score = viewModel.source.differentiationScore;
   const detailHref = isLocalPublished ? `/styles/local/${viewModel.id}` : `/styles/${viewModel.id}`;
   return (
     <article
@@ -54,35 +56,49 @@ export function StylePreviewCard({ style, normalized }: StylePreviewCardProps) {
               <h2 className="line-clamp-1 text-lg font-semibold text-slate-950">
                 {viewModel.name}
               </h2>
-              <p className="mt-1 line-clamp-2 text-sm leading-6 text-slate-600">
-                {getPrimaryScenario(viewModel, variant)}：{viewModel.slogan}
-              </p>
+            </div>
+            <div className="flex shrink-0 items-center gap-1.5">
+              <span className={`style-priority-badge priority-${viewModel.source.displayLevel === "hero" ? "P0" : "P1"}`}>
+                {displayBadge}
+              </span>
+              {typeof score === "number" ? (
+                <span className="style-score-badge">{score}</span>
+              ) : null}
             </div>
           </div>
 
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--styles-pitch-color-text-secondary)]">
+            {positionText}
+          </p>
+
           <div className="style-selection-meta">
-            <MetaBlock label="适合项目">
-              {projectTags.slice(0, 3).map((tag) => (
-                <span key={tag} className="style-business-tag">
-                  {tag}
-                </span>
-              ))}
-            </MetaBlock>
-            <MetaBlock label="适合平台">
-              <span className="style-business-tag mood">{viewModel.endpoint}</span>
-            </MetaBlock>
-            <MetaBlock label="视觉关键词">
-              {visualTags.slice(0, 3).map((tag) => (
-                <span key={tag} className="style-business-tag">
-                  {tag}
-                </span>
-              ))}
-            </MetaBlock>
+            <InfoRow label="适合项目" tags={projectTags} />
+            <InfoRow label="视觉机制" tags={mechanismTags} />
           </div>
 
           <div className="style-card-footer">
-            <ColorRibbon style={viewModel} />
-            <span className="style-detail-cta">查看详情 →</span>
+            <div className="min-w-0 space-y-2">
+              <div className="flex min-w-0 items-center gap-2">
+                <ColorRibbon style={viewModel} />
+                <span className="shrink-0 text-xs font-semibold text-[var(--styles-pitch-color-text-secondary)]">
+                  {viewModel.colorPreference}
+                </span>
+              </div>
+              {isVariant ? (
+                <p className="line-clamp-1 text-xs font-semibold text-[var(--styles-pitch-color-text-muted)]">
+                  属于：{parentStyleName ?? viewModel.source.parentStyleId ?? "主风格体系"}
+                </p>
+              ) : null}
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
+              {isMergedVariant ? (
+                <span className="rounded-full bg-[var(--styles-pitch-color-surface-muted)] px-2 py-1 text-xs font-semibold text-[var(--styles-pitch-color-text-muted)]">
+                  已归并为变体
+                </span>
+              ) : null}
+              <span className="style-detail-cta">查看详情 →</span>
+            </div>
           </div>
         </div>
       </Link>
@@ -90,19 +106,69 @@ export function StylePreviewCard({ style, normalized }: StylePreviewCardProps) {
   );
 }
 
-function MetaBlock({
+function InfoRow({
   label,
-  children,
+  tags,
 }: {
   label: string;
-  children: ReactNode;
+  tags: string[];
 }) {
   return (
     <div>
       <p className="text-xs font-semibold text-slate-400">{label}</p>
-      <div className="mt-2 flex flex-wrap gap-1.5">{children}</div>
+      <div className="mt-2 flex flex-wrap gap-1.5">
+        {tags.map((tag) => (
+          <span key={tag} className="style-business-tag">
+            {tag}
+          </span>
+        ))}
+      </div>
     </div>
   );
+}
+
+function getPositionText(style: NormalizedStyle) {
+  const source = style.source;
+  return source.positioning || source.description || style.description || style.slogan;
+}
+
+function getProjectTags(style: NormalizedStyle) {
+  return normalizeTagList(style.suitableFor.length ? style.suitableFor : [style.source.category]).slice(0, 3);
+}
+
+function getMechanismTags(style: NormalizedStyle, variant: string) {
+  const text = [
+    style.source.visualMechanism,
+    style.source.layoutMechanism,
+    style.source.componentMechanism,
+    style.source.visual,
+    variant,
+    ...style.visualSignature,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const rules: Array<[RegExp, string]> = [
+    [/玻璃|glass/i, "玻璃拟态"],
+    [/线性|1px|linear/i, "线性"],
+    [/表格|高密度|dense/i, "高密度表格"],
+    [/深色|暗色|大屏|command|dark/i, "深色大屏"],
+    [/微光|glow|发光/i, "微光"],
+    [/渐变|gradient|极光/i, "渐变"],
+    [/卡片|card/i, "卡片化"],
+    [/轻阴影|低阴影|shadow/i, "轻阴影"],
+    [/移动|mobile/i, "移动优先"],
+    [/流程|审批|节点/i, "流程化"],
+    [/AI|智能|Copilot|Agent/i, "AI 工作台"],
+    [/金融|资产|交易/i, "金融可信"],
+  ];
+  const tags = rules.flatMap(([pattern, label]) => (pattern.test(text) ? [label] : []));
+  return Array.from(new Set(tags.length ? tags : ["内容优先", "轻量组件", "可落地"])).slice(0, 3);
+}
+
+function normalizeTagList(tags: string[]) {
+  return tags
+    .map((tag) => tag.replace(/\s*\/\s*/g, " / ").trim())
+    .filter(Boolean);
 }
 
 function ColorRibbon({ style }: { style: NormalizedStyle }) {
@@ -283,47 +349,4 @@ function SealStack() {
       <span />
     </div>
   );
-}
-
-function getScenarioTags(style: NormalizedStyle) {
-  const text = [
-    style.name,
-    style.description,
-    style.suitableFor.join(" "),
-    style.visualSignature.join(" "),
-    style.moodTheme ?? "",
-    style.mood.join(" "),
-  ].join(" ");
-  const tags: string[] = [];
-
-  if (/企业|后台|CRM|ERP|OA|SaaS|表格|管理/.test(text)) tags.push("企业后台");
-  if (/移动|App|手机|小程序/.test(text)) tags.push("移动 App");
-  if (/AI|Copilot|Agent|智能|科技/.test(text)) tags.push("AI 工具");
-  if (/数据|大屏|看板|dashboard|指标/.test(text)) tags.push("数据看板");
-  if (/医疗|健康|体检|医院/.test(text)) tags.push("医疗健康");
-  if (/金融|资产|投资|支付|保险/.test(text)) tags.push("金融系统");
-  if (/本地生活|外卖|团购|到店|生活服务/.test(text)) tags.push("本地生活");
-  if (/国潮|文化|文旅|茶饮/.test(text)) tags.push("国潮文化");
-  if (/内容|社区|媒体|美妆|探店/.test(text)) tags.push("内容社区");
-  if (/开发者|API|控制台/.test(text)) tags.push("开发平台");
-
-  if (tags.length) return Array.from(new Set(tags));
-  return style.suitableFor.slice(0, 3).map((item) => item.split(" / ")[0].trim());
-}
-
-function getSelectionTags(style: NormalizedStyle, variant: ReturnType<typeof getStyleCoverVariant>) {
-  const variantTags: Record<ReturnType<typeof getStyleCoverVariant>, string[]> = {
-    "saas-clean-showroom": ["企业后台", "SaaS 系统", "客户运营"],
-    "enterprise-table-showroom": ["高密度后台", "ERP / CRM", "主数据管理"],
-    "mobile-workbench-showroom": ["移动办公", "审批待办", "客户跟进"],
-    "glass-enterprise-showroom": ["AI 工具", "智能分析", "高端产品"],
-    "dark-dashboard-showroom": ["数据大屏", "监控中心", "运营看板"],
-    "ai-copilot-showroom": ["AI 助手", "知识工作台", "智能推荐"],
-    "medical-health-showroom": ["医疗健康", "报告管理", "患者服务"],
-    "finance-trust-showroom": ["金融系统", "资产账户", "风控场景"],
-    "ecommerce-growth-showroom": ["电商运营", "订单增长", "营销活动"],
-    "local-service-showroom": ["本地生活", "门店经营", "预约服务"],
-  };
-
-  return Array.from(new Set([...variantTags[variant], ...getScenarioTags(style)]));
 }

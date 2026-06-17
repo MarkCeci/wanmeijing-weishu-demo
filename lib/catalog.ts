@@ -83,6 +83,18 @@ export type StylePack = {
     effects?: Record<string, string | number>;
   };
   coverVariant?: string;
+  parentStyleId?: string;
+  variantName?: string;
+  styleFamily?: string;
+  visualMechanism?: string;
+  layoutMechanism?: string;
+  componentMechanism?: string;
+  motionMechanism?: string;
+  differentiationScore?: number;
+  duplicateGroupId?: string;
+  displayLevel?: "hero" | "normal" | "hidden";
+  displayReason?: string;
+  isMainStyle?: boolean;
   aiTags?: string[];
   aiPrompt?: string;
   differenceFromExisting?: {

@@ -3,12 +3,16 @@ import { applyTheme, type NormalizedStyle } from "@/lib/style-theme";
 import { getStyleCoverVariant, type StyleCoverVariant } from "@/components/style-showroom-cover";
 
 export type EnterpriseCoverVariant =
+  | "saas-dashboard"
   | "saas-clean"
   | "enterprise-table"
   | "mobile-workbench"
+  | "ai-workspace"
   | "ai-copilot"
+  | "dark-command"
   | "dark-dashboard"
   | "glass-premium"
+  | "healthcare-report"
   | "medical-health"
   | "finance-trust"
   | "ecommerce-growth"
@@ -16,6 +20,7 @@ export type EnterpriseCoverVariant =
   | "gradient-aurora"
   | "dark-command-center"
   | "glow-ai-workspace"
+  | "linear-system"
   | "linear-enterprise"
   | "web3-console"
   | "glass-aurora";
@@ -43,6 +48,14 @@ export const enterpriseStyleCoverMap: {
   applicableScenarios: string[];
   futureReuseKeywords: string[];
 }[] = [
+  {
+    variant: "saas-dashboard",
+    status: "approved",
+    approvedStyleIds: ["style-001-modern-saas-clean"],
+    sampleStyleId: "style-001-modern-saas-clean",
+    applicableScenarios: ["SaaS 后台", "客户运营", "轻量管理系统"],
+    futureReuseKeywords: ["saas", "minimal", "clean", "admin", "运营", "客户"],
+  },
   {
     variant: "saas-clean",
     status: "approved",
@@ -81,6 +94,17 @@ export const enterpriseStyleCoverMap: {
     futureReuseKeywords: ["mobile", "app", "workbench", "移动", "轻办公", "审批", "商家"],
   },
   {
+    variant: "ai-workspace",
+    status: "approved",
+    approvedStyleIds: [
+      "style-021-ai-copilot-workspace",
+      "style-advanced-glow-ai-blue-purple-001",
+    ],
+    sampleStyleId: "style-021-ai-copilot-workspace",
+    applicableScenarios: ["AI 助手", "知识工作台", "智能推荐", "Agent 工作台"],
+    futureReuseKeywords: ["ai", "copilot", "assistant", "agent", "助手", "智能", "微光"],
+  },
+  {
     variant: "ai-copilot",
     status: "approved",
     approvedStyleIds: [
@@ -90,6 +114,19 @@ export const enterpriseStyleCoverMap: {
     sampleStyleId: "style-021-ai-copilot-workspace",
     applicableScenarios: ["AI 助手", "知识工作台", "学习平台", "智能推荐"],
     futureReuseKeywords: ["ai", "copilot", "assistant", "agent", "教育", "学习", "知识"],
+  },
+  {
+    variant: "dark-command",
+    status: "approved",
+    approvedStyleIds: [
+      "style-024-dark-dataviz-dashboard",
+      "style-advanced-dark-space-command-001",
+      "style-advanced-dark-ops-monitor-001",
+      "style-advanced-dark-saas-pro-001",
+    ],
+    sampleStyleId: "style-advanced-dark-space-command-001",
+    applicableScenarios: ["深色大屏", "指挥中心", "运维监控", "暗色 SaaS"],
+    futureReuseKeywords: ["dark", "dashboard", "command", "monitor", "暗色", "指挥", "运维"],
   },
   {
     variant: "dark-dashboard",
@@ -106,6 +143,14 @@ export const enterpriseStyleCoverMap: {
     sampleStyleId: "style_liquid_glass_aqua",
     applicableScenarios: ["高端工具", "智能分析", "轻奢产品", "未来感工作台"],
     futureReuseKeywords: ["glass", "liquid", "premium", "luxury", "高端", "轻奢", "未来"],
+  },
+  {
+    variant: "healthcare-report",
+    status: "approved",
+    approvedStyleIds: ["style_medical_clean_azure"],
+    sampleStyleId: "style_medical_clean_azure",
+    applicableScenarios: ["医疗健康", "检测报告", "风险标签", "患者服务"],
+    futureReuseKeywords: ["medical", "health", "医疗", "健康", "报告", "风险"],
   },
   {
     variant: "medical-health",
@@ -164,6 +209,14 @@ export const enterpriseStyleCoverMap: {
     futureReuseKeywords: ["advanced-glow", "glow", "微光", "光效", "洞察"],
   },
   {
+    variant: "linear-system",
+    status: "approved",
+    approvedStyleIds: ["style-advanced-linear-blue-white-001"],
+    sampleStyleId: "style-advanced-linear-blue-white-001",
+    applicableScenarios: ["Linear 专业", "工作流列表", "研发工具", "轻后台"],
+    futureReuseKeywords: ["advanced-linear", "linear", "线性", "1px", "工作流"],
+  },
+  {
     variant: "linear-enterprise",
     status: "approved",
     approvedStyleIds: ["style-advanced-linear-blue-white-001"],
@@ -200,9 +253,11 @@ export function shouldUseEnterpriseCover(style: NormalizedStyle) {
 }
 
 export function mapToEnterpriseCoverVariant(style: NormalizedStyle): EnterpriseCoverVariant {
-  if (isEnterpriseCoverVariant(style.source.coverVariant)) {
-    return style.source.coverVariant;
-  }
+  const semanticVariant = mapToSemanticCoverVariant(style);
+  if (semanticVariant) return semanticVariant;
+
+  const explicitVariant = normalizeEnterpriseCoverVariant(style.source.coverVariant);
+  if (explicitVariant) return explicitVariant;
 
   const approved = enterpriseStyleCoverMap.find((item) => item.approvedStyleIds.includes(style.id));
   if (approved) return approved.variant;
@@ -220,6 +275,80 @@ export function mapToEnterpriseCoverVariant(style: NormalizedStyle): EnterpriseC
   return "saas-clean";
 }
 
+function mapToSemanticCoverVariant(style: NormalizedStyle): EnterpriseCoverVariant | null {
+  const mainId = style.source.parentStyleId ?? style.id;
+  const text = [
+    mainId,
+    style.id,
+    style.name,
+    style.source.styleFamily,
+    style.source.visualMechanism,
+    style.source.layoutMechanism,
+    style.source.componentMechanism,
+    style.source.duplicateGroupId,
+    style.source.category,
+    style.source.coverVariant,
+    style.mood.join(" "),
+    style.colorPreference,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  const mainVariantMap: Record<string, EnterpriseCoverVariant> = {
+    "style-001-modern-saas-clean": "saas-dashboard",
+    "style-002-enterprise-classic-table": "enterprise-table",
+    "style-004-carbon-data-enterprise": "enterprise-table",
+    "style-007-sap-process-enterprise": "enterprise-table",
+    "style-021-ai-copilot-workspace": "ai-workspace",
+    "style-advanced-glow-ai-blue-purple-001": "ai-workspace",
+    "style-advanced-gradient-cyan-fluid-001": "ai-workspace",
+    "style-027-developer-console-api": "linear-system",
+    "style-024-dark-dataviz-dashboard": "dark-command",
+    "style-advanced-dark-space-command-001": "dark-command",
+    "style-advanced-dark-ops-monitor-001": "dark-command",
+    "style-advanced-dark-saas-pro-001": "dark-command",
+    "style-advanced-glass-liquid-enterprise-001": "glass-aurora",
+    "style-advanced-gradient-aurora-001": "glass-aurora",
+    "style_luxury_editorial_black_gold": "finance-trust",
+    "style-advanced-gradient-glacier-blue-001": "saas-dashboard",
+    "style-030-mobile-first-enterprise": "mobile-workbench",
+    "style_medical_clean_azure": "healthcare-report",
+    "style-011-fintech-trust": "finance-trust",
+    "style_local_life_meituan_yellow": "mobile-workbench",
+    "style-008-polars-merchant-ops": "ecommerce-growth",
+    "style-014-education-learning": "saas-dashboard",
+    "style-advanced-linear-blue-white-001": "linear-system",
+    "style-advanced-web3-wallet-console-001": "web3-console",
+  };
+
+  if (mainVariantMap[mainId]) return mainVariantMap[mainId];
+  if (has(text, ["web3", "crypto", "钱包", "链上"])) return "web3-console";
+  if (has(text, ["finance", "金融", "资产", "交易", "black-gold", "黑金"])) return "finance-trust";
+  if (has(text, ["medical", "health", "医疗", "健康", "报告"])) return "healthcare-report";
+  if (has(text, ["commerce", "merchant", "ecommerce", "电商", "商家", "订单", "增长"])) return "ecommerce-growth";
+  if (has(text, ["mobile", "移动", "本地生活", "门店", "预约", "到店"])) return "mobile-workbench";
+  if (has(text, ["linear", "线性", "1px", "developer", "api", "开发者"])) return "linear-system";
+  if (has(text, ["dark", "暗色", "大屏", "command", "指挥", "运维", "监控"])) return "dark-command";
+  if (has(text, ["ai", "copilot", "agent", "智能", "微光", "科技"])) return "ai-workspace";
+  if (has(text, ["glass", "aurora", "gradient", "玻璃", "极光", "渐变"])) return "glass-aurora";
+  if (has(text, ["table", "carbon", "erp", "流程", "表格", "数据密集"])) return "enterprise-table";
+  if (has(text, ["saas", "极简", "教育", "学习"])) return "saas-dashboard";
+  return null;
+}
+
+function normalizeEnterpriseCoverVariant(value: unknown): EnterpriseCoverVariant | null {
+  if (!isEnterpriseCoverVariant(value)) return null;
+  if (value === "saas-clean") return "saas-dashboard";
+  if (value === "ai-copilot" || value === "glow-ai-workspace") return "ai-workspace";
+  if (value === "dark-dashboard" || value === "dark-command-center") return "dark-command";
+  if (value === "glass-premium" || value === "gradient-aurora") return "glass-aurora";
+  if (value === "medical-health") return "healthcare-report";
+  if (value === "linear-enterprise") return "linear-system";
+  if (value === "local-service") return "mobile-workbench";
+  return value;
+}
+
 function isEnterpriseCoverVariant(value: unknown): value is EnterpriseCoverVariant {
   return (
     typeof value === "string" &&
@@ -234,9 +363,12 @@ export function EnterpriseStyleCover({ style, variant = mapToEnterpriseCoverVari
     <div className="enterprise-style-cover" data-enterprise-variant={variant} style={vars}>
       {variant === "enterprise-table" ? <EnterpriseTableCover style={style} /> : null}
       {variant === "mobile-workbench" ? <MobileWorkbenchCover /> : null}
+      {variant === "ai-workspace" ? <AiWorkspaceCover style={style} /> : null}
       {variant === "ai-copilot" ? <AiCopilotCover style={style} /> : null}
+      {variant === "dark-command" ? <DarkCommandCover style={style} /> : null}
       {variant === "dark-dashboard" ? <DarkDashboardCover /> : null}
       {variant === "glass-premium" ? <GlassPremiumCover /> : null}
+      {variant === "healthcare-report" ? <HealthcareReportCover /> : null}
       {variant === "medical-health" ? <MedicalHealthCover /> : null}
       {variant === "finance-trust" ? <FinanceTrustCover /> : null}
       {variant === "ecommerce-growth" ? <EcommerceGrowthCover /> : null}
@@ -244,9 +376,11 @@ export function EnterpriseStyleCover({ style, variant = mapToEnterpriseCoverVari
       {variant === "gradient-aurora" ? <GradientAuroraCover style={style} /> : null}
       {variant === "dark-command-center" ? <DarkCommandCenterCover style={style} /> : null}
       {variant === "glow-ai-workspace" ? <GlowAiWorkspaceCover style={style} /> : null}
+      {variant === "linear-system" ? <LinearSystemCover style={style} /> : null}
       {variant === "linear-enterprise" ? <LinearEnterpriseCover style={style} /> : null}
       {variant === "web3-console" ? <Web3ConsoleCover style={style} /> : null}
       {variant === "glass-aurora" ? <GlassAuroraCover style={style} /> : null}
+      {variant === "saas-dashboard" ? <SaasDashboardCover style={style} /> : null}
       {variant === "saas-clean" ? <SaasCleanCover style={style} /> : null}
     </div>
   );
@@ -291,6 +425,61 @@ function styleText(style: NormalizedStyle) {
 function styleHas(style: NormalizedStyle, keywords: string[]) {
   const text = styleText(style);
   return keywords.some((keyword) => text.includes(keyword.toLowerCase()));
+}
+
+function has(text: string, keywords: string[]) {
+  return keywords.some((keyword) => text.includes(keyword.toLowerCase()));
+}
+
+function SaasDashboardCover({ style }: { style: NormalizedStyle }) {
+  return <SaasCleanCover style={style} />;
+}
+
+function AiWorkspaceCover({ style }: { style: NormalizedStyle }) {
+  return <GlowAiWorkspaceCover style={style} />;
+}
+
+function DarkCommandCover({ style }: { style: NormalizedStyle }) {
+  return <DarkCommandCenterCover style={style} />;
+}
+
+function HealthcareReportCover() {
+  return <MedicalHealthCover />;
+}
+
+function LinearSystemCover({ style }: { style: NormalizedStyle }) {
+  return (
+    <div className="enterprise-cover-scene linear-system-v2">
+      <header className="v2-linear-head">
+        <div>
+          <span>Linear System</span>
+          <strong>{styleHas(style, ["developer", "api", "开发者"]) ? "开发者工作流" : "产品交付工作流"}</strong>
+        </div>
+        <b>清晰</b>
+      </header>
+      <div className="v2-linear-layout">
+        <section className="v2-linear-list">
+          {[
+            ["需求确认", "进行中", "P1"],
+            ["接口联调", "待处理", "P0"],
+            ["设计走查", "已完成", "P2"],
+            ["发布检查", "排期中", "P1"],
+          ].map((item) => (
+            <p key={item[0]}>
+              <span>{item[0]}</span>
+              <b>{item[1]}</b>
+              <i>{item[2]}</i>
+            </p>
+          ))}
+        </section>
+        <aside className="v2-linear-panel">
+          <span>状态概览</span>
+          <Metric label="开放任务" value="24" />
+          <Metric label="本周完成" value="18" />
+        </aside>
+      </div>
+    </div>
+  );
 }
 
 function GradientAuroraCover({ style }: { style: NormalizedStyle }) {
