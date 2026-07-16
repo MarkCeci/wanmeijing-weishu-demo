@@ -1,0 +1,16 @@
+[
+  {
+    "id": "style-01",
+    "type": "style",
+    "file": "styles/style-01.css",
+    "openTag": "<style>",
+    "closeTag": "</style>"
+  },
+  {
+    "id": "script-01",
+    "type": "script",
+    "file": "scripts/script-01.js",
+    "openTag": "<script>",
+    "closeTag": "</script>"
+  }
+]
