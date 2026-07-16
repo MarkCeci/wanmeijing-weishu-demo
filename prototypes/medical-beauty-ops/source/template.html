@@ -1,0 +1,1833 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>万美京微枢AI私域托管系统-交互demo</title>
+  <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+  <!-- @inline-block:style-01 -->
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="主导航">
+      <div class="brand">
+        <img class="brand-mark" src="assets/logo/weishu-logo-mark-v2.png" alt="万美京微枢 logo" />
+        <div>
+          <h1>万美京微枢</h1>
+          <p>AI私域托管系统</p>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-title">运营中心</div>
+        <button class="nav-button active" data-screen="dashboard"><iconify-icon icon="icon-park-outline:dashboard-one"></iconify-icon><span>工作台</span></button>
+        <button class="nav-button" data-screen="customers"><iconify-icon icon="icon-park-outline:people"></iconify-icon><span>客户运营</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
+        <button class="nav-button" data-screen="marketing"><iconify-icon icon="icon-park-outline:send"></iconify-icon><span>营销中心</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
+        <button class="nav-button" data-screen="assets"><iconify-icon icon="icon-park-outline:folder-open"></iconify-icon><span>素材与标签</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
+        <button class="nav-button" data-screen="ai"><iconify-icon icon="icon-park-outline:robot-one"></iconify-icon><span>AI助手</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
+        <button class="nav-button" data-screen="data"><iconify-icon icon="icon-park-outline:chart-line"></iconify-icon><span>数据中心</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-title">配置</div>
+        <button class="nav-button" data-screen="settings"><iconify-icon icon="icon-park-outline:setting-two"></iconify-icon><span>系统管理</span></button>
+      </div>
+
+      <button class="sidebar-account" id="accountSwitchBtn" aria-label="账号管理">
+        <span class="account-avatar" id="sidebarAccountAvatar" aria-hidden="true">林</span>
+        <span class="sidebar-account-label">
+          <strong id="sidebarAccountName">林主管</strong>
+          <span id="sidebarAccountRole">运营主管 · 当前账号</span>
+        </span>
+      </button>
+    </aside>
+
+    <main class="main">
+      <section class="content" id="appContent">
+        <div class="sync-line" id="syncLine"><span class="spinner"></span><span>正在同步企微潜客数据，预计 12 秒完成...</span></div>
+
+        <div class="screen active" id="screen-dashboard">
+          <div class="page-head">
+            <div class="eyeless">
+              <h2>经营总览</h2>
+              <p>面向医美与生美机构的托管运营视角，聚合潜客增长、咨询热度、预约转化、复购跟进与客诉提醒。</p>
+            </div>
+            <div class="actions">
+              <button class="btn primary" data-open-wizard><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>新建群发</button>
+              <button class="btn" id="syncBtn"><iconify-icon icon="icon-park-outline:cloud-sync"></iconify-icon>同步企微潜客</button>
+              <button class="btn" data-open-tags data-tag-entry="dashboard"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon>批量打标签</button>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="dashboard-stack">
+              <section class="priority-strip" aria-label="今日重点">
+                <div>
+                  <div class="priority-title"><b>P0 风险待处理</b></div>
+                  <div class="priority-risk-line"><strong>张女士</strong><span>术后客诉</span><span>已逾期 2小时18分</span><span class="chip red">高风险</span></div>
+                </div>
+                <div class="priority-actions">
+                  <button class="priority-secondary" data-open-todo-page="pending">查看 23 项待办</button>
+                  <button class="btn primary priority-action" data-assistant-command="dashboard-risk">立即处理</button>
+                </div>
+              </section>
+
+              <section class="panel today-ops-panel" aria-labelledby="todayOpsTitle">
+                <div class="panel-head"><div class="panel-title"><strong id="todayOpsTitle">今日运营队列</strong><span>按预计损失、转化机会与处理时限自动排序</span></div><span class="chip" id="todayOpsSummary">0 项待处理</span></div>
+                <div class="today-ops-list" id="todayOpsQueue"></div>
+              </section>
+
+              <div class="kpi-grid">
+                <button class="kpi" data-filter="all">
+                  <span class="kpi-top">总潜客数 <span class="kpi-icon"><iconify-icon icon="icon-park-outline:every-user"></iconify-icon></span></span>
+                  <span><strong id="customerTotalKpi">12,847</strong><span class="trend up">较上周 +12.4%</span></span>
+                </button>
+                <button class="kpi" data-filter="new">
+                  <span class="kpi-top">今日新增 <span class="kpi-icon"><iconify-icon icon="icon-park-outline:add-user"></iconify-icon></span></span>
+                  <span><strong id="customerTodayKpi">86</strong><span class="trend up">较昨日 +41%</span></span>
+                </button>
+                <button class="kpi" data-filter="intent">
+                  <span class="kpi-top">高意向咨询 <span class="kpi-icon"><iconify-icon icon="icon-park-outline:message"></iconify-icon></span></span>
+                  <span><strong>342</strong><span class="trend">近 7 天有效对话</span></span>
+                </button>
+                <button class="kpi" data-filter="todo">
+                  <span class="kpi-top">待办跟进 <span class="kpi-icon"><iconify-icon icon="icon-park-outline:checklist"></iconify-icon></span></span>
+                  <span><strong>23</strong><span class="trend warn">其中逾期 3 项</span></span>
+                </button>
+                <button class="kpi" data-filter="risk">
+                  <span class="kpi-top">风险/客诉提醒 <span class="kpi-icon"><iconify-icon icon="icon-park-outline:attention"></iconify-icon></span></span>
+                  <span><strong>5</strong><span class="trend danger">含高危客诉 1 项</span></span>
+                </button>
+              </div>
+
+              <div class="panel dashboard-table-panel" id="dashboardStorePanel">
+                <div class="panel-head">
+                  <div class="panel-title">
+                    <strong>机构 / 门店维度对比</strong>
+                    <span id="tableHint">展示全部医美客户的经营表现</span>
+                  </div>
+                  <div class="filters">
+                    <select class="field" id="categoryFilter">
+                      <option>全部项目</option>
+                      <option>皮肤管理</option>
+                      <option>光电项目</option>
+                      <option>抗衰咨询</option>
+                      <option>术后回访</option>
+                    </select>
+                    <select class="field">
+                      <option>近 7 天</option>
+                      <option>近 30 天</option>
+                      <option>本季度</option>
+                    </select>
+                  </div>
+                </div>
+                <table aria-label="机构门店维度对比">
+                  <thead>
+                    <tr>
+                      <th style="width: 28%">机构名称</th>
+                      <th>潜客数</th>
+                      <th>社群数</th>
+                      <th>咨询量</th>
+                      <th style="width: 18%">预约转化率</th>
+                      <th>复购提醒</th>
+                      <th>风险</th>
+                    </tr>
+                  </thead>
+                <tbody id="storeRows"></tbody>
+                </table>
+                <div class="dashboard-table-footer">
+                  <button class="text-link" data-open-store-data>查看全部机构数据 <iconify-icon icon="icon-park-outline:right"></iconify-icon></button>
+                </div>
+              </div>
+
+              <section class="panel attribution-panel" aria-labelledby="attributionTitle">
+                <div class="panel-head"><div class="panel-title"><strong id="attributionTitle">门店与员工归因</strong><span>从线索、预约到复购，识别应复制与应介入的经营动作</span></div><span class="chip">近 7 天</span></div>
+                <div class="attribution-grid panel-card-grid" id="attributionBoard"></div>
+              </section>
+
+              <div class="insight-grid">
+                <div class="panel">
+                  <div class="panel-head">
+                    <div class="panel-title">
+                      <strong>数据趋势</strong>
+                      <span>近 7 天潜客、咨询与预约变化</span>
+                    </div>
+                    <select class="field" id="trendPeriod"><option value="7">近 7 天</option><option value="30">近 30 天</option></select>
+                  </div>
+                  <div class="insight-body">
+                    <div class="chart-frame" aria-label="数据趋势图">
+                      <canvas id="trendCanvas" width="560" height="120" aria-hidden="true"></canvas>
+                      <div class="trend-axis" id="trendAxis" aria-hidden="true"></div>
+                    </div>
+                    <div class="trend-summary" id="trendSummary" aria-label="趋势模拟数据"></div>
+                    <div class="legend">
+                      <span><i class="dot"></i>潜客数</span>
+                      <span><i class="dot rose"></i>高意向咨询</span>
+                      <span><i class="dot amber"></i>预约数</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel">
+                  <div class="panel-head">
+                    <div class="panel-title">
+                      <strong>渠道来源占比</strong>
+                      <span>辅助判断内容投放重点</span>
+                    </div>
+                  </div>
+                  <div class="insight-body">
+                    <div class="donut-row">
+                      <div class="donut" aria-label="渠道来源占比图"></div>
+                      <div class="source-list">
+                        <div><span><i class="dot"></i>公众号</span><strong>42.1%</strong></div>
+                        <div><span><i class="dot" style="background:#77b2a0"></i>门店导流</span><strong>24.7%</strong></div>
+                        <div><span><i class="dot rose"></i>社群裂变</span><strong>16.8%</strong></div>
+                        <div><span><i class="dot amber"></i>朋友圈广告</span><strong>8.6%</strong></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <section class="panel todo-panel dashboard-todo-panel">
+                <div class="panel-head">
+                  <div class="panel-title">
+                    <strong>我的待办</strong>
+                    <span>按优先级、即将到期和处理状态排序</span>
+                  </div>
+                  <div class="dashboard-todo-toolbar">
+                    <button class="tab active" data-open-todo-page="pending">待处理（8）</button>
+                    <button class="tab" data-open-todo-page="due">即将到期（3）</button>
+                    <button class="tab" data-open-todo-page="done">已完成</button>
+                  </div>
+                </div>
+                <div class="todo-list" id="todoList"></div>
+                <div class="dashboard-table-footer">
+                  <button class="text-link" data-open-todo-page="pending">查看全部待办 <iconify-icon icon="icon-park-outline:right"></iconify-icon></button>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-todos">
+          <div class="page-head">
+            <div class="eyeless">
+              <h2>全部待办</h2>
+              <p>集中处理风险回访、客户跟进、审批与运营执行事项。</p>
+            </div>
+            <div class="actions">
+              <button class="btn" data-close-todo-page><iconify-icon icon="icon-park-outline:left"></iconify-icon>返回经营总览</button>
+            </div>
+          </div>
+
+          <section class="panel todo-page-panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <strong>我的待办</strong>
+                <span>按优先级与处理时限排序，高风险事项优先展示</span>
+              </div>
+              <div class="todo-page-tabs">
+                <button class="tab active" data-todo-page-filter="pending">待处理（<span id="todoPendingCount">8</span>）</button>
+                <button class="tab" data-todo-page-filter="due">即将到期（<span id="todoDueCount">3</span>）</button>
+                <button class="tab" data-todo-page-filter="done">已完成（<span id="todoDoneCount">0</span>）</button>
+              </div>
+            </div>
+            <div class="todo-page-summary" id="todoPageSummary"></div>
+            <div class="todo-page-list" id="todoPageList"></div>
+          </section>
+        </div>
+
+        <div class="screen" id="screen-stores">
+          <div class="page-head">
+            <div class="eyeless">
+              <h2>全部机构数据</h2>
+              <p>查看各机构与门店在潜客、咨询、预约、复购提醒和风险处置上的完整经营表现。</p>
+            </div>
+            <div class="actions">
+              <button class="btn" data-close-store-data><iconify-icon icon="icon-park-outline:left"></iconify-icon>返回经营总览</button>
+            </div>
+          </div>
+          <section class="panel store-data-page-panel" aria-labelledby="storeDataPageTitle">
+            <div class="panel-head">
+              <div class="panel-title">
+                <strong id="storeDataPageTitle">机构 / 门店经营表现</strong>
+                <span>共 4 家机构，支持按项目与统计周期查看</span>
+              </div>
+              <div class="filters">
+                <select class="field" id="storeDataCategoryFilter">
+                  <option>全部项目</option>
+                  <option>皮肤管理</option>
+                  <option>光电项目</option>
+                  <option>抗衰咨询</option>
+                  <option>术后回访</option>
+                </select>
+                <select class="field"><option>近 7 天</option><option>近 30 天</option><option>本季度</option></select>
+              </div>
+            </div>
+            <table aria-label="全部机构数据">
+              <thead><tr><th style="width: 28%">机构名称</th><th>潜客数</th><th>社群数</th><th>咨询量</th><th style="width: 18%">预约转化率</th><th>复购提醒</th><th>风险</th></tr></thead>
+              <tbody id="storeDataRows"></tbody>
+            </table>
+          </section>
+        </div>
+
+        <div class="screen" id="screen-customers">
+          <div class="page-head">
+            <div class="eyeless">
+              <h2>客户运营</h2>
+              <p>以女性潜客生命周期管理为主线，覆盖客户、群聊、会话风险、批量加好友与迁移交接。</p>
+              <span class="dependency-badge"><iconify-icon icon="icon-park-outline:api"></iconify-icon>真实同步需企微接口</span>
+            </div>
+            <div class="actions">
+              <button class="btn" id="syncBtn2"><iconify-icon icon="icon-park-outline:cloud-sync"></iconify-icon>同步企微潜客</button>
+              <button class="btn primary" data-open-tags data-tag-entry="customer-list"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon>批量打标签</button>
+            </div>
+          </div>
+
+          <div class="subnav" data-subnav="customers">
+            <button class="subnav-button active" data-subtarget="customer-list"><iconify-icon icon="icon-park-outline:people"></iconify-icon>客户管理</button>
+            <button class="subnav-button" data-subtarget="batch-add"><iconify-icon icon="icon-park-outline:add-user"></iconify-icon>批量加好友</button>
+            <button class="subnav-button" data-subtarget="conversations"><iconify-icon icon="icon-park-outline:message"></iconify-icon>会话跟进</button>
+            <button class="subnav-button" data-subtarget="groups"><iconify-icon icon="icon-park-outline:peoples"></iconify-icon>群聊管理</button>
+            <button class="subnav-button" data-subtarget="tag-groups"><iconify-icon icon="icon-park-outline:connection"></iconify-icon>标签建群</button>
+            <button class="subnav-button" data-subtarget="migration"><iconify-icon icon="icon-park-outline:transfer-data"></iconify-icon>迁移看板</button>
+            <button class="subnav-button" data-subtarget="channel-code"><iconify-icon icon="icon-park-outline:scan-code"></iconify-icon>渠道活码</button>
+            <button class="subnav-button" data-subtarget="blacklist"><iconify-icon icon="icon-park-outline:forbid"></iconify-icon>黑名单</button>
+          </div>
+
+          <div class="subscreen active" data-subscreen="customer-list">
+            <div class="section-grid customer-list-layout">
+              <div class="panel">
+                <div class="customer-toolbar">
+                  <div class="filters">
+                    <button class="tab active" data-customer-filter="全部潜客">全部潜客</button>
+                    <button class="tab" data-customer-filter="高意向">高意向</button>
+                    <button class="tab" data-customer-filter="待回访">待回访</button>
+                  </div>
+                  <div class="filters">
+                    <div class="search-wrap">
+                      <iconify-icon icon="icon-park-outline:search"></iconify-icon>
+                      <input class="field search" id="customerSearch" placeholder="搜索姓名 / 手机 / 项目意向" />
+                    </div>
+                    <div class="custom-select" id="tagFilterSelect">
+                      <input type="hidden" id="tagFilter" value="全部标签" />
+                      <button class="btn custom-select-trigger" type="button" data-toggle-tag-filter>
+                        <span id="tagFilterLabel">全部标签</span>
+                        <iconify-icon icon="icon-park-outline:down"></iconify-icon>
+                      </button>
+                      <div class="custom-select-menu" id="tagFilterMenu"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="batchbar" id="batchbar"><span>已选 3 位潜客</span><div class="actions"><button class="btn small" data-open-tags data-tag-entry="selected">批量打标签</button><button class="btn small primary" data-open-wizard data-broadcast-source="selected-customers"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>向已选客户群发</button></div></div>
+                <table class="customer-table" aria-label="潜客列表">
+                  <thead>
+                    <tr>
+                      <th style="width:42px"><input type="checkbox" id="selectAll" /></th>
+                      <th>昵称</th>
+                      <th>需求标签</th>
+                      <th>归属员工</th>
+                      <th>添加时间</th>
+                      <th>状态</th>
+                    </tr>
+                  </thead>
+                  <tbody id="customerRows"></tbody>
+                </table>
+                <div class="pagination" id="customerPager">
+                  <button class="btn small" id="customerPrevPage">上一页</button>
+                  <span class="table-meta" id="customerPageText">第 1 / 1 页</span>
+                  <button class="btn small" id="customerNextPage">下一页</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="blacklist">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head">
+                  <div class="panel-title"><strong>黑名单</strong><span>黑名单客户自动排除群发和营销活动，会话仍可继续处理</span></div>
+                  <button class="btn primary" id="addBlacklistFromSelected">添加黑名单客户</button>
+                </div>
+                <table>
+                  <thead><tr><th>客户</th><th>原因</th><th>拉黑时间</th><th>操作人</th><th>操作</th></tr></thead>
+                  <tbody id="blacklistRows"></tbody>
+                </table>
+              </div>
+              <aside class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>流失 / 删人提醒</strong><span>由会话和企微回调生成待办</span></div></div>
+                <div class="form-area">
+                  <div class="material"><strong>张女士已触发删人风险</strong><span class="table-meta">删除前摘要：术后泛红并提到退款，建议主管介入。</span></div>
+                  <div class="material"><strong>流失规则</strong><span class="table-meta">30 天未互动或连续 3 条消息未回复时标记流失预警。</span></div>
+                  <button class="btn primary" id="createLossTodo">生成流失跟进待办</button>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="groups">
+            <div class="group-management">
+              <section class="panel group-list-card">
+                <div class="panel-head">
+                  <div class="panel-title">
+                    <strong>群聊管理</strong>
+                    <span>同步企微外部群，按门店、群主和项目标签筛选</span>
+                  </div>
+                  <div class="filters">
+                    <input class="field" id="groupSearchInput" placeholder="搜索群名称" />
+                    <select class="field" id="groupTagFilter"><option>标签：全部</option><option>VIP群</option><option>活动群</option><option>复购群</option><option>咨询群</option></select>
+                    <button class="btn" id="syncGroups"><iconify-icon icon="icon-park-outline:cloud-sync"></iconify-icon>同步外部群</button>
+                  </div>
+                </div>
+                <table class="group-table">
+                  <colgroup>
+                    <col style="width: 42px" /><col style="width: 31%" />
+                    <col style="width: 10%" />
+                    <col style="width: 12%" />
+                    <col style="width: 13%" />
+                    <col style="width: 13%" />
+                    <col style="width: 18%" />
+                  </colgroup>
+                  <thead><tr><th><input type="checkbox" id="selectAllGroups" aria-label="全选当前页群组" /></th><th>群名称</th><th>成员数</th><th>群主</th><th>标签</th><th>最近活跃</th><th>操作</th></tr></thead>
+                  <tbody id="groupRows"></tbody>
+                </table>
+                <div class="batchbar" id="groupBatchbar"><span>已选 0 个客户群</span><button class="btn small primary" data-open-wizard data-broadcast-source="selected-groups"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>向已选群群发</button></div>
+                <div class="table-footer"><span id="groupCountText">共 100 个群聊</span><div class="pagination" id="groupPager"><button class="btn small" id="groupPrevPage">上一页</button><span class="table-meta" id="groupPageText">第 1 / 10 页</span><button class="btn small" id="groupNextPage">下一页</button></div></div>
+              </section>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="conversations">
+            <div class="conversation-workbench">
+              <aside class="conversation-list-panel">
+                <div class="conversation-list-head">
+                  <div class="conversation-tabs">
+                    <button class="tab active" data-conversation-filter="全部会话">会话</button>
+                    <button class="tab" data-conversation-filter="群聊">群聊</button>
+                    <button class="conversation-filter-icon" data-conversation-filter="风险会话" aria-label="筛选风险会话"><iconify-icon icon="icon-park-outline:filter"></iconify-icon></button>
+                  </div>
+                  <input class="field" id="conversationSearch" placeholder="搜索客户 / 会话" />
+                </div>
+                <div class="thread-list" id="threadList"></div>
+              </aside>
+
+              <section class="conversation-main">
+                <div class="conversation-risk-card">
+                  <div class="conversation-risk-head">
+                    <img class="chat-avatar" id="threadAvatar" src="assets/avatars/customer-avatar.png" alt="当前会话头像" />
+                    <div class="conversation-risk-title">
+                      <h3 id="threadTitle">张女士</h3>
+                      <div class="conversation-risk-meta">
+                        <span>会话类型：<strong id="threadTypeText">术后回访</strong></span>
+                        <span>风险等级：<span class="chip rose" id="threadRiskChip">高风险</span></span>
+                        <span>紧急程度：<span class="chip rose" id="threadUrgencyChip">高</span></span>
+                      </div>
+                      <div class="tag-wrap" id="threadTags"></div>
+                    </div>
+                    <button class="btn small ghost" id="syncConversations"><iconify-icon icon="icon-park-outline:cloud-sync"></iconify-icon>同步</button>
+                  </div>
+                  <div class="conversation-ai-summary">
+                    <iconify-icon icon="icon-park-outline:magic"></iconify-icon>
+                    <span id="threadAiSummary">AI 总结：客户术后担心恢复情况，建议优先安抚并同步门店顾问，30 分钟内回访。</span>
+                  </div>
+                  <span id="threadMeta" class="sr-only">单客会话 · 归属员工 李运营</span>
+                </div>
+
+                <div class="conversation-record-card">
+                  <div class="conversation-record-head">
+                    <div class="conversation-detail-tabs" role="tablist" aria-label="会话详情">
+                      <button class="conversation-detail-tab active" type="button" role="tab" aria-selected="true" data-conversation-detail-tab="record">会话记录</button>
+                      <button class="conversation-detail-tab" type="button" role="tab" aria-selected="false" data-conversation-detail-tab="overview" id="conversationOverviewTab">客户概览</button>
+                      <button class="conversation-detail-tab" type="button" role="tab" aria-selected="false" data-conversation-detail-tab="disposition">处理结果与跟进</button>
+                    </div>
+                    <button class="btn small" data-show-conversation-record>查看完整记录 <iconify-icon icon="icon-park-outline:down"></iconify-icon></button>
+                  </div>
+                  <div class="conversation-detail-pane active" data-conversation-detail-pane="record">
+                    <div class="chat-list">
+                      <div class="message-list" id="messageList"></div>
+                      <div class="reply-bar">
+                        <div class="conversation-ai-toolbar">
+                          <div class="conversation-ai-toolbar-heading">
+                            <span>AI 运营助手</span>
+                            <small>草稿已生成，发送前请人工确认</small>
+                          </div>
+                          <div class="conversation-ai-toolbar-actions">
+                            <button class="btn small ghost" data-conversation-ai="read">标记已读</button>
+                            <button class="btn small ghost" data-conversation-ai="escalate">升级接管</button>
+                            <button class="btn small" data-conversation-ai="generate"><iconify-icon icon="icon-park-outline:refresh"></iconify-icon>重新生成</button>
+                          </div>
+                        </div>
+                        <div class="ai-reply-title"><iconify-icon icon="icon-park-outline:magic"></iconify-icon>AI 建议</div>
+                        <div class="conversation-ai-meta"><span>发送策略：AI 草稿待人工确认</span><span class="pending" id="conversationAiStatus">待人工确认</span></div>
+                        <textarea class="textarea" id="replyInput" placeholder="输入回复内容，可用于单客会话或群聊回复">张女士您好，我已帮您同步给门店顾问，会在 30 分钟内电话联系您。</textarea>
+                        <div class="reply-actions">
+                          <div class="ai-reply-recommendations" id="aiReplyActions"></div>
+                          <div class="ai-action-row">
+                            <div class="ai-support-actions">
+                              <button class="btn small ghost" data-conversation-ai="review">生成复盘</button>
+                              <button class="btn small ghost" data-conversation-ai="reject">驳回草稿</button>
+                            </div>
+                            <button class="btn primary" id="sendReply"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>人工确认发送</button>
+                          </div>
+                        </div>
+                        <div class="conversation-ai-review" id="conversationAiReview" hidden></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="conversation-detail-pane info-pane" data-conversation-detail-pane="overview" id="conversationOverviewPane">
+                    <div class="conversation-info-card"><strong>客户概览</strong><span class="table-meta">正在加载客户资料…</span></div>
+                  </div>
+                  <div class="conversation-detail-pane info-pane" data-conversation-detail-pane="disposition" id="conversationDispositionPane">
+                    <div class="conversation-info-card"><strong>处理结果与跟进</strong><span class="table-meta">正在加载处理记录…</span></div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="channel-code">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head">
+                  <div class="panel-title"><strong>渠道活码</strong><span>按时段分配员工，自动打渠道标签并追踪新增</span></div>
+                  <button class="btn primary" id="createChannelCode">新建活码</button>
+                </div>
+                <table>
+                  <thead><tr><th>活码名称</th><th>今日添加</th><th>累计添加</th><th>分配方式</th><th>状态</th><th>操作</th></tr></thead>
+                  <tbody id="channelCodeRows"></tbody>
+                </table>
+              </div>
+              <aside class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>活码详情</strong><span id="channelDetailTitle">小红书引流</span></div></div>
+                <div class="metric-row">
+                  <div class="mini-stat"><span>今日</span><strong id="channelTodayStat">23</strong></div>
+                  <div class="mini-stat"><span>累计</span><strong id="channelTotalStat">1,245</strong></div>
+                </div>
+                <div class="form-area">
+                  <div class="material"><strong>员工分配</strong><span class="table-meta" id="channelStaffStat">李运营 520人 · 王专员 480人 · 赵运营 245人</span></div>
+                  <div class="tag-wrap"><span class="chip">渠道_小红书</span><span class="chip rose">活动_618</span></div>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="batch-add">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>批量加好友</strong><span>导入手机号，按间隔执行，失败号码可重试</span></div></div>
+                <div class="form-area">
+                  <div class="form-row"><label>导入方式</label><div class="radio-row"><button class="choice active" data-import-method="文本粘贴">文本粘贴</button><button class="choice" data-import-method="CSV 上传">CSV 上传</button><button class="choice" data-import-method="下载模板">下载模板</button></div></div>
+                  <div class="form-row"><label>手机号列表</label><textarea class="textarea" id="phoneList">13800138000
+13900139000
+13700137000
+12345</textarea><span class="table-meta" id="phonePreview">已识别 3 个有效号码，过滤 1 个无效号码</span></div>
+                  <div class="filters"><select class="field" id="batchAssignMode"><option>自动分配：空闲优先</option><option>自动分配：轮流分配</option><option>指定员工：李运营</option><option>指定员工：王专员</option></select><input class="field" value="30" aria-label="加好友间隔" /><span class="table-meta">秒/个，防风控</span></div>
+                  <button class="btn primary" id="submitBatchAdd">提交任务</button>
+                </div>
+              </div>
+              <div class="panel batch-task-panel">
+                <div class="panel-head"><div class="panel-title"><strong>任务列表</strong><span>展示自动分配与完成率</span></div></div>
+                <div class="batch-task-list" id="batchTaskRows"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="tag-groups">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>标签建群</strong><span>按标签筛选后自动拆群、编号并配置欢迎语</span></div><button class="btn primary" id="createTagGroupTask">新建建群任务</button></div>
+                <table><thead><tr><th>任务名称</th><th>筛选条件</th><th>目标人数</th><th>已建群数</th><th>状态</th><th>操作</th></tr></thead><tbody id="tagGroupRows"></tbody></table>
+              </div>
+              <aside class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>新建规则预览</strong><span>每群 200 人，自动编号</span></div></div>
+                <div class="form-area">
+                  <div class="material"><strong>VIP专属群</strong><span class="table-meta">标签：高意向 + 老客；预估 1,250 人；预计创建 7 个群。</span></div>
+                  <div class="form-row"><label>入群欢迎语</label><textarea class="textarea" id="groupWelcomeText">欢迎加入[群名称]，这里会同步皮肤管理福利和预约名额。</textarea></div>
+                  <div class="actions"><span class="save-status" id="groupWelcomeSaved"></span><button class="btn" id="saveGroupWelcome">保存欢迎语</button></div>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="migration">
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><strong>客户迁移看板</strong><span>支撑员工离职、门店交接和客户重新分配</span></div><button class="btn primary" id="createMigration">新建迁移</button></div>
+              <div class="metric-row">
+                <div class="mini-stat"><span>待迁移</span><strong id="migrationPendingStat">1,200</strong></div>
+                <div class="mini-stat"><span>迁移中</span><strong id="migrationRunningStat">86</strong></div>
+                <div class="mini-stat"><span>已完成</span><strong id="migrationDoneStat">9,514</strong></div>
+                <div class="mini-stat"><span>迁移失败</span><strong id="migrationFailStat">47</strong></div>
+              </div>
+              <div class="kanban" id="migrationBoard"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-marketing">
+          <div class="page-head">
+            <div class="eyeless">
+              <h2>营销中心</h2>
+              <p>围绕医美咨询、项目预约、术后回访与复购提醒，完成群发和拉群任务的编排执行。</p>
+              <span class="dependency-badge"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>真实发送需企微接口</span>
+            </div>
+            <div class="actions">
+              <button class="btn primary" data-open-wizard><iconify-icon icon="icon-park-outline:plus"></iconify-icon>新建群发</button>
+            </div>
+          </div>
+
+          <div class="subnav" data-subnav="marketing">
+            <button class="subnav-button active" data-subtarget="broadcast"><iconify-icon icon="icon-park-outline:send"></iconify-icon>群发任务</button>
+            <button class="subnav-button" data-subtarget="group-invite"><iconify-icon icon="icon-park-outline:pull-requests"></iconify-icon>拉群任务</button>
+            <button class="subnav-button" data-subtarget="scripts"><iconify-icon icon="icon-park-outline:doc-detail"></iconify-icon>话术库</button>
+            <button class="subnav-button" data-subtarget="radar"><iconify-icon icon="icon-park-outline:radar"></iconify-icon>互动雷达</button>
+            <button class="subnav-button" data-subtarget="marketing-governance"><iconify-icon icon="icon-park-outline:chart-proportion"></iconify-icon>运营治理</button>
+          </div>
+          <span class="subnav-mobile-hint" aria-hidden="true"><iconify-icon icon="lucide:move-horizontal"></iconify-icon>左右滑动切换页签</span>
+
+          <div class="subscreen" data-subscreen="marketing-governance">
+          <section class="panel sop-template-panel" aria-labelledby="sopTemplateTitle">
+            <div class="panel-head"><div class="panel-title"><strong id="sopTemplateTitle">医美运营 SOP</strong><span>选择模板后将预填人群、内容、发送节奏与风险控制项</span></div><span class="dependency-badge"><iconify-icon icon="icon-park-outline:check-correct"></iconify-icon>AI 建议待人工确认</span></div>
+            <div class="sop-template-grid panel-card-grid" id="sopTemplateList"></div>
+          </section>
+
+          <section class="panel growth-governance-panel" aria-labelledby="growthGovernanceTitle">
+            <div class="panel-head"><div class="panel-title"><strong id="growthGovernanceTitle">审批、实验与 ROI 复盘</strong><span>审批通过后进入实验对照；结果按渠道、内容与人群回流经营看板</span></div></div>
+            <div class="growth-governance-grid panel-card-grid"><div id="approvalQueue"></div><div id="experimentReview"></div><div id="roiReview"></div></div>
+          </section>
+
+          <section class="panel lifecycle-governance-panel" aria-labelledby="lifecycleGovernanceTitle">
+            <div class="panel-head"><div class="panel-title"><strong id="lifecycleGovernanceTitle">客户数据与触达治理</strong><span>事件链、身份合并、授权与频控均保留审计线索；外部系统状态如实展示</span></div></div>
+            <div class="lifecycle-governance-grid panel-card-grid"><div id="integrationHealth"></div><div id="frequencyGuardrails"></div></div>
+          </section>
+
+          </div>
+
+          <div class="subscreen active" data-subscreen="broadcast">
+            <div class="wizard-layout">
+              <div class="panel">
+                <div class="panel-head">
+                  <div class="panel-title">
+                    <strong>群发任务列表</strong>
+                    <span>从草稿到完成，所有群发任务都在这里处理</span>
+                  </div>
+                  <div class="filters">
+                    <button class="tab active" data-broadcast-filter="全部">全部</button>
+                    <button class="tab" data-broadcast-filter="草稿">草稿</button>
+                    <button class="tab" data-broadcast-filter="审批中">审批中</button>
+                    <button class="tab" data-broadcast-filter="待定时发送">待定时发送</button>
+                    <button class="tab" data-broadcast-filter="待员工确认">待员工确认</button>
+                    <button class="tab" data-broadcast-filter="发送中">发送中</button>
+                    <button class="tab" data-broadcast-filter="已完成">已完成</button>
+                  </div>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th style="width: 26%">任务标题</th>
+                      <th>目标数</th>
+                      <th>成功</th>
+                      <th>失败</th>
+                      <th>状态</th>
+                      <th>创建人</th>
+                      <th>创建时间</th>
+                      <th style="width: 104px; text-align: center">操作</th>
+                    </tr>
+                  </thead>
+                  <tbody id="broadcastRows"></tbody>
+                </table>
+              </div>
+
+              <aside class="panel" id="broadcastDetailPane">
+                <div class="panel-head">
+                  <div class="panel-title">
+                    <strong id="broadcastDetailHead">群发任务详情</strong>
+                    <span id="broadcastDetailSub">选择一条任务，查看发送对象、进度和下一步操作</span>
+                  </div>
+                </div>
+                <div class="stepper">
+                  <span class="step active"><b>1</b>选择内容</span><span class="step-line"></span>
+                  <span class="step active"><b>2</b>选择目标</span><span class="step-line"></span>
+                  <span class="step active"><b>3</b>设置时间</span>
+                </div>
+                <div class="form-area" id="broadcastDetailBody">
+                  <div class="material">
+                    <strong>七夕皮肤管理复购提醒</strong>
+                    <span class="table-meta">内容：水光复购文案 + 七夕焕肤海报；目标：1,250 位客户；时间：2026-07-15 14:30。</span>
+                  </div>
+                  <div class="form-row">
+                    <label>目标与防打扰规则</label>
+                    <div class="material">
+                      <strong>1,250 位客户 / 42 个客户群</strong>
+                      <span class="table-meta">已自动排除 38 位近 7 天触达过的客户。</span>
+                      <div class="tag-wrap">
+                        <span class="chip rose">水光复购</span>
+                        <span class="chip">高意向咨询</span>
+                        <span class="chip amber">沉睡 30 天</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label>执行员工</label>
+                    <div class="tag-wrap"><span class="chip">李运营</span><span class="chip">王专员</span><span class="chip">赵运营</span></div>
+                  </div>
+                  <div class="actions">
+                    <button class="btn" data-open-wizard>打开完整向导</button>
+                    <button class="btn primary" id="wizardNext">提交草稿</button>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="group-invite">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head">
+                  <div class="panel-title">
+                    <strong>拉群任务</strong>
+                    <span>按标签筛选潜客，邀请进入外部客户群</span>
+                  </div>
+                  <button class="btn primary" id="submitInvite">新建拉群</button>
+                </div>
+                <table>
+                  <thead><tr><th>任务标题</th><th>目标客户数</th><th>成功</th><th>失败</th><th>状态</th><th>创建时间</th></tr></thead>
+                  <tbody id="inviteRows"></tbody>
+                </table>
+              </div>
+              <aside class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>新建拉群任务</strong><span>仅展示外部客户群</span></div></div>
+                <div class="form-area">
+                  <div class="form-row"><label>选择客户</label><div class="material"><strong>已按标签筛选：VIP客户</strong><span class="table-meta">已选 50 位潜客，可手动增减</span><div class="tag-wrap"><span class="chip rose">高净值</span><span class="chip">到店体验</span></div></div></div>
+                  <div class="form-row"><label>目标群</label><select class="field"><option>悦颜静安-焕肤福利群（198人）</option><option>芙洛湖滨-水光复购群（156人）</option></select></div>
+                  <div class="form-row"><label>群主</label><select class="field"><option>李运营</option><option>王专员</option></select></div>
+                  <div class="form-row"><label>执行时间</label><div class="filters"><select class="field"><option>定时</option><option>立即</option></select><input class="field" value="2026-07-12 10:00" /></div></div>
+                  <button class="btn primary" id="confirmInvite">提交任务</button>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="moments">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>朋友圈</strong><span>创建企微朋友圈，追踪查看客户并自动打标签</span></div><button class="btn primary" id="createMoment">创建朋友圈</button></div>
+                <table><thead><tr><th>内容预览</th><th>发送员工</th><th>发送时间</th><th>查看数</th><th>状态</th><th>操作</th></tr></thead><tbody id="momentRows"></tbody></table>
+              </div>
+              <aside class="panel"><div class="panel-head"><div class="panel-title"><strong>查看追踪</strong><span id="momentDetailTitle">七夕焕肤活动</span></div></div><div class="metric-row"><div class="mini-stat"><span>查看数</span><strong id="momentViewStat">856</strong></div><div class="mini-stat"><span>打标签</span><strong id="momentTagStat">320</strong></div></div><div class="material"><strong>最近查看客户</strong><span class="table-meta">张女士、陈女士已自动加入「七夕意向」标签。</span></div></aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="scripts">
+            <div class="script-library-shell">
+              <aside class="script-resource-nav" aria-label="话术资源导航">
+                <div class="script-nav-section">
+                  <strong class="script-nav-heading">话术资源</strong>
+                  <button class="script-nav-item active" data-script-resource="全部话术"><iconify-icon icon="lucide:archive"></iconify-icon>全部话术</button>
+                  <button class="script-nav-item" data-script-resource="最近使用"><iconify-icon icon="lucide:clock-3"></iconify-icon>最近使用</button>
+                  <button class="script-nav-item" data-script-resource="我的收藏"><iconify-icon icon="lucide:star"></iconify-icon>我的收藏</button>
+                  <button class="script-nav-item" data-script-resource="我创建的"><iconify-icon icon="lucide:user-round"></iconify-icon>我创建的</button>
+                  <button class="script-nav-item" data-script-resource="待审核"><iconify-icon icon="lucide:circle-alert"></iconify-icon>待审核<span>12</span></button>
+                  <button class="script-nav-item" data-script-resource="待更新"><iconify-icon icon="lucide:history"></iconify-icon>待更新<span>6</span></button>
+                  <button class="script-nav-item" data-script-resource="已停用"><iconify-icon icon="lucide:circle-x"></iconify-icon>已停用<span>8</span></button>
+                  <button class="script-nav-item" data-script-resource="回收站"><iconify-icon icon="lucide:trash-2"></iconify-icon>回收站</button>
+                </div>
+                <div class="script-nav-section script-collection-tree">
+                  <strong class="script-nav-heading">话术集合</strong>
+                  <div class="script-tree-group">
+                    <div class="script-tree-parent"><iconify-icon icon="lucide:chevron-down"></iconify-icon><strong>客户转化</strong></div>
+                    <button data-script-collection="新客咨询">新客咨询</button>
+                    <button data-script-collection="预约促单">预约促单</button>
+                    <button data-script-collection="未成交跟进">未成交跟进</button>
+                  </div>
+                  <div class="script-tree-group">
+                    <div class="script-tree-parent"><iconify-icon icon="lucide:chevron-down"></iconify-icon><strong>客户复购</strong></div>
+                    <button data-script-collection="水光复购">水光复购</button>
+                    <button data-script-collection="光电抗衰">光电抗衰</button>
+                    <button data-script-collection="老客唤醒">老客唤醒</button>
+                  </div>
+                  <div class="script-tree-group">
+                    <div class="script-tree-parent"><iconify-icon icon="lucide:chevron-down"></iconify-icon><strong>服务跟进</strong></div>
+                    <button data-script-collection="术前提醒">术前提醒</button>
+                    <button data-script-collection="术后关怀">术后关怀</button>
+                    <button data-script-collection="客诉安抚">客诉安抚</button>
+                  </div>
+                </div>
+              </aside>
+
+              <section class="script-library-main">
+                <div class="script-toolbar">
+                  <div class="script-toolbar-heading"><div><strong>话术包</strong><span>创建个人话术包并维护每条触达内容</span></div><button class="btn primary" id="createScriptPackage"><iconify-icon icon="lucide:plus"></iconify-icon>新建话术包</button></div>
+                  <div class="script-search-wrap">
+                    <iconify-icon icon="lucide:search"></iconify-icon>
+                    <label class="sr-only" for="scriptSearch">搜索话术库</label>
+                    <input id="scriptSearch" placeholder="搜索话术名称、正文、关键词…" autocomplete="off" />
+                  </div>
+                  <div class="script-filter-row" id="scriptFilterRow">
+                    <div class="script-filter-control"><button data-script-filter="scope"><span>归属范围</span><iconify-icon icon="lucide:chevron-down"></iconify-icon></button><div class="script-filter-menu" data-script-filter-menu="scope"></div></div>
+                    <div class="script-filter-control"><button data-script-filter="scene"><span>业务场景</span><iconify-icon icon="lucide:chevron-down"></iconify-icon></button><div class="script-filter-menu" data-script-filter-menu="scene"></div></div>
+                    <div class="script-filter-control"><button data-script-filter="stage"><span>客户阶段</span><iconify-icon icon="lucide:chevron-down"></iconify-icon></button><div class="script-filter-menu" data-script-filter-menu="stage"></div></div>
+                    <div class="script-filter-control"><button data-script-filter="channel"><span>使用渠道</span><iconify-icon icon="lucide:chevron-down"></iconify-icon></button><div class="script-filter-menu" data-script-filter-menu="channel"></div></div>
+                    <div class="script-filter-control"><button data-script-filter="project"><span>所属项目</span><iconify-icon icon="lucide:chevron-down"></iconify-icon></button><div class="script-filter-menu" data-script-filter-menu="project"></div></div>
+                    <div class="script-filter-control"><button data-script-filter="status"><span>状态</span><iconify-icon icon="lucide:chevron-down"></iconify-icon></button><div class="script-filter-menu" data-script-filter-menu="status"></div></div>
+                    <button class="btn script-more-filter" data-script-filter="more">更多筛选<iconify-icon icon="lucide:funnel"></iconify-icon></button>
+                  </div>
+                  <div class="script-active-filters" id="scriptActiveFilters"></div>
+                </div>
+
+                <div class="script-viewbar">
+                  <div class="script-view-switch" role="tablist" aria-label="话术库视图">
+                    <button class="active" data-script-view="packages"><iconify-icon icon="lucide:folder"></iconify-icon>话术包视图</button>
+                    <button data-script-view="list"><iconify-icon icon="lucide:list"></iconify-icon>列表视图</button>
+                    <button data-script-view="flow"><iconify-icon icon="lucide:network"></iconify-icon>流程视图</button>
+                  </div>
+                  <div class="script-result-meta"><button class="btn" id="scriptSortButton">默认排序<iconify-icon icon="lucide:chevron-down"></iconify-icon></button><span id="scriptResultCount">共 0 个话术包</span></div>
+                </div>
+
+                <div class="script-content" id="scriptContent"></div>
+              </section>
+            </div>
+
+            <div class="script-batchbar" id="scriptBatchbar" aria-live="polite">
+              <div class="script-batch-count"><strong id="scriptSelectedCount">0</strong><span>已选择 0 条</span><button data-clear-script-selection>清空选择</button></div>
+              <div class="script-batch-actions">
+                <button class="btn" data-script-batch-action="移动到话术包"><iconify-icon icon="lucide:folder"></iconify-icon>移动到话术包</button>
+                <button class="btn" data-script-batch-action="批量打标签"><iconify-icon icon="lucide:tag"></iconify-icon>批量打标签</button>
+                <button class="btn" data-script-batch-action="提交审核"><iconify-icon icon="lucide:file-check-2"></iconify-icon>提交审核</button>
+                <button class="btn primary" data-script-batch-action="发布"><iconify-icon icon="lucide:arrow-up"></iconify-icon>发布</button>
+                <button class="btn" data-script-batch-action="停用"><iconify-icon icon="lucide:circle-pause"></iconify-icon>停用</button>
+                <button class="btn" data-script-batch-action="导出"><iconify-icon icon="lucide:download"></iconify-icon>导出</button>
+              </div>
+            </div>
+
+            <div class="script-hidden-bridge" aria-hidden="true">
+              <button id="createScript">新建话术</button>
+              <textarea id="scriptDraft">您好，结合您的皮肤状态，建议先完成检测后再确认项目方案。</textarea>
+              <button id="insertScriptToReply">插入当前会话</button>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="cards">
+            <div class="two-col card-editor-layout">
+              <div class="panel">
+                <div class="panel-head">
+                  <div class="panel-title"><strong>智能名片</strong><span>员工可分享的数字化名片</span></div>
+                  <button class="btn primary" id="saveSmartCard">保存名片</button>
+                </div>
+                <div class="form-area">
+                  <div class="form-row"><label>姓名</label><input class="field" id="cardNameInput" value="李运营" /></div>
+                  <div class="form-row"><label>职位</label><input class="field" id="cardTitleInput" value="高级客户顾问" /></div>
+                  <div class="form-row"><label>产品</label><input class="field" id="cardProductsInput" value="热玛吉, 超声炮, 水光修护" /></div>
+                </div>
+              </div>
+              <aside class="panel smart-card-preview">
+                <div class="smart-card-head">
+                  <div class="avatar" id="cardPreviewAvatar">李</div>
+                  <div>
+                    <h3 id="cardPreviewName">李运营</h3>
+                    <div class="sub" id="cardPreviewTitle">高级客户顾问 · 微枢医美机构</div>
+                  </div>
+                </div>
+                <div class="smart-card-section">
+                  <span class="section-label">擅长项目</span>
+                  <div class="tag-wrap" id="cardProductTags"><span class="chip">热玛吉</span><span class="chip">超声炮</span><span class="chip rose">水光修护</span></div>
+                </div>
+                <div class="smart-card-section">
+                  <span class="section-label">服务说明</span>
+                  <p>可为客户提供项目咨询、肤质评估、预约协调和术后回访。</p>
+                </div>
+                <div class="smart-card-actions">
+                  <button class="btn primary" id="cardAddWechat">添加微信</button>
+                  <button class="btn" id="cardViewProducts">查看产品</button>
+                </div>
+              </aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="promo">
+            <div class="two-col">
+              <div class="panel"><div class="panel-head"><div class="panel-title"><strong>自助推广码</strong><span>自定义落地页和二维码追踪</span></div><button class="btn primary" id="createPromo">新建推广码</button></div><table><thead><tr><th>推广名称</th><th>扫码数</th><th>转化数</th><th>转化率</th><th>操作</th></tr></thead><tbody id="promoRows"></tbody></table></div>
+              <aside class="panel"><div class="panel-head"><div class="panel-title"><strong>推广页配置</strong><span>保存后生成二维码</span></div></div><div class="form-area"><input class="field" id="promoNameInput" value="夏日护肤节" /><textarea class="textarea" id="promoDescInput">限时皮肤检测与补水修护福利，扫码领取专属预约名额。</textarea><button class="btn" id="previewPromo">预览推广页</button></div></aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="forms">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head">
+                  <div class="panel-title"><strong>自定义表单</strong><span>收集客户资料，提交后自动打标签</span></div>
+                  <button class="btn primary" id="createCustomForm">新建表单</button>
+                </div>
+                <table>
+                  <thead><tr><th>表单名称</th><th>提交数</th><th>字段数</th><th>自动标签</th><th>操作</th></tr></thead>
+                  <tbody id="formRows"></tbody>
+                </table>
+              </div>
+              <aside class="panel" id="formDataPane"></aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="radar">
+            <div class="two-col">
+              <div class="panel"><div class="panel-head"><div class="panel-title"><strong>互动雷达</strong><span>追踪链接/文件打开行为并自动打标签</span></div><button class="btn primary" id="createRadar">新建雷达</button></div><table><thead><tr><th>雷达名称</th><th>类型</th><th>今日打开</th><th>累计打开</th><th>标签</th><th>操作</th></tr></thead><tbody id="radarRows"></tbody></table></div>
+              <aside class="panel"><div class="panel-head"><div class="panel-title"><strong>打开客户</strong><span>热玛吉项目介绍</span></div></div><table><thead><tr><th>客户</th><th>打开次数</th><th>最近打开</th></tr></thead><tbody><tr><td>张女士</td><td>5</td><td>07-10</td></tr><tr><td>林女士</td><td>2</td><td>07-10</td></tr></tbody></table></aside>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-assets">
+          <div class="page-head">
+            <div class="eyeless">
+              <h2>素材与标签</h2>
+              <p>沉淀可复用的医美内容资产与女性潜客标签体系，支撑批量触达和精细化跟进。</p>
+            </div>
+          </div>
+
+          <div class="subnav" data-subnav="assets">
+            <button class="subnav-button active" data-subtarget="asset-library" data-content-target="asset-library" data-asset-module="library"><iconify-icon icon="icon-park-outline:folder-open"></iconify-icon>素材库</button>
+            <button class="subnav-button" data-subtarget="asset-collections" data-content-target="asset-library" data-asset-module="collections"><iconify-icon icon="icon-park-outline:layers"></iconify-icon>素材包</button>
+            <button class="subnav-button" data-subtarget="tag-system"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon>标签管理</button>
+            <button class="subnav-button" data-subtarget="asset-recycle" data-content-target="asset-library" data-asset-module="recycle"><iconify-icon icon="icon-park-outline:delete"></iconify-icon>回收站</button>
+          </div>
+
+          <div class="subscreen active" data-subscreen="asset-library">
+            <div class="asset-management-shell">
+              <aside class="asset-resource-nav">
+                <div class="asset-nav-section">
+                  <div class="asset-nav-title">素材范围</div>
+                  <button class="asset-nav-item active" data-asset-scope="全部素材"><iconify-icon icon="icon-park-outline:folder-open"></iconify-icon>全部素材<span id="assetCountAll">0</span></button>
+                  <button class="asset-nav-item" data-asset-scope="最近使用"><iconify-icon icon="icon-park-outline:history"></iconify-icon>最近使用<span>4</span></button>
+                  <button class="asset-nav-item" data-asset-scope="我的收藏"><iconify-icon icon="icon-park-outline:star"></iconify-icon>我的收藏<span>2</span></button>
+                  <button class="asset-nav-item" data-asset-scope="我上传的"><iconify-icon icon="icon-park-outline:upload"></iconify-icon>我上传的<span>3</span></button>
+                  <button class="asset-nav-item" data-asset-scope="待审核"><iconify-icon icon="icon-park-outline:doc-search"></iconify-icon>待审核<span>2</span></button>
+                  <button class="asset-nav-item" data-asset-scope="已过期"><iconify-icon icon="icon-park-outline:time"></iconify-icon>已过期<span>1</span></button>
+                </div>
+                <div class="asset-nav-section">
+                  <div class="asset-nav-title">素材目录</div>
+                  <div class="asset-tree-group">
+                    <strong>节日营销</strong>
+                    <button class="asset-tree-leaf" data-asset-dir="节日营销">七夕活动</button>
+                    <button class="asset-tree-leaf" data-asset-dir="节日营销">女神节</button>
+                  </div>
+                  <div class="asset-tree-group">
+                    <strong>项目科普</strong>
+                    <button class="asset-tree-leaf" data-asset-dir="项目科普">水光项目</button>
+                    <button class="asset-tree-leaf" data-asset-dir="项目科普">光电抗衰</button>
+                  </div>
+                  <div class="asset-tree-group">
+                    <strong>客户运营</strong>
+                    <button class="asset-tree-leaf" data-asset-dir="复购提醒">老客复购</button>
+                    <button class="asset-tree-leaf" data-asset-dir="术后关怀">术后关怀</button>
+                  </div>
+                </div>
+              </aside>
+
+              <section class="panel asset-main-panel">
+                <div class="panel-head asset-panel-head">
+                  <div class="panel-title">
+                    <strong id="assetViewTitle">素材库</strong>
+                    <span id="assetViewDesc">素材包、文件和标签分层管理，支持筛选、批量治理和任务引用追踪。</span>
+                    <span class="dependency-badge"><iconify-icon icon="icon-park-outline:upload"></iconify-icon>真实上传需文件服务</span>
+                  </div>
+                  <div class="filters">
+                    <input class="field" id="assetSearchInput" placeholder="搜索素材名称 / 标签 / 集合" />
+                    <button class="btn" data-reset-asset-filters>重置筛选</button>
+                    <button class="btn" data-create-asset-package><iconify-icon icon="icon-park-outline:plus"></iconify-icon>新建素材包</button>
+                    <button class="btn primary" data-open-upload><iconify-icon icon="icon-park-outline:upload"></iconify-icon>上传素材</button>
+                  </div>
+                </div>
+
+                <div class="asset-filter-panel">
+                  <div class="asset-filter-row">
+                    <span>文件类型</span>
+                    <button class="filter-chip active" data-asset-type="全部">全部类型</button>
+                    <button class="filter-chip" data-asset-type="图片">图片</button>
+                    <button class="filter-chip" data-asset-type="视频">视频</button>
+                    <button class="filter-chip" data-asset-type="文本">文案</button>
+                    <button class="filter-chip" data-asset-type="文件">文件</button>
+                  </div>
+                  <div class="asset-filter-row">
+                    <span>素材状态</span>
+                    <button class="filter-chip active" data-asset-status="全部状态">全部状态</button>
+                    <button class="filter-chip" data-asset-status="可用">可用</button>
+                    <button class="filter-chip" data-asset-status="待审核">待审核</button>
+                    <button class="filter-chip" data-asset-status="已过期">已过期</button>
+                  </div>
+                  <div class="asset-filter-footer">
+                    <div class="active-filter-list" id="assetActiveFilters"></div>
+                    <div class="view-switch" aria-label="素材视图切换">
+                      <button class="active" data-asset-view="packs"><iconify-icon icon="icon-park-outline:layers"></iconify-icon>素材包</button>
+                      <button data-asset-view="grid"><iconify-icon icon="icon-park-outline:view-grid-card"></iconify-icon>网格</button>
+                      <button data-asset-view="list"><iconify-icon icon="icon-park-outline:list"></iconify-icon>列表</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="asset-content" id="assetContent"></div>
+                <section class="content-compliance-panel" id="contentCompliancePanel"></section>
+                <div class="asset-batchbar" id="assetBatchbar"></div>
+              </section>
+
+              <aside class="asset-detail-drawer" id="assetDetailDrawer"></aside>
+            </div>
+          </div>
+
+          <div class="subscreen" data-subscreen="tag-system">
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-title">
+                  <strong>标签管理</strong>
+                  <span>支持新建、编辑、启停、删除和应用到客户，同分组下不允许重名</span>
+                </div>
+                <div class="filters">
+                  <select class="field" id="tagManageTypeFilter"><option>类型：全部</option><option>客户标签</option><option>群标签</option></select>
+                  <select class="field" id="tagManageGroupFilter"><option>分组：全部</option></select>
+                  <input class="field" id="tagManageSearch" placeholder="搜索标签名称" />
+                  <button class="btn" data-open-tag-group-editor><iconify-icon icon="icon-park-outline:folder-plus"></iconify-icon>新建分组</button>
+                  <button class="btn primary" data-open-tag-editor><iconify-icon icon="icon-park-outline:plus"></iconify-icon>新建标签</button>
+                </div>
+              </div>
+              <table class="tag-manage-table" aria-label="标签管理表">
+                <colgroup>
+                  <col style="width: 14%" />
+                  <col style="width: 12%" />
+                  <col style="width: 14%" />
+                  <col style="width: 12%" />
+                  <col style="width: 11%" />
+                  <col style="width: 15%" />
+                  <col style="width: 22%" />
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>标签名称</th>
+                    <th>类型</th>
+                    <th>分组</th>
+                    <th>使用量</th>
+                    <th>状态</th>
+                    <th>最近更新</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody id="tagManageRows"></tbody>
+              </table>
+              <div class="metric-row" style="border-top:1px solid var(--line)">
+                <div class="mini-stat"><span>总标签数</span><strong id="tagTotalStat">15</strong></div>
+                <div class="mini-stat"><span>未使用标签</span><strong id="tagUnusedStat">0</strong></div>
+                <div class="mini-stat"><span>重复候选</span><strong>2</strong></div>
+                <div class="mini-stat"><span>治理状态</span><strong>可优化</strong></div>
+              </div>
+              <div class="form-area">
+                <div class="material"><strong>标签治理建议</strong><span class="table-meta" id="tagGovernanceText">建议合并「高意向」和「高意向咨询」，清理停用且无使用记录的标签。</span></div>
+                <button class="btn" id="runTagGovernance">一键生成治理建议</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-ai">
+          <div class="page-head">
+            <div class="eyeless"><h2>AI 能力中心</h2><p>配置模型能力、审核阈值和活动风控策略，支撑各业务页面的智能辅助。</p><span class="dependency-badge"><iconify-icon icon="icon-park-outline:robot-one"></iconify-icon>真实生成需 AI 模型接口</span></div>
+            <div class="actions"><button class="btn primary" id="createFraudTask">新建防刷任务</button></div>
+          </div>
+          <div class="subnav" data-subnav="ai">
+            <button class="subnav-button active" data-subtarget="ai-copy"><iconify-icon icon="icon-park-outline:edit"></iconify-icon>文案生成</button>
+            <button class="subnav-button" data-subtarget="ai-fraud"><iconify-icon icon="icon-park-outline:shield"></iconify-icon>AI 活动防刷</button>
+            <button class="subnav-button" data-subtarget="ai-config"><iconify-icon icon="icon-park-outline:setting"></iconify-icon>模型配置</button>
+          </div>
+          <div class="subscreen active" data-subscreen="ai-copy">
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><strong>文案生成</strong><span>按项目、标签和素材生成运营动作</span></div></div>
+              <div class="form-area"><textarea class="textarea" id="aiCopyInput">帮我生成七夕水光复购朋友圈文案</textarea><button class="btn primary" id="generateAiCopy">生成文案</button></div>
+            </div>
+            <div class="panel" style="margin-top:18px">
+              <div class="panel-head"><div class="panel-title"><strong>生成记录</strong><span>保留本次会话内的全部文案，可预览发送或复制</span></div></div>
+              <div class="ai-copy-history" id="aiCopyHistory"><span class="table-meta">暂未生成文案。</span></div>
+            </div>
+          </div>
+          <div class="subscreen" data-subscreen="ai-fraud">
+            <div class="two-col"><div class="panel"><div class="panel-head"><div class="panel-title"><strong>AI 活动防刷</strong><span>识别高频参与、多账号同设备、注册过短等风险</span></div></div><table><thead><tr><th>活动名称</th><th>参与人数</th><th>拦截数</th><th>状态</th><th>操作</th></tr></thead><tbody id="fraudRows"></tbody></table></div><aside class="panel"><div class="panel-head"><div class="panel-title"><strong>防护规则</strong><span>发现高风险自动拦截并加入黑名单</span></div></div><div class="form-area"><div class="tag-wrap"><span class="chip">10分钟内&gt;5次</span><span class="chip">同设备/IP</span><span class="chip rose">注册&lt;24小时</span></div><button class="btn primary" id="startFraudGuard">启动防护</button></div></aside></div>
+          </div>
+          <div class="subscreen" data-subscreen="ai-config">
+            <div class="panel">
+              <div class="panel-head">
+                <div class="panel-title"><strong>模型配置</strong><span>配置 AI 能力开关和人工复核阈值</span></div>
+                <div class="actions"><span class="save-status" id="aiConfigSaved"></span><button class="btn primary" id="saveAiConfig">保存配置</button></div>
+              </div>
+              <div class="config-grid">
+                <div class="config-control"><span>文案生成</span><label><input type="checkbox" id="aiCopyEnabled" checked />启用</label></div>
+                <div class="config-control"><span>风险识别</span><label><input type="checkbox" id="aiRiskEnabled" checked />启用</label></div>
+                <div class="config-control"><span>自动执行阈值</span><input class="field" id="aiThresholdInput" type="number" min="50" max="100" value="85" aria-label="自动执行阈值百分比" /></div>
+                <div class="config-control"><span>人工复核</span><label><input type="checkbox" id="aiReviewEnabled" checked />开启</label></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="screen" id="screen-data">
+          <div class="page-head">
+            <div class="eyeless"><h2>数据中心</h2><p>集中查看成员统计、直播统计、一客一码统计和操作日志。</p></div>
+            <div class="actions"><button class="btn" id="exportDataReport">导出报表</button></div>
+          </div>
+          <div class="subnav" data-subnav="data">
+            <button class="subnav-button active" data-subtarget="member-stats">成员统计</button>
+            <button class="subnav-button" data-subtarget="live-stats">直播统计</button>
+            <button class="subnav-button" data-subtarget="qr-stats">一客一码</button>
+            <button class="subnav-button" data-subtarget="operation-logs">操作日志</button>
+          </div>
+          <div class="subscreen active" data-subscreen="member-stats"><div class="panel"><div class="panel-head"><div class="panel-title"><strong>成员统计</strong><span>新增客户、活跃会话、跟进完成和响应时效</span></div></div><table><thead><tr><th>员工</th><th>新增客户</th><th>活跃会话</th><th>群发数</th><th>跟进完成</th><th>响应时效</th></tr></thead><tbody id="memberStatRows"></tbody></table></div></div>
+          <div class="subscreen" data-subscreen="live-stats">
+            <div class="two-col">
+              <div class="panel">
+                <div class="panel-head"><div class="panel-title"><strong>直播统计</strong><span>观看行为可批量打标签</span></div></div>
+                <table><thead><tr><th>直播名称</th><th>观看人数</th><th>评论数</th><th>平均时长</th><th>操作</th></tr></thead><tbody id="liveRows"></tbody></table>
+              </div>
+              <aside class="panel live-viewer-card">
+                <div class="panel-head"><div class="panel-title"><strong>观看客户</strong><span id="liveViewerSubtitle">已选择热玛吉科普</span></div></div>
+                <div class="live-viewer-body">
+                  <div class="live-summary">
+                    <div class="live-summary-title">
+                      <div><strong id="liveViewerTitle">热玛吉科普</strong><span id="liveViewerDesc">按观看行为生成潜客标签</span></div>
+                      <span class="chip" id="liveViewerTag">意向_热玛吉</span>
+                    </div>
+                    <div class="viewer-metrics">
+                      <div class="viewer-metric"><span>观看客户</span><strong id="liveViewerCount">856</strong></div>
+                      <div class="viewer-metric"><span>评论互动</span><strong id="liveViewerComments">342</strong></div>
+                      <div class="viewer-metric"><span>平均观看</span><strong id="liveViewerAvg">18min</strong></div>
+                    </div>
+                  </div>
+                  <div class="viewer-action-row">
+                    <button class="btn" id="viewLiveCustomerDetail"><iconify-icon icon="icon-park-outline:preview-open"></iconify-icon>查看明细</button>
+                    <button class="btn primary" id="tagLiveViewers"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon>批量打标签</button>
+                  </div>
+                </div>
+              </aside>
+            </div>
+          </div>
+          <div class="subscreen" data-subscreen="qr-stats"><div class="panel"><div class="panel-head"><div class="panel-title"><strong>一客一码统计</strong><span>查看员工专属二维码生成和扫码效果</span></div></div><table><thead><tr><th>员工</th><th>总生成码数</th><th>总扫码数</th><th>扫码率</th><th>新增客户</th></tr></thead><tbody id="qrStatRows"></tbody></table></div></div>
+          <div class="subscreen" data-subscreen="operation-logs"><div class="panel"><div class="panel-head"><div class="panel-title"><strong>操作日志</strong><span>记录创建、编辑、删除、导出和权限变更</span></div><input class="field" id="logSearch" placeholder="搜索员工/操作" /></div><table><thead><tr><th>时间</th><th>员工</th><th>操作类型</th><th>对象</th><th>详情</th></tr></thead><tbody id="logRows"></tbody></table></div></div>
+        </div>
+
+        <div class="screen" id="screen-settings">
+          <div class="page-head">
+            <div class="eyeless">
+              <h2>系统管理</h2>
+              <p>管理员可维护员工账号、角色权限和客户数据范围，确保不同岗位只看到自己的运营对象。</p>
+            </div>
+            <div class="actions">
+              <button class="btn" id="openAccountSwitchFromSettings"><iconify-icon icon="icon-park-outline:switch-button"></iconify-icon>切换账号预览</button>
+              <button class="btn primary" id="openAccountCreate"><iconify-icon icon="icon-park-outline:add-user"></iconify-icon>新增员工</button>
+            </div>
+          </div>
+          <div class="panel" style="margin-bottom:22px">
+            <div class="panel-head">
+              <div class="panel-title">
+                <strong>当前登录账号</strong>
+                <span id="currentAccountScope">林主管正在以运营主管身份查看全部医美客户</span>
+              </div>
+              <button class="btn" id="openAccountSwitchInline">切换演示账号</button>
+            </div>
+            <div class="metric-row">
+              <div class="mini-stat"><span>当前角色</span><strong id="currentRoleStat">运营主管</strong></div>
+              <div class="mini-stat"><span>数据范围</span><strong id="currentScopeStat">全部医美客户</strong></div>
+              <div class="mini-stat"><span>可见菜单</span><strong id="currentMenuStat">5 个</strong></div>
+              <div class="mini-stat"><span>账号状态</span><strong id="currentStatusStat">启用</strong></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <div class="panel-title">
+                <strong>员工账号</strong>
+              <span>管理员可管理登录账号、角色、数据范围、模块权限与启停状态</span>
+              </div>
+            </div>
+            <table class="account-table">
+              <colgroup>
+                <col style="width: 13%" />
+                <col style="width: 12%" />
+                <col style="width: 11%" />
+                <col style="width: 13%" />
+                <col style="width: 16%" />
+                <col style="width: 12%" />
+                <col style="width: 8%" />
+                <col style="width: 15%" />
+              </colgroup>
+              <thead>
+                <tr><th>员工</th><th>登录账号</th><th>角色</th><th>数据范围</th><th>模块权限</th><th>最近登录</th><th>状态</th><th>操作</th></tr>
+              </thead>
+              <tbody id="accountRows"></tbody>
+            </table>
+          </div>
+          <div class="panel" style="margin-top:22px">
+            <div class="panel-head">
+              <div class="panel-title">
+                <strong>角色权限矩阵</strong>
+                <span>对应 PRD 的 admin / manager / operator / content / auditor 数据边界</span>
+              </div>
+              <button class="btn" id="saveRoles">保存权限</button>
+            </div>
+            <div class="role-matrix">
+              <table>
+                <thead>
+                  <tr><th>页面 / 操作</th><th>管理员</th><th>运营主管</th><th>运营专员</th><th>内容运营</th><th>风控审核员</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>经营总览</strong></td><td><span class="chip">全部</span></td><td><span class="chip">全部</span></td><td><span class="chip amber">自己范围</span></td><td><span class="chip amber">自己范围</span></td><td><span class="chip amber">自己范围</span></td></tr>
+                  <tr><td><strong>客户管理</strong></td><td><span class="chip">管理</span></td><td><span class="chip">管理</span></td><td><span class="chip amber">打标签</span></td><td><span class="chip neutral">不可见</span></td><td><span class="chip neutral">不可见</span></td></tr>
+                  <tr><td><strong>群发任务</strong></td><td><span class="chip">创建/审批</span></td><td><span class="chip">创建/审批</span></td><td><span class="chip amber">创建</span></td><td><span class="chip neutral">不可见</span></td><td><span class="chip neutral">不可见</span></td></tr>
+                  <tr><td><strong>素材库 / 标签</strong></td><td><span class="chip">管理</span></td><td><span class="chip">管理</span></td><td><span class="chip amber">查看</span></td><td><span class="chip">管理</span></td><td><span class="chip neutral">不可见</span></td></tr>
+                  <tr><td><strong>风险会话处置</strong></td><td><span class="chip">查看</span></td><td><span class="chip">查看</span></td><td><span class="chip neutral">不可处置</span></td><td><span class="chip neutral">不可见</span></td><td><span class="chip amber">处置</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="two-col" style="margin-top:22px">
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><strong>欢迎语配置</strong><span>好友欢迎语和入群欢迎语默认模板</span></div><div class="actions"><span class="save-status" id="welcomeConfigSaved"></span><button class="btn primary" id="saveWelcomeConfig">保存配置</button></div></div>
+              <div class="form-area">
+                <div class="form-row"><label>好友欢迎语</label><textarea class="textarea" id="friendWelcomeInput">您好，我是[员工姓名]，很高兴为您服务。可以把您的皮肤状态和想改善的问题发给我。</textarea></div>
+                <div class="form-row"><label>入群欢迎语</label><textarea class="textarea" id="defaultGroupWelcomeInput">欢迎加入[群名称]，请查看群公告了解福利和群规。</textarea></div>
+                <div class="tag-wrap"><span class="chip">[员工姓名]</span><span class="chip">[企业名称]</span><span class="chip">[客户昵称]</span><span class="chip">[群名称]</span></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div class="panel-title"><strong>侧边栏管理</strong><span>企微侧边栏模块开关和排序</span></div><button class="btn primary" id="saveSidebarConfig">保存侧边栏</button></div>
+              <div class="form-area">
+                <div class="material"><strong>已启用模块</strong><span class="table-meta" id="sidebarEnabledText">客户信息 / 话术库 / 素材库 / 智能名片 / 互动雷达</span></div>
+                <div class="tag-wrap"><button class="choice active" data-sidebar-module="客户信息">客户信息</button><button class="choice active" data-sidebar-module="话术库">话术库</button><button class="choice active" data-sidebar-module="素材库">素材库</button><button class="choice active" data-sidebar-module="智能名片">智能名片</button><button class="choice active" data-sidebar-module="互动雷达">互动雷达</button><button class="choice" data-sidebar-module="自定义表单">自定义表单</button></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="assistant-rail" id="assistantRail" aria-label="AI 运营助手常驻栏">
+          <div class="assistant-rail-head">
+            <button class="assistant-rail-collapse" id="assistantRailCollapse" type="button" data-toggle-assistant-rail aria-label="收起 AI 运营助手" aria-expanded="true" title="收起 AI 运营助手"><iconify-icon icon="lucide:panel-right-close"></iconify-icon></button>
+            <div class="assistant-hero-copy">
+              <iconify-icon icon="icon-park-outline:magic"></iconify-icon>
+              <div class="assistant-title-row"><strong>AI 运营助手</strong></div>
+              <span>基于当前对象给出可执行建议</span>
+              <button class="assistant-status-pill" id="assistantSyncStatus" data-sync-status="healthy" data-assistant-command="wecom-sync" aria-label="查看企微同步详情"><span class="assistant-status-label"><strong>企微正常</strong><span class="assistant-status-detail"> · 每30秒同步</span></span><span class="assistant-status-popover"><strong>企微同步详情</strong><span>同步周期：每 30 秒</span><span>数据范围：客户、会话、待办与风险事件</span></span></button>
+            </div>
+            <img class="assistant-portrait" src="assets/assistant/ai-operator-avatar.png?v=20260714-horizontal" alt="AI 运营助手数字人" />
+          </div>
+          <div class="assistant-rail-body">
+            <div class="assistant-rail-section">
+              <strong>当前上下文</strong>
+              <div class="assistant-rail-context">
+                <span>正在查看</span>
+                <strong id="assistantRailContextText">工作台 · 优先处理风险会话、复购提醒和审批中群发</strong>
+                <details class="assistant-context-details" id="assistantContextDetails">
+                  <summary>查看其余 3 项待办</summary>
+                  <ul>
+                    <li>高意向咨询跟进 · 12 人</li>
+                    <li>水光复购群发 · 审批中</li>
+                    <li>素材审核 · 2 项待处理</li>
+                  </ul>
+                </details>
+              </div>
+            </div>
+            <div class="assistant-rail-section">
+              <strong>AI 发现</strong>
+              <div class="assistant-rail-output" id="assistantRailOutput">
+                <strong>P0｜张女士术后客诉逾期</strong>
+                <div class="assistant-risk-meta"><span>已逾期 2小时18分</span><span>高风险</span></div>
+                <p>继续延误可能引发投诉、差评与客诉升级。请先完成安抚与回访。</p>
+                <div class="assistant-risk-profile-wrap">
+                  <button class="text-link assistant-risk-profile" data-assistant-command="dashboard-risk-detail" aria-describedby="assistantRiskPreview">查看风险档案</button>
+                  <div class="assistant-risk-preview" id="assistantRiskPreview" role="tooltip"><strong>张女士｜风险预览</strong><span>项目：水光修护套餐</span><span>术后：2026-07-13（第 2 天）</span><span>历史投诉：1 次 · 已闭环</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="assistant-rail-section">
+              <strong>推荐操作</strong>
+              <div class="assistant-rail-actions" id="assistantRailActions">
+                <button class="assistant-rail-action is-primary" data-assistant-command="dashboard-risk" aria-label="处理风险会话：打开会话并写入安抚回复"><iconify-icon icon="icon-park-outline:attention"></iconify-icon><strong>处理风险</strong></button>
+                <button class="assistant-rail-action" data-assistant-command="dashboard-approval" aria-label="处理群发审批：筛出审批中任务并决定下一步"><iconify-icon icon="icon-park-outline:check-correct"></iconify-icon><strong>处理审批</strong></button>
+                <button class="assistant-rail-action" data-assistant-command="dashboard-broadcast" aria-label="生成复购群发草稿：预填目标标签、素材和发送时间"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon><strong>生成群发</strong></button>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <button class="assistant-rail-reopen" id="assistantRailExpand" type="button" data-toggle-assistant-rail data-assistant-rail-drag aria-label="展开 AI 运营助手；可拖动调整位置" aria-expanded="false" title="拖动调整位置，点击展开 AI 运营助手"><iconify-icon icon="lucide:sparkles"></iconify-icon><span>展开 AI 助手</span></button>
+      </section>
+    </main>
+  </div>
+
+  <button class="assistant-launcher" id="assistantLauncher" data-toggle-assistant aria-label="打开 AI 运营助手" aria-expanded="false">
+    <iconify-icon icon="icon-park-outline:magic"></iconify-icon>
+    <span class="assistant-launcher-text">
+      <strong>AI助手</strong>
+      <small id="assistantLauncherHint">3 条建议</small>
+    </span>
+  </button>
+
+  <aside class="assistant-mini" id="assistantMini" aria-label="AI 运营助手快捷面板" aria-hidden="true">
+    <div class="assistant-mini-head">
+      <div>
+        <strong>AI 运营助手</strong>
+        <span>按当前页面生成下一步</span>
+      </div>
+      <button class="btn small ghost" data-close-assistant-mini aria-label="收起 AI 快捷面板"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+    </div>
+    <div class="assistant-mini-body">
+      <div class="assistant-context">
+        <span>当前上下文</span>
+        <strong id="assistantContextText">工作台 · 优先处理风险会话和复购提醒</strong>
+      </div>
+      <div class="assistant-mini-actions">
+        <button class="assistant-mini-action" data-ai-action="reply"><iconify-icon icon="icon-park-outline:message-sent"></iconify-icon><span>生成回复</span></button>
+        <button class="assistant-mini-action" data-ai-action="tags"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon><span>推荐标签</span></button>
+        <button class="assistant-mini-action" data-ai-action="broadcast"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon><span>生成群发</span></button>
+      </div>
+      <div class="assistant-mini-foot">
+        <span>高危会话 1 项</span>
+        <button class="btn small" data-expand-assistant>展开助手</button>
+      </div>
+    </div>
+  </aside>
+
+  <aside class="assistant-drawer" id="assistantDrawer" aria-label="AI 运营助手" aria-hidden="true">
+    <div class="assistant-drawer-head">
+      <div>
+        <strong>AI 运营助手</strong>
+        <span>全局辅助会话、标签、素材和群发任务</span>
+      </div>
+      <button class="btn small ghost" data-close-assistant aria-label="关闭 AI 运营助手"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+    </div>
+    <div class="assistant-body">
+      <div class="assistant-output" id="assistantOutput">
+        <strong>今日建议</strong>
+        <p>优先处理张女士术后风险会话；水光复购标签适合在 16:30 前补发权益提醒，并排除近 7 天已触达客户。</p>
+        <div class="tag-wrap"><span class="chip amber">风险优先</span><span class="chip rose">水光复购</span></div>
+      </div>
+      <div class="assistant-actions">
+        <button class="assistant-card" data-ai-action="reply"><iconify-icon icon="icon-park-outline:message-sent"></iconify-icon><strong>生成回复</strong><span>写入单客/群聊回复框</span></button>
+        <button class="assistant-card" data-ai-action="broadcast"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon><strong>生成群发</strong><span>生成复购触达草稿</span></button>
+        <button class="assistant-card" data-ai-action="tags"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon><strong>推荐标签</strong><span>为选中潜客补标签</span></button>
+        <button class="assistant-card" data-ai-action="risk"><iconify-icon icon="icon-park-outline:attention"></iconify-icon><strong>风险摘要</strong><span>打开高危会话处置</span></button>
+      </div>
+      <div class="assistant-compose">
+        <label class="sr-only" for="assistantPromptInput">向 AI 运营助手描述需要完成的任务</label>
+        <input class="field" id="assistantPromptInput" placeholder="例如：帮我生成水光复购文案" />
+        <button class="btn small primary" id="askAssistant">生成</button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="modal-backdrop" id="customerDetailModal" aria-hidden="true">
+    <div class="modal customer-detail-modal" role="dialog" aria-modal="true" aria-labelledby="customerDetailTitle">
+      <div class="modal-head">
+        <div class="customer-detail-heading">
+          <strong id="customerDetailTitle">客户详情</strong>
+          <span class="chip" id="customerDetailSelectedLabel">当前选中潜客</span>
+        </div>
+        <button class="btn small ghost" data-close-modal aria-label="关闭客户详情"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="customer-detail-body" id="customerDetailBody"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="groupDetailModal" aria-hidden="true">
+    <div class="modal customer-detail-modal group-detail-modal" role="dialog" aria-modal="true" aria-labelledby="groupDetailTitle">
+      <div class="modal-head">
+        <div class="customer-detail-heading">
+          <strong id="groupDetailTitle">群聊详情</strong>
+          <span class="chip" id="groupDetailStatus">活跃</span>
+        </div>
+        <button class="btn small ghost" data-close-modal aria-label="关闭群聊详情"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="customer-detail-body group-detail-body" id="groupDetailBody"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="tagModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tagTitle">
+      <div class="modal-head">
+        <strong id="tagTitle">批量打标签</strong>
+        <button class="btn small ghost" data-close-modal aria-label="关闭素材详情"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row" id="tagTargetScopeRow">
+          <label>打给谁</label>
+          <div class="checks">
+            <button class="choice active" data-tag-scope="selected">已勾选潜客</button>
+            <button class="choice" data-tag-scope="high-intent">高意向潜客</button>
+            <button class="choice" data-tag-scope="pending-follow">待回访潜客</button>
+            <button class="choice" data-tag-scope="recent-new">近 7 天新增</button>
+          </div>
+          <span class="table-meta" id="tagScopeHint">先选择目标范围，再选择要添加的标签。</span>
+        </div>
+        <div class="form-row">
+          <label>搜索标签</label>
+          <div class="filters">
+            <input class="field" id="tagSearchInput" placeholder="输入标签名称，如 水光复购" />
+            <button class="btn" id="addTagFromSearch">加入已选</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>常用标签</label>
+          <div class="checks" id="tagChoiceList"></div>
+        </div>
+        <div class="material">
+          <strong>已选标签</strong>
+          <span class="table-meta" id="tagTargetText">将为已选潜客添加标签</span>
+          <div class="tag-wrap" id="selectedTagList"></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="confirmTags">确认添加</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="wizardModal" aria-hidden="true">
+    <div class="modal broadcast-wizard-modal" role="dialog" aria-modal="true" aria-labelledby="wizardTitle">
+      <div class="modal-head">
+        <div class="broadcast-modal-title"><strong id="wizardTitle">新建群发任务</strong><span>按步骤完成对象、内容和发送安排</span></div>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="stepper broadcast-stepper" style="padding:0" id="broadcastStepper">
+          <span class="step active" data-wizard-step-label="1"><b>1</b>选择发送对象</span><span class="step-line"></span>
+          <span class="step" data-wizard-step-label="2"><b>2</b>编辑群发内容</span><span class="step-line"></span>
+          <span class="step" data-wizard-step-label="3"><b>3</b>设置发送策略</span>
+        </div>
+        <div class="wizard-step-pane" data-wizard-pane="2">
+          <div class="broadcast-step-intro"><span>第 2 步</span><strong>编辑客户会收到的内容</strong></div>
+          <div class="form-row broadcast-composer-panel">
+            <div class="broadcast-composer-head"><div><label>文案编辑区</label><span>点击下方文本框，直接修改本次群发文案。</span></div><span class="broadcast-edit-state"><iconify-icon icon="icon-park-outline:edit"></iconify-icon>可编辑</span></div>
+            <textarea class="textarea" id="broadcastContentInput">张女士您好，近期肌肤屏障修护季已开启，可根据上次皮肤检测结果安排一次补水修护方案。</textarea>
+            <div class="broadcast-editor-tools" aria-label="文案编辑工具"><span>插入变量</span><button class="btn small" type="button" data-insert-broadcast-variable="{客户姓名}">{客户姓名}</button><button class="btn small" type="button" data-insert-broadcast-variable="{消费项目}">{消费项目}</button><button class="btn small" type="button" data-insert-broadcast-variable="{到店时间}">{到店时间}</button></div>
+            <div class="broadcast-copy-suggestions" aria-label="推荐文案"><span>推荐文案</span><button type="button" data-broadcast-template="repurchase">复购提醒</button><button type="button" data-broadcast-template="consult">咨询答疑</button><button type="button" data-broadcast-template="event">到店活动</button></div>
+          </div>
+          <div class="material broadcast-message-preview"><div class="broadcast-preview-head"><strong id="broadcastPreviewTitle">客户私聊预览</strong><span>实时预览</span></div><div class="bubble" id="broadcastMessagePreview">张女士您好，近期肌肤屏障修护季已开启，可根据上次皮肤检测结果安排一次补水修护方案。</div><div class="broadcast-media-preview" id="broadcastMediaPreview"></div><span class="table-meta">预览仅用于核对内容，发送前仍会进入审批。</span></div>
+          <div class="material asset-picker">
+            <div class="asset-picker-head">
+              <div>
+                <strong>群发素材</strong>
+                <span class="table-meta" id="broadcastAssetHint">可从素材库选择，或上传图片/视频后同步入库。</span>
+              </div>
+              <button class="btn small" data-open-upload data-upload-context="broadcast"><iconify-icon icon="icon-park-outline:upload"></iconify-icon>上传图片/视频</button>
+            </div>
+            <div class="tag-wrap" id="broadcastSelectedAssets"></div>
+            <div class="asset-picker-list" id="broadcastAssetChoices"></div>
+          </div>
+        </div>
+        <div class="wizard-step-pane active" data-wizard-pane="1">
+          <div class="broadcast-step-intro"><span>第 1 步</span><strong>选择发送对象</strong></div>
+          <section class="broadcast-audience-workspace" aria-label="触达对象设置">
+            <div class="broadcast-decision-section broadcast-audience-panel">
+              <div class="broadcast-panel-heading"><strong>触达方式</strong><span>客户与客户群使用独立名单和消息预览。</span></div>
+              <div class="form-row" id="broadcastTargetTypeRow">
+                <div class="radio-row broadcast-target-toggle">
+                  <button class="choice active" data-target-type="潜客">发给客户</button>
+                  <button class="choice" data-target-type="客户群">发给客户群</button>
+                </div>
+              </div>
+            </div>
+            <div class="broadcast-decision-section broadcast-source-panel">
+              <div class="broadcast-panel-heading broadcast-mode-heading"><strong>名单来源</strong><span>先用条件圈选；需要精准增减时再进入名单调整。</span></div>
+              <div class="broadcast-mode-options">
+                <button class="broadcast-mode-card active" data-broadcast-filter-mode="smart"><span class="broadcast-mode-icon"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon></span><span><strong>按条件筛选</strong><small>适合批量触达相同需求的人群</small></span><iconify-icon class="broadcast-mode-check" icon="icon-park-outline:check"></iconify-icon></button>
+                <button class="broadcast-mode-card" data-broadcast-filter-mode="manual"><span class="broadcast-mode-icon"><iconify-icon icon="icon-park-outline:every-user"></iconify-icon></span><span><strong>手动挑选</strong><small>适合少量、重点客户或社群</small></span></button>
+              </div>
+            </div>
+            <div class="broadcast-decision-section broadcast-filter-panel">
+              <div class="form-row" id="broadcastTargetFilterRow">
+                <label>筛选条件</label>
+                <div class="broadcast-condition-grid">
+                  <label class="broadcast-condition-field"><span>客户标签</span><div class="broadcast-tag-selector" id="broadcastTagSelector"><input id="broadcastTagInput" type="hidden" value="水光复购"><div class="broadcast-tag-selection" id="broadcastTagSelection"></div><button class="broadcast-tag-trigger" type="button" id="toggleBroadcastTags">选择标签<iconify-icon icon="icon-park-outline:down"></iconify-icon></button><div class="broadcast-tag-menu" id="broadcastTagMenu" hidden><label><input type="checkbox" data-broadcast-tag="水光复购">水光复购</label><label><input type="checkbox" data-broadcast-tag="高意向咨询">高意向咨询</label><label><input type="checkbox" data-broadcast-tag="抗衰咨询">抗衰咨询</label><label><input type="checkbox" data-broadcast-tag="术后回访">术后回访</label><button type="button" class="broadcast-tag-done" id="closeBroadcastTags">完成</button></div></div></label>
+                  <label class="broadcast-condition-field"><span>选择发送者</span><span class="broadcast-owner-select"><select class="field" id="broadcastOwnerInput"><option>全部员工</option><option>李运营</option><option>王专员</option><option>赵运营</option></select><iconify-icon icon="icon-park-outline:down"></iconify-icon></span></label>
+                  <div class="actions broadcast-recipient-actions"><button class="btn small" id="manualBroadcastRecipients"><iconify-icon icon="icon-park-outline:edit"></iconify-icon>调整名单</button></div>
+                </div>
+                <p class="broadcast-rule-note">系统会自动去重，并排除黑名单及近 7 天已触达对象。</p>
+              </div>
+            </div>
+          </section>
+          <div class="broadcast-risk-banner"><iconify-icon icon="icon-park-outline:attention"></iconify-icon><span><strong>发现 1 条 P0 术后客诉风险客户，已默认排除</strong></span><button type="button" class="broadcast-risk-link" data-show-broadcast-risk>查看名单 <iconify-icon icon="icon-park-outline:right"></iconify-icon></button></div>
+          <div class="material" id="broadcastTargetEstimate">
+            <div class="broadcast-estimate-main"><span class="broadcast-estimate-icon"><iconify-icon icon="icon-park-outline:every-user"></iconify-icon></span><div class="broadcast-estimate-result"><span class="broadcast-estimate-label">预计触达</span><strong id="broadcastTargetCount">1,250 位客户</strong><span class="broadcast-exclusion">已自动排除 38 位近 7 天触达用户、黑名单及术后风险客户。</span></div></div><div class="broadcast-estimate-rule"><label class="check-line"><input type="checkbox" id="broadcastRiskExclude" checked> 自动排除术后风险 / 逾期回访客户</label><p>同一客户 / 社群单日仅可接收 1 条营销群发。</p></div>
+          </div>
+        </div>
+        <div class="wizard-step-pane" data-wizard-pane="3">
+          <div class="broadcast-step-intro"><span>第 3 步</span><strong>安排发送并提交审批</strong></div>
+          <section class="broadcast-settings-panel">
+            <strong class="broadcast-section-title">发送设置</strong>
+            <div class="broadcast-time-shortcuts" role="group" aria-label="发送模式"><button class="broadcast-time-card" data-send-type="立即发送"><strong>立即发送</strong><span>审批通过后开始发送</span></button><button class="broadcast-time-card active" data-send-type="定时单次"><strong>定时发送</strong><span>指定日期与时间发送</span></button></div>
+            <div class="form-row"><label>发送时间</label><input class="field" id="broadcastTimeInput" type="datetime-local" min="2026-07-10T00:00" value="2026-07-15T14:30" /></div>
+            <div class="form-row"><label>发送间隔</label><select class="field" id="broadcastIntervalInput"><option>5 秒（推荐）</option><option>3 秒</option><option>8 秒</option><option>10 秒</option></select><span class="table-meta">系统会按此间隔分批发送。</span></div>
+            <div class="form-row"><label>执行方式</label><div class="radio-row"><button class="choice active" data-execution-mode="管理员直发">管理员后台直发</button><button class="choice" data-execution-mode="员工确认">顾问人工确认</button></div></div>
+          </section>
+          <section class="broadcast-task-panel">
+            <strong class="broadcast-section-title">任务信息</strong>
+            <div class="form-row"><label>任务标题</label><input class="field" id="broadcastTitleInput" value="七夕皮肤管理复购提醒" /></div>
+            <div class="form-row"><label>活动归属</label><select class="field" id="broadcastCampaignInput"><option>水光复购</option><option>术后回访</option><option>节日活动</option><option>项目咨询</option></select></div>
+            <div class="form-row"><label>运营备注 <span class="table-meta">选填</span></label><input class="field" id="broadcastNoteInput" placeholder="例如：7 月老客到店权益提醒" /></div>
+            <div class="material broadcast-confirm-card"><strong>提交前请确认</strong><span class="table-meta" id="broadcastConfirmText">确认后提交审批；通过后会按设定的方式进入待发送。</span></div>
+          </section>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" id="saveBroadcastDraft">保存草稿</button>
+        <button class="btn" id="broadcastPrev">上一步</button>
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="submitWizard">下一步</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="broadcastActionModal" aria-hidden="true">
+    <div class="modal broadcast-action-modal" role="dialog" aria-modal="true" aria-labelledby="broadcastActionTitle">
+      <div class="modal-head"><strong id="broadcastActionTitle">群发任务操作</strong><button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button></div>
+      <div class="modal-body" id="broadcastActionBody"></div>
+      <div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="broadcastActionConfirm">确认</button></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="tagEditorModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tagEditorTitle">
+      <div class="modal-head">
+        <strong id="tagEditorTitle">新建标签</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row"><label>标签名称</label><input class="field" id="tagNameInput" placeholder="例如：敏感肌修护" /></div>
+        <div class="form-row"><label>标签类型</label><select class="field" id="tagTypeInput"><option>客户标签</option><option>群标签</option></select></div>
+        <div class="form-row"><label>所属分组</label><select class="field" id="tagGroupInput"></select></div>
+        <div class="form-row"><label>状态</label><select class="field" id="tagStatusInput"><option>启用</option><option>停用</option></select></div>
+        <div class="material">
+          <strong>管理规则</strong>
+          <span class="table-meta">同一类型、同一分组下不可重复；停用后不会出现在批量打标签常用列表，但历史客户标签会保留。</span>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="saveManagedTag">保存标签</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="tagGroupEditorModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tagGroupEditorTitle">
+      <div class="modal-head">
+        <strong id="tagGroupEditorTitle">新建标签分组</strong>
+        <button class="btn small ghost" data-close-modal aria-label="关闭新建标签分组"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row"><label>分组名称</label><input class="field" id="tagGroupNameInput" placeholder="例如：消费偏好" /></div>
+        <div class="form-row"><label>适用标签类型</label><select class="field" id="tagGroupTypeInput"><option>客户标签</option><option>群标签</option></select></div>
+        <div class="material"><strong>分组规则</strong><span class="table-meta">分组名称不可重复；创建后可在新建标签时直接选择，也会出现在标签管理筛选中。</span></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="saveTagGroup">创建分组</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="blacklistModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="blacklistTitle">
+      <div class="modal-head">
+        <strong id="blacklistTitle">添加黑名单客户</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <label>选择客户</label>
+          <input type="hidden" id="blacklistCustomerSelect" />
+          <div class="custom-select modal-select" id="blacklistCustomerSelectBox">
+            <button class="btn custom-select-trigger" type="button" data-toggle-blacklist-select="customer">
+              <span id="blacklistCustomerSelectText">请选择客户</span>
+              <iconify-icon icon="icon-park-outline:down"></iconify-icon>
+            </button>
+            <div class="custom-select-menu" id="blacklistCustomerSelectMenu"></div>
+          </div>
+          <span class="table-meta" id="blacklistCustomerHint">默认带入客户管理列表中最近选中的潜客，可在此切换。</span>
+        </div>
+        <div class="form-row">
+          <label>拉黑原因</label>
+          <input type="hidden" id="blacklistReasonInput" value="运营手动标记" />
+          <div class="custom-select modal-select" id="blacklistReasonSelectBox">
+            <button class="btn custom-select-trigger" type="button" data-toggle-blacklist-select="reason">
+              <span id="blacklistReasonSelectText">运营手动标记</span>
+              <iconify-icon icon="icon-park-outline:down"></iconify-icon>
+            </button>
+            <div class="custom-select-menu" id="blacklistReasonSelectMenu"></div>
+          </div>
+        </div>
+        <div class="material" id="blacklistPreview">
+          <strong>请选择客户</strong>
+          <span class="table-meta">加入后将自动排除群发、活动触达和批量加好友任务。</span>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="confirmBlacklistAdd">确认加入</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="tagGroupTaskModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tagGroupTaskTitle">
+      <div class="modal-head">
+        <strong id="tagGroupTaskTitle">新建标签建群任务</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <label>任务名称</label>
+          <input class="field" id="tagGroupTaskName" value="VIP专属群" />
+        </div>
+        <div class="form-row">
+          <label>筛选条件</label>
+          <select class="field" id="tagGroupRuleInput">
+            <option>高意向 + 老客</option>
+            <option>水光复购 + 老客</option>
+            <option>皮肤管理意向</option>
+            <option>术后回访 + 待复购</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>目标人数</label>
+          <input class="field" id="tagGroupTargetInput" type="number" min="1" value="1250" />
+        </div>
+        <div class="form-row">
+          <label>每群人数</label>
+          <select class="field" id="tagGroupSizeInput">
+            <option value="200">200 人 / 群</option>
+            <option value="150">150 人 / 群</option>
+            <option value="100">100 人 / 群</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>入群欢迎语</label>
+          <textarea class="textarea" id="tagGroupWelcomeInput">欢迎加入[群名称]，这里会同步皮肤管理福利和预约名额。</textarea>
+        </div>
+        <div class="material" id="tagGroupTaskPreview"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="confirmTagGroupTask">创建待执行任务</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="customFormModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="customFormTitle">
+      <div class="modal-head">
+        <strong id="customFormTitle">新建自定义表单</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+          <label>表单名称</label>
+          <input class="field" id="customFormNameInput" value="术后反馈表" />
+        </div>
+        <div class="form-row">
+          <label>收集场景</label>
+          <select class="field" id="customFormSceneInput">
+            <option>术后反馈</option>
+            <option>肤质调查</option>
+            <option>到店预约</option>
+            <option>复购意向</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>字段模板</label>
+          <div class="tag-wrap">
+            <button class="choice active" data-form-field="姓名">姓名</button>
+            <button class="choice active" data-form-field="手机号">手机号</button>
+            <button class="choice active" data-form-field="肤质">肤质</button>
+            <button class="choice active" data-form-field="关注项目">关注项目</button>
+            <button class="choice" data-form-field="术后状态">术后状态</button>
+            <button class="choice" data-form-field="预约时间">预约时间</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>自动标签</label>
+          <input class="field" id="customFormTagInput" value="表单_术后反馈" />
+        </div>
+        <div class="material" id="customFormPreview"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="confirmCustomForm">创建表单</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="uploadModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
+      <div class="modal-head">
+        <strong id="uploadTitle">上传素材</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="upload-zone clickable" id="uploadDropZone">
+          <div>
+            <iconify-icon icon="icon-park-outline:upload" style="font-size:28px;color:var(--teal)"></iconify-icon>
+            <strong style="display:block;margin-top:8px;color:var(--ink)">拖拽文件到此处或点击上传</strong>
+            <span id="uploadFileStatus">支持 JPG/PNG/GIF ≤10MB，MP4 ≤50MB，PDF/Word/PPT ≤20MB</span>
+          </div>
+        </div>
+        <input class="upload-file-input" id="uploadFileInput" type="file" accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx" />
+        <div class="form-row"><label>标题</label><input class="field" id="uploadTitleInput" value="七夕焕肤活动海报" /></div>
+        <div class="form-row"><label>类型</label><select class="field" id="uploadTypeInput"><option>图片</option><option>视频</option><option>文本</option><option>文件</option></select></div>
+        <div class="form-row"><label>目录</label><select class="field" id="uploadDirInput"><option>节日营销</option><option>项目科普</option><option>复购提醒</option><option>术后关怀</option></select></div>
+        <div class="form-row">
+          <label>标签</label>
+          <div class="upload-tags-control">
+            <div class="tag-wrap upload-tags-selected" id="uploadTagList"></div>
+            <div class="upload-tag-picker" id="uploadTagPicker" hidden>
+              <div class="upload-tag-search">
+                <input class="field" id="uploadTagSearch" placeholder="搜索或输入新标签" maxlength="16" />
+                <button class="btn small" type="button" id="createUploadTag">新建并添加</button>
+              </div>
+              <div class="upload-tag-options" id="uploadTagOptions"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="confirmUpload">确认上传</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="accountSwitchModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="accountSwitchTitle">
+      <div class="modal-head">
+        <strong id="accountSwitchTitle">切换演示账号</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="material">
+          <strong>切换后会更新顶部当前账号、数据范围和系统管理里的权限预览</strong>
+          <span class="table-meta">用于演示 PRD 中 admin / manager / operator / content / auditor 的角色边界。</span>
+        </div>
+        <div class="account-list" id="accountSwitchList"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="accountEditModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="accountEditTitle">
+      <div class="modal-head">
+        <strong id="accountEditTitle">新增员工账号</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row"><label>员工姓名</label><input class="field" id="accountNameInput" value="周审核" /></div>
+        <div class="form-row"><label>登录账号</label><input class="field" id="accountLoginInput" value="zhou.audit" /></div>
+        <div class="form-row"><label>角色</label><select class="field" id="accountRoleInput"><option>运营主管</option><option>运营专员</option><option>内容运营</option><option>风控审核员</option><option>管理员</option></select></div>
+        <div class="form-row"><label>数据范围</label><select class="field" id="accountScopeInput"><option>全部医美客户</option><option>悦颜轻医美</option><option>芙洛皮肤管理</option><option>素材与标签</option><option>风控会话</option></select></div>
+        <div class="form-row">
+          <label>模块权限</label>
+          <div class="checks" id="accountPermissionChecks"></div>
+        </div>
+        <div class="material">
+          <strong>管理员权限配置</strong>
+          <span class="table-meta">保存后会立即更新员工可见菜单和当前账号权限预览；角色切换会带入默认权限，可再单独调整。</span>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="saveAccount">保存账号</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="followModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="followTitle">
+      <div class="modal-head">
+        <strong id="followTitle">添加跟进</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row"><label>跟进对象</label><input class="field" id="followCustomerInput" readonly /></div>
+        <div class="form-row"><label>跟进类型</label><select class="field" id="followTypeInput"><option>电话回访</option><option>企微回复</option><option>预约到店</option><option>术后关怀</option></select></div>
+        <div class="form-row"><label>计划时间</label><input class="field" id="followTimeInput" value="2026-07-10 16:30" /></div>
+        <div class="form-row"><label>备注</label><textarea class="textarea" id="followNoteInput">确认皮肤状态，推荐先做皮肤检测后再预约项目。</textarea></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="confirmFollow">保存跟进</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="migrationModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="migrationTitle">
+      <div class="modal-head">
+        <strong id="migrationTitle">新建客户迁移</strong>
+        <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row"><label>迁出员工</label><select class="field" id="migrationFromInput"><option>李运营</option><option>王专员</option><option>赵运营</option><option>陈内容</option></select></div>
+        <div class="form-row"><label>接收员工</label><select class="field" id="migrationToInput"><option>王专员</option><option>李运营</option><option>钱主管</option><option>赵运营</option></select></div>
+        <div class="form-row"><label>迁移范围</label><select class="field" id="migrationScopeInput"><option>悦颜静安店高意向潜客</option><option>芙洛皮肤管理老客复购</option><option>初见美学抗衰咨询</option><option>术后回访客户</option></select></div>
+        <div class="form-row"><label>客户数量</label><input class="field" id="migrationCountInput" value="120" /></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal>取消</button>
+        <button class="btn primary" id="confirmMigration">创建迁移</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="assetPreviewModal" aria-hidden="true">
+    <div class="modal asset-preview-modal" role="dialog" aria-modal="true" aria-labelledby="assetPreviewTitle">
+      <div class="modal-head">
+        <strong id="assetPreviewTitle">素材预览</strong>
+        <button class="btn small ghost" data-close-modal aria-label="关闭素材详情"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body" id="assetPreviewBody"></div>
+      <div class="modal-foot">
+        <button class="btn favorite-action" id="assetPreviewFavorite"><iconify-icon icon="icon-park-outline:star"></iconify-icon><span>收藏素材</span></button>
+        <button class="btn" data-close-modal>关闭</button>
+        <button class="btn primary" id="usePreviewAsset">选入群发草稿</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="assetImageLightbox" aria-hidden="true">
+    <div class="modal asset-image-lightbox" role="dialog" aria-modal="true" aria-labelledby="assetImageLightboxTitle">
+      <div class="modal-head"><strong id="assetImageLightboxTitle">原图查看</strong><button class="btn small ghost" data-close-modal aria-label="关闭原图"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button></div>
+      <div class="asset-image-lightbox-body" id="assetImageLightboxBody"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="assetPackagePreviewModal" aria-hidden="true">
+    <div class="modal asset-package-preview-modal" role="dialog" aria-modal="true" aria-labelledby="assetPackagePreviewTitle">
+      <div class="modal-head">
+        <div><strong id="assetPackagePreviewTitle">素材包详情</strong><span class="table-meta" id="assetPackagePreviewSub">多类型素材的完整内容包</span></div>
+        <button class="btn small ghost" data-close-modal aria-label="关闭素材包详情"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body" id="assetPackagePreviewBody"></div>
+      <div class="modal-foot" id="assetPackagePreviewActions"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="workflowModal" aria-hidden="true">
+    <div class="modal workflow-modal" role="dialog" aria-modal="true" aria-labelledby="workflowTitle">
+      <div class="modal-head">
+        <strong id="workflowTitle">操作确认</strong>
+        <button class="btn small ghost" data-close-modal aria-label="关闭"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="modal-body" id="workflowBody"></div>
+      <div class="modal-foot">
+        <button class="btn" data-close-modal id="workflowCancel">取消</button>
+        <button class="btn primary" id="workflowConfirm">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><iconify-icon icon="icon-park-outline:check-one"></iconify-icon><span id="toastText">操作成功</span></div>
+
+  <!-- @inline-block:script-01 -->
+</body>
+</html>
