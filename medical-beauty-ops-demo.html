@@ -1220,6 +1220,12 @@
       height: calc(100% - 26px);
     }
 
+    .trend-axis { position: absolute; inset: auto 18px 5px; display: flex; justify-content: space-between; color: #7a8882; font-size: 10px; pointer-events: none; }
+    .trend-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 12px; }
+    .trend-summary > div { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; background: #f7faf8; }
+    .trend-summary span { color: var(--muted); font-size: 11px; }
+    .trend-summary strong { color: var(--ink); font-size: 15px; }
+
     .legend {
       display: flex;
       align-items: center;
@@ -1729,7 +1735,7 @@
       display: none;
       position: fixed;
       z-index: 20;
-      top: 20px;
+      top: var(--assistant-rail-reopen-top, 20px);
       right: 0;
       min-height: 48px;
       align-items: center;
@@ -1742,11 +1748,15 @@
       color: var(--teal-dark);
       font-weight: 760;
       box-shadow: 0 5px 10px rgba(31, 95, 80, .1);
-      cursor: pointer;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      transition: top .18s ease, background .18s ease, box-shadow .18s ease;
     }
 
     .assistant-rail-reopen iconify-icon { font-size: 17px; color: var(--teal); }
     .assistant-rail-reopen:hover { background: #edf8f4; }
+    .assistant-rail-reopen.is-dragging { cursor: grabbing; box-shadow: 0 8px 18px rgba(31, 95, 80, .16); transition: none; }
 
     .content.assistant-rail-collapsed .assistant-rail { display: none; }
     .content.assistant-rail-collapsed .assistant-rail-reopen { display: inline-flex; }
@@ -4996,6 +5006,24 @@
       display: grid;
     }
 
+    .broadcast-quick-section { display:grid; gap:10px; }
+    .broadcast-quick-cards { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    .broadcast-quick-card, .broadcast-time-card { display:flex; gap:10px; align-items:flex-start; padding:12px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); text-align:left; cursor:pointer; }
+    .broadcast-quick-card.active, .broadcast-time-card.active { border-color:#8fcab9; background:#f2fbf7; }
+    .broadcast-quick-card iconify-icon { color:var(--teal); font-size:18px; }
+    .broadcast-quick-card span, .broadcast-time-card { display:grid; gap:3px; }
+    .broadcast-quick-card small, .broadcast-time-card span { color:var(--muted); font-size:12px; }
+    .broadcast-selection-summary { display:flex; justify-content:space-between; gap:12px; padding:14px; border:1px solid #cfe8df; border-radius:10px; background:#f7fcfa; }
+    .broadcast-selection-summary > div { display:grid; gap:3px; }
+    .broadcast-selection-summary span { color:var(--muted); font-size:12px; }
+    .broadcast-recipient-list { display:grid; gap:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+    .broadcast-recipient-list > div { display:grid; gap:3px; padding:10px 12px; border-bottom:1px solid var(--line); }
+    .broadcast-recipient-list > div:last-of-type { border-bottom:0; }
+    .broadcast-recipient-list span { color:var(--muted); font-size:12px; }
+    .broadcast-time-shortcuts { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
+    .broadcast-time-card { display:grid; min-height:72px; }
+    @media (max-width:760px) { .broadcast-quick-cards,.broadcast-time-shortcuts { grid-template-columns:1fr 1fr; } }
+
     .form-area {
       padding: 22px;
       display: grid;
@@ -5200,6 +5228,9 @@
 
     .modal-backdrop.show { display: flex; }
 
+    .modal-backdrop:has(.broadcast-wizard-modal),
+    .modal-backdrop:has(.broadcast-action-modal) { align-items: flex-start; overflow-y: auto; }
+
     .modal {
       width: min(560px, 100%);
       background: #fff;
@@ -5228,6 +5259,622 @@
       gap: 10px;
       background: linear-gradient(180deg, #fbfdfc, #f4f9f6);
     }
+
+    .broadcast-wizard-modal { width: min(1180px, calc(100vw - 40px)); max-height: calc(100vh - 32px); display: flex; flex-direction: column; }
+    .broadcast-wizard-modal .modal-head { flex: 0 0 auto; }
+    .broadcast-wizard-modal .modal-body { grid-template-columns: minmax(0, 1fr); overflow-y: auto; padding: 18px 24px; gap: 14px; }
+    .broadcast-wizard-modal .modal-foot { flex: 0 0 auto; position: sticky; bottom: 0; z-index: 1; }
+    .broadcast-wizard-modal .wizard-step-pane.active { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; gap: 14px 18px; }
+    .broadcast-wizard-modal .wizard-step-pane.active > .stepper,
+    .broadcast-wizard-modal .wizard-step-pane.active > .material { grid-column: 1 / -1; }
+    .broadcast-wizard-modal .wizard-step-pane.active > .form-row { margin: 0; }
+    .broadcast-wizard-modal .asset-picker,
+    .broadcast-wizard-modal .broadcast-message-preview,
+    .broadcast-wizard-modal #broadcastTargetEstimate,
+    .broadcast-wizard-modal #broadcastRecipientList { grid-column: 1 / -1; }
+    .broadcast-selection-card { min-width: 0; display: grid; align-content: start; gap: 18px; padding: 28px; border: 1px solid #dfe8e4; border-radius: 12px; background: #fff; }
+    .broadcast-risk-banner { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border: 1px solid #f4dcaf; border-radius: 10px; background: #fff8e9; color: #744711; font-size: 14px; line-height: 1.55; }
+    .broadcast-risk-banner iconify-icon { flex: 0 0 auto; margin-top: 2px; color: #c17018; font-size: 22px; }
+    .broadcast-risk-banner strong { color: #ad541b; }
+    .broadcast-panel-heading { display: grid; gap: 5px; }
+    .broadcast-panel-heading strong { color: var(--ink); font-size: 17px; }
+    .broadcast-panel-heading span, .broadcast-mode-tip { color: var(--muted); font-size: 13px; }
+    .broadcast-mode-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .broadcast-mode-card { position: relative; min-height: 132px; display: flex; align-items: center; gap: 15px; padding: 18px; border: 1px solid #d7e2de; border-radius: 12px; color: var(--ink); background: #fff; text-align: left; cursor: pointer; }
+    .broadcast-mode-card > span:nth-child(2) { display: grid; gap: 6px; }
+    .broadcast-mode-card strong { font-size: 16px; }
+    .broadcast-mode-card small { color: var(--muted); font-size: 13px; font-weight: 500; }
+    .broadcast-mode-card.active { border-color: var(--teal); background: #f6fcf9; box-shadow: inset 0 0 0 1px rgba(31, 122, 104, .08); }
+    .broadcast-mode-icon, .broadcast-estimate-icon { width: 54px; height: 54px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid #d8e8e2; border-radius: 50%; background: #fff; color: var(--teal); font-size: 25px; }
+    .broadcast-mode-check { display: none; position: absolute; right: 12px; top: 12px; color: #fff; font-size: 15px; }
+    .broadcast-mode-card.active .broadcast-mode-check { display: block; width: 24px; height: 24px; padding: 4px; border-radius: 0 8px 0 8px; background: var(--teal); }
+    .broadcast-filter-panel { grid-template-rows: auto 1fr; }
+    .broadcast-target-toggle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; }
+    .broadcast-target-toggle .choice { justify-content: center; min-height: 46px; border-radius: 0; }
+    .broadcast-target-toggle .choice:first-child { border-radius: 8px 0 0 8px; }
+    .broadcast-target-toggle .choice:last-child { margin-left: -1px; border-radius: 0 8px 8px 0; }
+    .broadcast-condition-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .broadcast-condition-grid .field { min-width: 0; }
+    .broadcast-rule-chips { margin-top: 2px; }
+    .broadcast-recipient-actions { justify-content: flex-end; margin-top: auto; }
+    .broadcast-recipient-actions .btn { min-height: 40px; }
+    .broadcast-wizard-modal .broadcast-condition-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .broadcast-wizard-modal .broadcast-time-shortcuts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #broadcastTargetEstimate { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; padding: 22px 28px; border-color: #b8ddd1; background: #f7fcfa; }
+    .broadcast-estimate-main { display: flex; align-items: center; gap: 18px; min-width: 0; }
+    .broadcast-estimate-icon { width: 78px; height: 78px; border: 0; background: #daf2e9; color: #148263; font-size: 35px; }
+    .broadcast-estimate-main > div { display: grid; gap: 6px; }
+    .broadcast-estimate-main strong { color: var(--teal-dark); font-size: 30px; line-height: 1; }
+    .broadcast-exclusion { color: #52635c; font-size: 13px; line-height: 1.5; }
+    .broadcast-estimate-rule { display: grid; gap: 10px; padding-left: 28px; border-left: 1px solid #d9e9e3; }
+    .broadcast-estimate-rule .check-line { color: #127356; font-size: 14px; }
+    .broadcast-estimate-rule p { margin: 0; color: #52635c; font-size: 13px; }
+    .broadcast-action-modal { width: min(780px, calc(100vw - 40px)); max-height: calc(100vh - 72px); display: flex; flex-direction: column; }
+    .broadcast-action-modal .modal-body { overflow-y: auto; }
+    .broadcast-recipient-list { max-height: 210px; overflow-y: auto; background: #fff; }
+    .broadcast-recipient-list > div { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+    .broadcast-recipient-list > div::after { content: "已选"; color: #287154; font-size: 12px; font-weight: 700; }
+    .broadcast-action-modal .workflow-list { max-height: min(440px, 48vh); overflow-y: auto; border: 1px solid var(--line); border-radius: 10px; }
+    .broadcast-action-modal .workflow-list-item { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
+    .broadcast-action-modal .workflow-list-item input { width: 18px; height: 18px; accent-color: var(--teal); }
+    .broadcast-action-modal .workflow-list-item strong { font-size: 14px; }
+    .broadcast-action-modal .workflow-list-item span { margin-top: 0; text-align: right; }
+
+    /* 群发向导：以“当前决策 + 可见结果”为核心，避免配置表单式堆叠。 */
+    .broadcast-wizard-modal {
+      border: 1px solid #d9e5e0;
+      border-radius: 12px;
+      background: #fbfdfc;
+      box-shadow: 0 16px 44px rgba(29, 66, 55, .14);
+    }
+    .broadcast-wizard-modal .modal-head {
+      min-height: 64px;
+      padding: 14px 20px;
+      border-bottom: 1px solid #e1ebe7;
+      background: rgba(255, 255, 255, .92);
+    }
+    .broadcast-modal-title { display: grid; gap: 2px; }
+    .broadcast-modal-title strong { font-size: 16px; letter-spacing: 0; }
+    .broadcast-modal-title span { color: var(--muted); font-size: 12px; }
+    .broadcast-wizard-modal .modal-body { padding: 16px 20px 20px; gap: 14px; }
+    .broadcast-stepper {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr) 48px minmax(0, 1fr);
+      align-items: center;
+      padding: 2px 4px !important;
+    }
+    .broadcast-stepper .step {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #7a8983;
+      font-size: 13px;
+      font-weight: 650;
+    }
+    .broadcast-stepper .step b {
+      width: 26px;
+      height: 26px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #d6e1dc;
+      border-radius: 50%;
+      background: #fff;
+      color: #64746e;
+    }
+    .broadcast-stepper .step.active { color: #126e58; }
+    .broadcast-stepper .step.active b { border-color: #148263; background: #148263; color: #fff; box-shadow: none; }
+    .broadcast-stepper .step-line { height: 1px; margin: 0 12px; background: #dce7e2; }
+    .broadcast-wizard-modal .wizard-step-pane.active { gap: 14px 16px; }
+    .broadcast-step-intro {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 10px;
+      row-gap: 3px;
+      margin-top: 2px;
+      padding: 2px 0;
+    }
+    .broadcast-step-intro > span { grid-row: 1 / span 2; align-self: center; padding: 3px 6px; border-radius: 6px; background: #eaf5f0; color: #137458; font-size: 11px; font-weight: 700; }
+    .broadcast-step-intro strong { align-self: end; color: #17251f; font-size: 15px; }
+    .broadcast-step-intro small { color: #6c7c75; font-size: 12px; }
+    .broadcast-selection-card {
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid #dde8e3;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(41, 78, 65, .035);
+    }
+    .broadcast-panel-heading { gap: 4px; }
+    .broadcast-panel-heading strong { font-size: 16px; letter-spacing: 0; }
+    .broadcast-kicker { color: #148263 !important; font-size: 12px !important; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .broadcast-mode-heading { margin-top: 2px; }
+    .broadcast-audience-panel .form-row { margin: 0; }
+    .broadcast-target-toggle { padding: 3px; border: 1px solid #bfdbd0; border-radius: 9px; overflow: hidden; background: #edf6f2; }
+    .broadcast-target-toggle .choice { min-height: 44px; border: 0; border-radius: 6px !important; background: transparent; color: #52675e; font-size: 14px; font-weight: 650; }
+    .broadcast-target-toggle .choice.active { background: #0f7658; color: #fff; box-shadow: none; }
+    .broadcast-mode-options { gap: 12px; }
+    .broadcast-mode-card { min-height: 92px; gap: 10px; padding: 12px; border-radius: 10px; transition: border-color .16s ease, background .16s ease, transform .16s ease; }
+    .broadcast-mode-card:hover { border-color: #6cad96; transform: translateY(-1px); }
+    .broadcast-mode-card.active { border: 2px solid #0f7658; background: #f2fbf6; box-shadow: none; }
+    .broadcast-mode-card.active > span:nth-child(2)::after { content: "✓ 已选择"; display: inline-block; width: fit-content; margin-top: 3px; color: #0f7658; font-size: 12px; font-weight: 750; }
+    .broadcast-mode-card.active .broadcast-mode-check { display: none; }
+    .broadcast-mode-card strong { font-size: 15px; }
+    .broadcast-mode-card small { line-height: 1.45; }
+    .broadcast-mode-icon { width: 38px; height: 38px; font-size: 18px; background: #f5faf7; }
+    .broadcast-mode-tip { padding: 9px 11px; border-radius: 8px; background: #f6f9f8; line-height: 1.5; }
+    .broadcast-risk-banner { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); padding: 13px 14px; border-color: #f2d8a6; border-radius: 10px; background: #fffaef; font-size: 13px; }
+    .broadcast-risk-link { grid-column: 2; justify-self: start; margin: 2px 0 0; padding: 0; border: 0; background: transparent; color: #a95718; font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+    .broadcast-filter-panel { grid-template-rows: auto 1fr; }
+    .broadcast-filter-panel .form-row { display: grid; align-content: start; gap: 10px; margin: 0; }
+    .broadcast-filter-panel .form-row > label { color: #1c2c25; font-size: 14px; font-weight: 700; }
+    .broadcast-condition-grid { gap: 10px; }
+    .broadcast-condition-field { display: grid; gap: 6px; color: #61736a; font-size: 12px; font-weight: 650; }
+    .broadcast-condition-grid .field { min-height: 44px; background: #fbfcfc; }
+    .broadcast-selected-condition, .broadcast-auto-rules { display: flex; align-items: center; gap: 8px; min-height: 30px; }
+    .broadcast-selected-condition > span, .broadcast-auto-rules > span { flex: 0 0 auto; color: #71827a; font-size: 12px; }
+    .broadcast-selected-condition strong { padding: 5px 9px; border-radius: 999px; background: #e4f4ed; color: #0f7658; font-size: 12px; }
+    .broadcast-rule-chips { margin-top: 0; }
+    .broadcast-rule-chips .chip { min-height: 27px; }
+    .broadcast-recipient-actions { justify-content: flex-start; margin-top: auto; padding-top: 13px; border-top: 1px solid #e6eeea; }
+    .broadcast-recipient-actions .btn { padding-inline: 12px; background: #fff; }
+    #broadcastTargetEstimate { gap: 18px; padding: 16px 18px; border: 1px solid #aad8c7; border-radius: 12px; background: linear-gradient(100deg, #e9f8f1, #fbfdfc); box-shadow: none; }
+    .broadcast-estimate-main { gap: 14px; }
+    .broadcast-estimate-main > .broadcast-estimate-result { gap: 5px; padding: 4px 0; }
+    .broadcast-estimate-label { color: #4a7163; font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+    .broadcast-estimate-main strong { font-size: 26px; letter-spacing: -.02em; }
+    .broadcast-estimate-icon { width: 52px; height: 52px; font-size: 23px; background: #d6f0e4; }
+    .broadcast-estimate-rule { min-height: 58px; padding-left: 18px; }
+    .broadcast-composer-panel { padding: 18px; border: 1px solid #dde8e3; border-radius: 14px; background: #fff; }
+    .broadcast-composer-panel .textarea { min-height: 180px; border-color: #cbded6; background: #fcfefd; line-height: 1.65; }
+    .broadcast-message-preview { padding: 18px; border: 1px solid #d6e7df; border-radius: 14px; background: linear-gradient(160deg, #f2fbf6, #fff); }
+    .broadcast-preview-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .broadcast-preview-head span { padding: 3px 8px; border-radius: 999px; background: #dff2e9; color: #117058; font-size: 11px; font-weight: 700; }
+    .broadcast-message-preview .bubble { margin: 16px 0 10px; max-width: 88%; padding: 12px 14px; border-radius: 4px 12px 12px; background: #fff; box-shadow: 0 2px 8px rgba(37, 76, 62, .08); line-height: 1.6; }
+    .broadcast-wizard-modal .asset-picker { padding: 18px; border-radius: 14px; background: #fff; }
+    .broadcast-wizard-modal [data-wizard-pane="3"] > .form-row { padding: 15px 16px; border: 1px solid #e0e9e5; border-radius: 12px; background: #fff; }
+    .broadcast-wizard-modal [data-wizard-pane="3"] > .form-row label { color: #26362f; font-weight: 700; }
+    .broadcast-wizard-modal .broadcast-time-shortcuts { padding: 4px; border-radius: 14px; background: #eaf1ee; }
+    .broadcast-time-card { min-height: 82px; padding: 16px; border-color: transparent; border-radius: 10px; background: transparent; }
+    .broadcast-time-card.active { border-color: #d5e5de; background: #fff; box-shadow: 0 3px 10px rgba(44, 80, 68, .08); }
+    .broadcast-wizard-modal .modal-foot { min-height: 64px; padding: 12px 20px; border-top: 1px solid #dfe9e5; background: rgba(255, 255, 255, .94); }
+    .broadcast-wizard-modal .modal-foot .btn.primary { min-width: 112px; border-color: #0f7658; background: #0f7658; box-shadow: none; }
+    .broadcast-wizard-modal .modal-foot .btn.primary:hover { border-color: #0a6048; background: #0a6048; }
+
+    /* 第一步采用纵向分区，结构与运营人员的确认顺序一致。 */
+    .broadcast-wizard-modal [data-wizard-pane="1"].active { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro { display: block; margin: 8px 0 12px; padding: 0; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro > span,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro small { display: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro strong { font-size: 20px; line-height: 1.35; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-selection-card { gap: 18px; padding: 20px 28px 24px; border-radius: 12px; box-shadow: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-panel-heading strong { font-size: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-heading { margin: 0; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle { padding: 0; border: 0; border-radius: 0; background: transparent; gap: 12px; overflow: visible; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice { position: relative; justify-content: flex-start; min-height: 76px; padding: 0 18px; border: 1px solid #dbe2e0; border-radius: 10px !important; background: #fff; color: #64706b; font-size: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice::before { content: ""; width: 22px; height: 22px; margin-right: 12px; border: 2px solid #cbd3d1; border-radius: 50%; box-sizing: border-box; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice.active { border: 2px solid #16b982; background: #f1fcf7; color: #1f2d28; box-shadow: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice.active::before { border: 6px solid #16b982; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-options { gap: 12px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card { min-height: 86px; padding: 0 18px; border-color: #dbe2e0; background: #fff; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card.active { border: 2px solid #16b982; background: #f1fcf7; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card.active > span:nth-child(2)::after { display: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-icon { width: 40px; height: 40px; border: 0; border-radius: 8px; background: #f1f4f3; color: #63716b; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card.active .broadcast-mode-icon { background: #d7f8e8; color: #0c9f6b; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card strong { font-size: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card small,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-tip { display: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel { padding-bottom: 18px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel .form-row { gap: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-grid { grid-template-columns: 1fr; gap: 12px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-field { grid-template-columns: 102px minmax(0, 310px); align-items: center; gap: 14px; font-size: 15px; color: #34413d; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-field .field { min-height: 42px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-selected-condition,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-auto-rules { padding-left: 102px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-selected-condition { display: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-auto-rules { position: relative; min-height: 34px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-auto-rules > span { position: absolute; left: 0; color: #34413d; font-size: 15px; font-weight: 650; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-rule-chips .chip { border: 0; background: #f3f5f5; color: #64706b; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-rule-chips .chip::before { content: "✓"; margin-right: 5px; color: #7a8983; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-recipient-actions { margin-top: 8px; padding-top: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-banner { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; padding: 16px 20px; border-color: #f2cf5b; border-radius: 12px; background: #fff9e7; color: #9b5518; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-banner iconify-icon { margin: 0; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-link { grid-column: auto; justify-self: end; margin: 0; color: #a95718; text-decoration: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-link iconify-icon { font-size: 14px; vertical-align: -2px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); min-height: 128px; padding: 22px 28px; border-color: #8fe9c8; border-radius: 12px; background: #ecfff6; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-estimate-icon { width: 64px; height: 64px; border-radius: 12px; background: #fff; box-shadow: 0 2px 8px rgba(25, 139, 98, .08); }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-estimate-main strong { font-size: 32px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-estimate-rule { min-height: 78px; align-content: center; border-left-color: #98efd0; }
+
+    /* 第 2、3 步复刻参考图的双栏工作区：编辑与预览、设置与确认。 */
+    .broadcast-wizard-modal [data-wizard-pane="2"].active {
+      grid-template-columns: minmax(0, 1.45fr) minmax(300px, .75fr);
+      grid-template-areas: "intro intro" "composer preview" "assets preview";
+      align-items: start;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-step-intro { grid-area: intro; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel { grid-area: composer; min-height: 176px; padding: 14px; border-radius: 10px; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel .textarea { min-height: 104px; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-message-preview { grid-area: preview; min-height: 300px; padding: 14px; border-radius: 10px; background: #fff; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-message-preview .bubble { max-width: 94%; margin-top: 10px; background: #ddf7e9; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker { grid-area: assets; padding: 14px; border: 1px solid #dde8e3; border-radius: 10px; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .broadcast-wizard-modal [data-wizard-pane="3"].active {
+      grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr);
+      align-items: start;
+    }
+    .broadcast-settings-panel, .broadcast-task-panel {
+      display: grid;
+      align-content: start;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid #dde8e3;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .broadcast-section-title { color: var(--ink); font-size: 16px; }
+    .broadcast-settings-panel .form-row, .broadcast-task-panel .form-row { margin: 0; }
+    .broadcast-settings-panel .form-row { padding: 0 !important; border: 0 !important; background: transparent !important; }
+    .broadcast-settings-panel .broadcast-time-shortcuts { padding: 0; border-radius: 0; background: transparent; }
+    .broadcast-settings-panel .broadcast-time-card { min-height: 64px; padding: 12px; border: 1px solid #dce4e0; background: #fff; }
+    .broadcast-settings-panel .broadcast-time-card.active { border: 2px solid #16b982; background: #f1fcf7; box-shadow: none; }
+    .broadcast-task-panel .form-row { display: grid; gap: 7px; }
+    .broadcast-task-panel .form-row label { color: #42514b; font-size: 13px; }
+    .broadcast-confirm-card { display: grid; gap: 7px; padding: 14px; border: 1px solid #aee8d0; border-radius: 9px; background: #eafff4; }
+    .broadcast-confirm-card strong { color: #0d7856; font-size: 14px; }
+    .broadcast-confirm-card .table-meta { color: #24735b; line-height: 1.6; }
+    @media (max-width: 760px) {
+      .broadcast-wizard-modal { width: calc(100vw - 20px); max-height: calc(100vh - 20px); }
+      .broadcast-wizard-modal .modal-body { padding: 16px; }
+      .broadcast-wizard-modal .wizard-step-pane.active { grid-template-columns: 1fr; }
+      .broadcast-wizard-modal .wizard-step-pane.active > .material,
+      .broadcast-wizard-modal #broadcastTargetEstimate,
+      .broadcast-wizard-modal #broadcastRecipientList { grid-column: auto; }
+      .broadcast-action-modal { width: calc(100vw - 20px); }
+      .broadcast-action-modal .workflow-list-item { grid-template-columns: auto minmax(0, 1fr); }
+      .broadcast-action-modal .workflow-list-item span { grid-column: 2; text-align: left; }
+      .broadcast-mode-options, .broadcast-condition-grid, #broadcastTargetEstimate { grid-template-columns: 1fr; }
+      .broadcast-selection-card { padding: 18px; }
+      .broadcast-stepper { grid-template-columns: 1fr; gap: 8px; padding: 0 !important; }
+      .broadcast-stepper .step-line { display: none; }
+      .broadcast-stepper .step { padding: 7px 8px; border-radius: 8px; }
+      .broadcast-stepper .step.active { background: #edf8f3; }
+      .broadcast-step-intro { grid-template-columns: 1fr; gap: 4px; }
+      .broadcast-step-intro > span { grid-row: auto; justify-self: start; }
+      .broadcast-estimate-rule { padding: 14px 0 0; border-left: 0; border-top: 1px solid #d9e9e3; }
+    }
+
+    .broadcast-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; }
+    .broadcast-detail-grid > div { min-width: 0; }
+    .broadcast-detail-grid > div > strong { display: block; margin-bottom: 8px; color: var(--ink); font-size: 13px; }
+    .broadcast-history { list-style: none; display: grid; gap: 8px; margin: 0; padding: 0; }
+    .broadcast-history li { display: flex; gap: 8px; justify-content: space-between; align-items: flex-start; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .broadcast-history li strong { color: #34413d; flex: 0 0 auto; }
+    .broadcast-history li span { text-align: right; }
+    .broadcast-alert { margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: #fff6dc; color: #825b16; font-size: 12px; line-height: 1.5; }
+    .broadcast-alert.risk { background: #fff0ee; color: #9d3f3a; }
+    .broadcast-message-preview { display: grid; gap: 10px; background: #f7fbf9; }
+    .broadcast-message-preview .bubble { width: fit-content; max-width: 92%; margin: 0; color: #274239; background: #dff3e8; font-size: 14px; line-height: 1.65; }
+    #broadcastContentGuard { color: #69766f; }
+
+    /* 群发向导最终结构：用清晰的工作区替代叠加卡片。 */
+    .broadcast-wizard-modal { width: min(1120px, calc(100vw - 48px)); background: #fff; }
+    .broadcast-wizard-modal .modal-head { min-height: 58px; padding: 12px 20px; }
+    .broadcast-modal-title strong { font-size: 16px; }
+    .broadcast-modal-title span { display: none; }
+    .broadcast-wizard-modal .modal-body { padding: 16px 20px 20px; background: #fafbfb; }
+    .broadcast-stepper { max-width: 620px; margin: 0 auto 4px; }
+    .broadcast-stepper .step { font-size: 13px; }
+    .broadcast-wizard-modal .wizard-step-pane.active { gap: 16px; }
+    .broadcast-step-intro { padding: 2px 0; }
+    .broadcast-step-intro strong { font-size: 16px; }
+    .broadcast-step-intro small { font-size: 12px; }
+
+    .broadcast-wizard-modal [data-wizard-pane="1"].active {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px 16px;
+      align-items: start;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-banner,
+    .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate,
+    .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastRecipientList { grid-column: 1 / -1; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro { display: grid; margin: 0; padding: 0 0 2px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro > span { display: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro strong { font-size: 18px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro small { display: block; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-selection-card {
+      min-height: 0;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid #dfe7e4;
+      border-radius: 10px;
+      background: #fff;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-panel-heading strong { font-size: 15px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-options { gap: 8px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card {
+      min-height: 64px;
+      padding: 0 14px;
+      border: 1px solid #d6dfdb;
+      border-radius: 8px !important;
+      background: #fff;
+      font-size: 14px;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice::before { width: 18px; height: 18px; margin-right: 9px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice.active,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card.active { border: 1px solid #16a979; background: #f1fbf6; color: #1d3229; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-target-toggle .choice.active::before { border: 5px solid #16a979; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card { gap: 10px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card strong { font-size: 14px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-icon { width: 34px; height: 34px; border-radius: 7px; font-size: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-card small,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-mode-tip { display: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel { gap: 14px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel .form-row { gap: 12px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-field { grid-template-columns: 1fr; gap: 6px; font-size: 12px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-selected-condition { display: flex; padding: 0; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-auto-rules { padding: 0; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-auto-rules > span { position: static; font-size: 12px; font-weight: 500; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-recipient-actions { margin-top: 0; padding-top: 12px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-banner { padding: 12px 14px; border-radius: 8px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate { min-height: 92px; padding: 16px; border-radius: 10px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-estimate-icon { width: 48px; height: 48px; border-radius: 9px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-estimate-main strong { font-size: 26px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-estimate-rule { min-height: 52px; padding-left: 16px; }
+
+    .broadcast-wizard-modal [data-wizard-pane="2"].active {
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      grid-template-areas: "intro intro" "composer preview" "assets preview";
+      align-items: start;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel,
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-message-preview,
+    .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker { border-radius: 10px; box-shadow: none; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel { min-height: 166px; padding: 14px; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel .textarea { min-height: 98px; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-message-preview { min-height: 288px; background: #fff; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker { padding: 14px; }
+
+    .broadcast-wizard-modal [data-wizard-pane="3"].active { grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); align-items: start; }
+    .broadcast-settings-panel, .broadcast-task-panel { gap: 12px; padding: 16px; border-radius: 10px; }
+    .broadcast-section-title { font-size: 15px; }
+    .broadcast-settings-panel .broadcast-time-card { min-height: 58px; padding: 10px 12px; }
+    .broadcast-confirm-card { padding: 12px; }
+
+    .broadcast-wizard-modal button:focus-visible,
+    .broadcast-wizard-modal .field:focus-visible,
+    .broadcast-wizard-modal .textarea:focus-visible { outline: 2px solid #148263; outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .broadcast-wizard-modal { width: calc(100vw - 20px); }
+      .broadcast-wizard-modal [data-wizard-pane="1"].active,
+      .broadcast-wizard-modal [data-wizard-pane="2"].active,
+      .broadcast-wizard-modal [data-wizard-pane="3"].active { grid-template-columns: 1fr; grid-template-areas: none; }
+      .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro,
+      .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel,
+      .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-banner,
+      .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate,
+      .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastRecipientList { grid-column: auto; }
+      .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-step-intro,
+      .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel,
+      .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-message-preview,
+      .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker { grid-area: auto; }
+      .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-grid { grid-template-columns: 1fr; }
+      .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate { grid-template-columns: 1fr; }
+      .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-estimate-rule { padding: 12px 0 0; border-left: 0; border-top: 1px solid #98efd0; }
+    }
+    /* 群发任务：一个决策工作区、一条清楚的提交路径。 */
+    .broadcast-wizard-modal {
+      width: min(1040px, calc(100vw - 40px));
+      height: min(760px, calc(100vh - 32px));
+      max-height: calc(100vh - 32px);
+      border-radius: 12px;
+      background: #fff;
+      isolation: isolate;
+    }
+    .broadcast-wizard-modal .modal-head { min-height: 58px; padding: 12px 20px; background: #fff; }
+    .broadcast-modal-title strong { color: var(--ink); font-size: 16px; }
+    .broadcast-wizard-modal .modal-body { flex: 1 1 auto; min-height: 0; align-content: start; padding: 16px 20px 20px; gap: 16px; background: #f8faf9; }
+    .broadcast-wizard-modal .modal-foot { min-height: 66px; padding: 12px 20px; background: #fff; }
+    .broadcast-wizard-modal .modal-foot .btn { width: 128px; min-width: 128px; height: 40px; min-height: 40px; padding: 0 12px; justify-content: center; }
+    .broadcast-wizard-modal #saveBroadcastDraft { margin-right: auto; }
+    .broadcast-stepper { width: min(100%, 580px); max-width: 580px; margin: 0 auto 2px; }
+    .broadcast-stepper .step { font-size: 13px; }
+    .broadcast-stepper .step b { width: 22px; height: 22px; font-size: 11px; }
+    .broadcast-step-intro { gap: 4px; padding: 2px 0; }
+    .broadcast-step-intro > span { display: none; }
+    .broadcast-wizard-modal .wizard-step-pane .broadcast-step-intro strong { color: var(--ink); font-size: 16px !important; font-weight: 760; line-height: 1.4; }
+    .broadcast-step-intro small { color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+    .broadcast-wizard-modal [data-wizard-pane="1"].active {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-step-intro,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-audience-workspace,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel,
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-risk-banner,
+    .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate,
+    .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastRecipientList { grid-column: 1 / -1; }
+    .broadcast-audience-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: visible;
+      background: #fff;
+    }
+    .broadcast-decision-section { display: grid; gap: 12px; min-width: 0; padding: 16px; }
+    .broadcast-decision-section + .broadcast-decision-section { border-left: 1px solid var(--line); }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-audience-workspace .broadcast-filter-panel { grid-column: 1 / -1; padding: 16px; border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; }
+    .broadcast-panel-heading { gap: 3px; }
+    .broadcast-panel-heading strong { color: var(--ink); font-size: 14px; }
+    .broadcast-panel-heading span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .broadcast-target-toggle, .broadcast-mode-options { gap: 8px; }
+    .broadcast-target-toggle .choice,
+    .broadcast-mode-card {
+      min-height: 54px;
+      padding: 0 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px !important;
+      background: #fff;
+      color: #5c6964;
+      font-size: 14px;
+    }
+    .broadcast-target-toggle .choice { flex: 1; justify-content: flex-start; }
+    .broadcast-target-toggle .choice::before { width: 16px; height: 16px; margin-right: 8px; border-width: 2px; }
+    .broadcast-target-toggle .choice.active,
+    .broadcast-mode-card.active { border: 1px solid var(--teal); background: var(--selected-bg); color: var(--selected-text); box-shadow: inset 0 0 0 1px var(--teal); }
+    .broadcast-target-toggle .choice.active::before { border: 4px solid var(--teal); }
+    .broadcast-mode-card { min-height: 62px; gap: 9px; }
+    .broadcast-mode-icon { width: 30px; height: 30px; border-radius: 7px; background: #f1f4f3; color: #68766f; font-size: 15px; }
+    .broadcast-mode-card.active .broadcast-mode-icon { background: #dff5ea; color: var(--teal); }
+    .broadcast-mode-card strong { font-size: 14px; }
+    .broadcast-mode-card small { display: none; }
+    .broadcast-mode-check { right: 9px; top: 9px; font-size: 15px; }
+
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel {
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel .form-row { gap: 12px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-filter-panel > .form-row > label { color: var(--ink); font-size: 14px; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) auto; gap: 12px; }
+    .broadcast-condition-field { grid-template-columns: 66px minmax(0, 1fr); align-items: center; gap: 8px; color: #55635d; font-size: 12px; }
+    .broadcast-condition-field .field { min-height: 34px; }
+    .broadcast-condition-field select.field { cursor: pointer; border-color: #aecbc0; background-color: #fff; }
+    .broadcast-condition-field select.field:hover { border-color: var(--teal); }
+    .broadcast-owner-select { position: relative; display: block; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-owner-select .field { width: 100%; height: 36px; min-height: 36px; padding-right: 34px; appearance: none; background: #fff; }
+    .broadcast-owner-select > iconify-icon { position: absolute; top: 50%; right: 11px; pointer-events: none; color: var(--teal-dark); font-size: 16px; transform: translateY(-50%); }
+    .broadcast-tag-selector { position: relative; z-index: 8; display: flex; align-items: center; height: 36px; min-height: 36px; gap: 6px; padding: 4px 6px; border: 1px solid #aecbc0; border-radius: 8px; background: #fff; cursor: pointer; }
+    .broadcast-tag-selector:hover { border-color: var(--teal); }
+    .broadcast-tag-selection { display: flex; min-width: 0; flex: 1; gap: 4px; flex-wrap: wrap; }
+    .broadcast-tag-chip { display: inline-flex; align-items: center; gap: 3px; padding: 3px 5px 3px 7px; border-radius: 5px; background: var(--teal-soft); color: var(--teal-dark); font-size: 12px; font-weight: 700; }
+    .broadcast-tag-chip button { display: inline-grid; width: 15px; height: 15px; padding: 0; place-items: center; border: 0; border-radius: 4px; background: transparent; color: var(--teal-dark); }
+    .broadcast-tag-chip button:hover { background: rgba(31, 122, 104, .14); }
+    .broadcast-tag-chip iconify-icon { font-size: 12px; }
+    .broadcast-tag-empty { padding-left: 3px; color: var(--subtle); font-size: 12px; }
+    .broadcast-tag-trigger { display: inline-flex; flex: 0 0 auto; align-items: center; gap: 3px; min-height: 26px; padding: 0 7px; border: 0; border-left: 1px solid var(--line); background: #fff; color: #53615b; font-size: 12px; font-weight: 700; }
+    .broadcast-tag-trigger iconify-icon { color: var(--muted); font-size: 13px; }
+    .broadcast-tag-menu { position: absolute; z-index: 12; top: calc(100% + 6px); right: 0; left: 0; display: grid; gap: 2px; padding: 6px; border: 1px solid var(--line-strong); border-radius: 8px; background: #fff; box-shadow: 0 10px 24px rgba(31, 68, 58, .14); }
+    .broadcast-tag-menu[hidden] { display: none; }
+    .broadcast-tag-menu label { display: flex; align-items: center; gap: 7px; min-height: 30px; padding: 0 7px; border-radius: 5px; color: #3c4b45; font-size: 12px; font-weight: 600; }
+    .broadcast-tag-menu label:hover { background: var(--selected-bg); }
+    .broadcast-tag-done { min-height: 30px; margin-top: 3px; border: 0; border-top: 1px solid var(--line); background: #fff; color: var(--teal-dark); font-size: 12px; font-weight: 800; }
+    .broadcast-tag-done:hover { background: var(--selected-bg); }
+    .broadcast-selected-condition,
+    .broadcast-auto-rules { padding: 0; }
+    .broadcast-selected-condition { display: flex; align-items: center; gap: 8px; }
+    .broadcast-selected-condition > span,
+    .broadcast-auto-rules > span { position: static; color: #55635d; font-size: 12px; font-weight: 600; }
+    .broadcast-auto-rules { display: flex; align-items: center; gap: 8px; min-height: 28px; }
+    .broadcast-rule-chips .chip { border: 0; background: #f2f5f4; color: #66746e; }
+    .broadcast-rule-chips .chip::before { content: "✓"; margin-right: 4px; color: #708079; }
+    .broadcast-recipient-actions { align-self: end; justify-content: flex-start; margin: 0; padding: 0; border: 0; }
+    .broadcast-recipient-actions .btn { min-height: 36px; height: 36px; padding: 0 12px; border-color: #c9ddd5; border-radius: 8px; color: #394942; font-size: 13px; font-weight: 700; background: #fff; }
+    .broadcast-recipient-actions .btn:hover { border-color: var(--teal); color: var(--teal-dark); background: var(--selected-bg); }
+    .broadcast-recipient-actions .btn iconify-icon { color: var(--teal-dark); font-size: 16px; }
+    .broadcast-rule-note { margin: -2px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .broadcast-risk-banner { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid #f1d58f; border-radius: 8px; background: #fff9ea; color: #92541e; font-size: 12px; line-height: 1.45; }
+    .broadcast-risk-banner iconify-icon { margin: 0; color: #bd711c; font-size: 17px; }
+    .broadcast-risk-banner strong { color: #9d581e; }
+    .broadcast-risk-link { justify-self: end; color: #9d581e; font-weight: 700; font-size: 12px; text-decoration: none; }
+    .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate {
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .85fr);
+      min-height: 82px;
+      padding: 14px 16px;
+      border: 1px solid #9bdcc6;
+      border-radius: 10px;
+      background: #effbf6;
+    }
+    .broadcast-estimate-icon { width: 42px; height: 42px; border-radius: 8px; background: #fff; color: var(--teal); }
+    .broadcast-estimate-label { font-size: 12px; }
+    .broadcast-estimate-main strong { color: #176c55; font-size: 24px; }
+    .broadcast-exclusion { font-size: 12px; }
+    .broadcast-estimate-rule { min-height: 44px; padding-left: 16px; border-left-color: #b9e7d5; }
+    .broadcast-estimate-rule p { font-size: 12px; }
+
+    .broadcast-wizard-modal [data-wizard-pane="2"].active {
+      grid-template-columns: minmax(0, 1.4fr) minmax(280px, .75fr);
+      grid-template-areas: "intro intro" "composer preview" "assets preview";
+      gap: 14px;
+      align-items: start;
+    }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-step-intro { grid-area: intro; }
+    .broadcast-composer-panel, .asset-picker, .broadcast-message-preview,
+    .broadcast-settings-panel, .broadcast-task-panel { border: 1px solid var(--line); border-radius: 10px; background: #fff; box-shadow: none; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel { grid-area: composer; min-height: 172px; padding: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel .textarea { min-height: 102px; }
+    .broadcast-composer-head, .broadcast-editor-tools, .broadcast-copy-suggestions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .broadcast-composer-head { justify-content: space-between; }
+    .broadcast-composer-head > div { display: grid; gap: 2px; }
+    .broadcast-composer-head > div > span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .broadcast-edit-state { display: inline-flex; align-items: center; gap: 4px; padding: 3px 7px; border-radius: 5px; background: var(--teal-soft); color: var(--teal-dark); font-size: 12px; font-weight: 700; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel .textarea { min-height: 132px; border: 1px solid #9fcabc; background: #fff; color: var(--ink); font-size: 14px; line-height: 1.65; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel .textarea:hover { border-color: var(--teal); }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel .textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(31, 122, 104, .12); }
+    .broadcast-editor-tools > span, .broadcast-copy-suggestions > span { margin-right: 2px; color: var(--muted); font-size: 12px; }
+    .broadcast-editor-tools .btn { min-height: 26px; padding: 3px 7px; color: var(--teal-dark); background: #fff; }
+    .broadcast-copy-suggestions { padding-top: 9px; border-top: 1px solid #edf1ef; }
+    .broadcast-copy-suggestions button { min-height: 26px; padding: 3px 8px; border: 0; border-radius: 6px; background: #f1f5f3; color: #54625c; font-size: 12px; font-weight: 650; }
+    .broadcast-copy-suggestions button:hover, .broadcast-copy-suggestions button.active { background: var(--teal-soft); color: var(--teal-dark); }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-message-preview { grid-area: preview; min-height: 274px; padding: 16px; background: #fff; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker { grid-area: assets; padding: 16px; }
+    .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .broadcast-message-preview .bubble { background: #dff4e9; font-size: 13px; }
+    .broadcast-media-preview { display: grid; width: min(220px, 100%); gap: 5px; padding: 6px; border: 1px solid #d9e8e2; border-radius: 8px; background: #fff; }
+    .broadcast-media-preview[hidden] { display: none; }
+    .broadcast-media-preview img { display: block; width: 100%; height: 118px; border-radius: 5px; object-fit: cover; }
+    .broadcast-media-preview span { overflow: hidden; color: #46544f; font-size: 12px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+    .broadcast-wizard-modal [data-wizard-pane="2"].active > .broadcast-step-intro { grid-column: 1 / -1 !important; grid-row: 1 !important; }
+    .broadcast-wizard-modal [data-wizard-pane="2"].active > .broadcast-composer-panel { grid-column: 1 !important; grid-row: 2 !important; }
+    .broadcast-wizard-modal [data-wizard-pane="2"].active > .broadcast-message-preview { grid-column: 2 !important; grid-row: 2 / span 2 !important; }
+    .broadcast-wizard-modal [data-wizard-pane="2"].active > .asset-picker { grid-column: 1 !important; grid-row: 3 !important; }
+
+    .broadcast-wizard-modal [data-wizard-pane="3"].active { grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr); gap: 14px; align-items: start; }
+    .broadcast-settings-panel, .broadcast-task-panel { gap: 12px; padding: 16px; }
+    .broadcast-section-title { color: var(--ink); font-size: 14px; }
+    .broadcast-settings-panel .broadcast-time-card { min-height: 54px; padding: 10px 12px; border: 1px solid var(--line-strong); background: #fff; }
+    .broadcast-settings-panel .broadcast-time-card.active { border: 1px solid var(--teal); background: var(--selected-bg); box-shadow: inset 0 0 0 1px var(--teal); }
+    .broadcast-confirm-card { padding: 12px; border: 1px solid #9bdcc6; border-radius: 8px; background: #effbf6; }
+    .broadcast-confirm-card strong, .broadcast-confirm-card .table-meta { color: #176c55; }
+    .broadcast-wizard-modal button:focus-visible,
+    .broadcast-wizard-modal .field:focus-visible,
+    .broadcast-wizard-modal .textarea:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    @media (max-width: 760px) {
+      .broadcast-wizard-modal { width: calc(100vw - 20px); max-height: calc(100vh - 20px); }
+      .broadcast-wizard-modal .modal-body { padding: 14px; }
+      .broadcast-audience-workspace,
+      .broadcast-wizard-modal [data-wizard-pane="1"] #broadcastTargetEstimate,
+      .broadcast-wizard-modal [data-wizard-pane="2"].active,
+      .broadcast-wizard-modal [data-wizard-pane="3"].active { grid-template-columns: 1fr; grid-template-areas: none; }
+      .broadcast-decision-section + .broadcast-decision-section { border-top: 1px solid var(--line); border-left: 0; }
+      .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-step-intro,
+      .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-composer-panel,
+      .broadcast-wizard-modal [data-wizard-pane="2"] .broadcast-message-preview,
+      .broadcast-wizard-modal [data-wizard-pane="2"] .asset-picker { grid-area: auto; }
+      .broadcast-wizard-modal [data-wizard-pane="2"].active > .broadcast-step-intro,
+      .broadcast-wizard-modal [data-wizard-pane="2"].active > .broadcast-composer-panel,
+      .broadcast-wizard-modal [data-wizard-pane="2"].active > .broadcast-message-preview,
+      .broadcast-wizard-modal [data-wizard-pane="2"].active > .asset-picker { grid-column: auto !important; grid-row: auto !important; grid-area: auto !important; }
+      .broadcast-wizard-modal [data-wizard-pane="1"] .broadcast-condition-grid { grid-template-columns: 1fr; }
+      .broadcast-audience-workspace .broadcast-filter-panel { border-left: 0; }
+      .broadcast-estimate-rule { padding: 12px 0 0; border-top: 1px solid #b9e7d5; border-left: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { .broadcast-wizard-modal * { transition: none !important; } }
+
+    .btn.danger { color: #9d3f3a; border-color: #dc938c; background: #fff; }
+    .btn.danger:hover { background: #fff0ee; }
+    @media (max-width: 760px) { .broadcast-detail-grid { grid-template-columns: 1fr; } .broadcast-history li { align-items: flex-start; } }
 
     .asset-preview-modal {
       width: min(720px, 100%);
@@ -5415,6 +6062,85 @@
       display: grid;
       gap: 18px;
     }
+
+    .group-detail-modal { width: min(980px, 100%); }
+
+    .group-detail-body { gap: 16px; }
+
+    .group-detail-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 22px;
+      border: 1px solid #cfe8df;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f2fbf7 0%, #ffffff 68%);
+    }
+
+    .group-detail-identity { display: flex; align-items: center; gap: 16px; min-width: 0; }
+    .group-detail-identity .group-avatar { width: 62px; height: 62px; flex: none; }
+    .group-detail-identity .group-avatar iconify-icon { font-size: 29px; }
+    .group-detail-title { display: grid; gap: 7px; min-width: 0; }
+    .group-detail-title .tag-wrap { gap: 6px; }
+    .group-detail-title h3 { margin: 0; color: var(--ink); font-size: 20px; line-height: 1.3; }
+    .group-detail-title p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+
+.group-engagement {
+  position: relative;
+  width: 82px;
+      height: 82px;
+      flex: none;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: conic-gradient(var(--teal) var(--engagement), #dcefe9 0);
+    }
+
+    .group-engagement::before { content: ""; position: absolute; width: 66px; height: 66px; border-radius: 50%; background: #fff; }
+    .group-engagement div { position: relative; z-index: 1; display: grid; gap: 1px; text-align: center; }
+    .group-engagement strong { color: var(--teal-dark); font-size: 20px; line-height: 1; }
+    .group-engagement span { color: var(--muted); font-size: 10px; font-weight: 760; }
+
+    .group-detail-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; }
+    .group-detail-metrics > div { min-height: 96px; padding: 14px 15px; display: grid; grid-template-columns: 30px minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 9px; align-content: center; border-right: 1px solid var(--line); }
+    .group-detail-metrics > div:last-child { border-right: 0; }
+    .group-detail-metric-icon { grid-row: 1 / -1; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 9px; background: #eef8f4; color: var(--teal); }
+    .group-detail-metrics > div > span:not(.group-detail-metric-icon) { color: var(--muted); font-size: 12px; line-height: 1.25; }
+    .group-detail-metrics strong { color: var(--ink); font-size: 19px; line-height: 1.2; font-variant-numeric: tabular-nums; }
+    .group-detail-metrics small { margin-left: 2px; color: var(--muted); font-size: 11px; font-weight: 700; }
+
+    .group-detail-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+    .group-detail-section { min-width: 0; border: 1px solid var(--line); border-radius: 12px; padding: 17px; background: #fff; }
+    .group-detail-section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 15px; }
+    .group-detail-section-head > div { display: grid; gap: 3px; }
+    .group-detail-section-head strong { color: var(--ink); font-size: 15px; }
+    .group-detail-section-head span { color: var(--muted); font-size: 12px; }
+    .group-member-bars { display: grid; gap: 12px; }
+    .group-member-bar { display: grid; gap: 6px; }
+    .group-member-bar > div { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); font-size: 12px; }
+    .group-member-bar strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+    .group-member-bar i { display: block; height: 7px; overflow: hidden; border-radius: 999px; background: #edf4f1; }
+    .group-member-bar i::after { content: ""; display: block; width: var(--member-ratio); height: 100%; border-radius: inherit; background: var(--teal); }
+    .group-member-bar i.mint::after { background: #77b9a8; }
+    .group-member-bar i.amber::after { background: #d7a650; }
+    .group-insight { display: flex; gap: 7px; margin: 15px 0 0; padding-top: 13px; border-top: 1px solid var(--line); color: #52645e; font-size: 12px; line-height: 1.55; }
+    .group-insight iconify-icon { flex: none; margin-top: 1px; color: #b77a21; }
+
+    .group-activity-timeline { display: grid; gap: 13px; margin: 0; padding: 0; list-style: none; }
+    .group-activity-timeline li { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; min-width: 0; }
+    .group-activity-timeline li:not(:last-child)::after { content: ""; position: absolute; top: 29px; left: 13px; width: 1px; height: 16px; background: #cce5dc; }
+    .group-activity-timeline li > span { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: #eaf7f1; color: var(--teal); }
+    .group-activity-timeline li.next > span { background: #fff4de; color: #ad741f; }
+    .group-activity-timeline li > div { display: grid; gap: 3px; padding-top: 2px; }
+    .group-activity-timeline strong { color: var(--ink); font-size: 13px; line-height: 1.35; }
+    .group-activity-timeline small { color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    .group-notice-card { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 11px; padding: 14px 16px; border: 1px solid #ead9b6; border-radius: 12px; background: #fffdf8; }
+    .group-notice-card > span { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 9px; background: #fff4de; color: #ae7520; }
+    .group-notice-card > div { display: grid; gap: 3px; }
+    .group-notice-card strong { color: #68502c; font-size: 13px; }
+    .group-notice-card p { margin: 0; color: #6f675a; font-size: 12px; line-height: 1.55; }
 
     .customer-detail-hero {
       display: grid;
@@ -5647,6 +6373,19 @@
     @media (max-width: 760px) {
       .customer-detail-modal { max-height: calc(100vh - 24px); }
       .customer-detail-body { padding: 16px; }
+      .group-detail-hero { align-items: flex-start; gap: 14px; padding: 16px; }
+      .group-detail-identity { align-items: flex-start; gap: 12px; }
+      .group-detail-identity .group-avatar { width: 52px; height: 52px; }
+      .group-detail-title h3 { font-size: 17px; }
+      .group-engagement { width: 68px; height: 68px; }
+      .group-engagement::before { width: 54px; height: 54px; }
+      .group-engagement strong { font-size: 17px; }
+      .group-detail-metrics { min-height: 170px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .group-detail-metrics > div { min-height: 84px; padding: 12px; border-bottom: 1px solid var(--line); }
+      .group-detail-metrics > div:nth-child(2) { border-right: 0; }
+      .group-detail-metrics > div:nth-child(n + 3) { border-bottom: 0; }
+      .group-detail-layout { grid-template-columns: 1fr; }
+      .group-detail-section { padding: 15px; }
       .customer-detail-hero { grid-template-columns: 74px minmax(0, 1fr); padding: 20px; }
       .customer-detail-avatar { width: 68px; height: 68px; font-size: 24px; }
       .customer-detail-name-row h3 { font-size: 22px; }
@@ -6836,12 +7575,14 @@
                       <strong>数据趋势</strong>
                       <span>近 7 天潜客、咨询与预约变化</span>
                     </div>
-                    <select class="field"><option>近 7 天</option><option>近 30 天</option></select>
+                    <select class="field" id="trendPeriod"><option value="7">近 7 天</option><option value="30">近 30 天</option></select>
                   </div>
                   <div class="insight-body">
                     <div class="chart-frame" aria-label="数据趋势图">
                       <canvas id="trendCanvas" width="560" height="120" aria-hidden="true"></canvas>
+                      <div class="trend-axis" id="trendAxis" aria-hidden="true"></div>
                     </div>
+                    <div class="trend-summary" id="trendSummary" aria-label="趋势模拟数据"></div>
                     <div class="legend">
                       <span><i class="dot"></i>潜客数</span>
                       <span><i class="dot rose"></i>高意向咨询</span>
@@ -6899,7 +7640,7 @@
               <p>集中处理风险回访、客户跟进、审批与运营执行事项。</p>
             </div>
             <div class="actions">
-              <button class="btn" data-dashboard-view="overview"><iconify-icon icon="icon-park-outline:left"></iconify-icon>返回经营总览</button>
+              <button class="btn" data-close-todo-page><iconify-icon icon="icon-park-outline:left"></iconify-icon>返回经营总览</button>
             </div>
           </div>
 
@@ -7002,7 +7743,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="batchbar" id="batchbar"><span>已选 3 位潜客</span><button class="btn small primary" data-open-tags data-tag-entry="selected">批量打标签</button></div>
+                <div class="batchbar" id="batchbar"><span>已选 3 位潜客</span><div class="actions"><button class="btn small" data-open-tags data-tag-entry="selected">批量打标签</button><button class="btn small primary" data-open-wizard data-broadcast-source="selected-customers"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>向已选客户群发</button></div></div>
                 <table class="customer-table" aria-label="潜客列表">
                   <thead>
                     <tr>
@@ -7064,16 +7805,17 @@
                 </div>
                 <table class="group-table">
                   <colgroup>
-                    <col style="width: 34%" />
+                    <col style="width: 42px" /><col style="width: 31%" />
                     <col style="width: 10%" />
                     <col style="width: 12%" />
                     <col style="width: 13%" />
                     <col style="width: 13%" />
                     <col style="width: 18%" />
                   </colgroup>
-                  <thead><tr><th>群名称</th><th>成员数</th><th>群主</th><th>标签</th><th>最近活跃</th><th>操作</th></tr></thead>
+                  <thead><tr><th><input type="checkbox" id="selectAllGroups" aria-label="全选当前页群组" /></th><th>群名称</th><th>成员数</th><th>群主</th><th>标签</th><th>最近活跃</th><th>操作</th></tr></thead>
                   <tbody id="groupRows"></tbody>
                 </table>
+                <div class="batchbar" id="groupBatchbar"><span>已选 0 个客户群</span><button class="btn small primary" data-open-wizard data-broadcast-source="selected-groups"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>向已选群群发</button></div>
                 <div class="table-footer"><span id="groupCountText">共 100 个群聊</span><div class="pagination" id="groupPager"><button class="btn small" id="groupPrevPage">上一页</button><span class="table-meta" id="groupPageText">第 1 / 10 页</span><button class="btn small" id="groupNextPage">下一页</button></div></div>
               </section>
             </div>
@@ -7156,8 +7898,12 @@
                       </div>
                     </div>
                   </div>
-                  <div class="conversation-detail-pane info-pane" data-conversation-detail-pane="overview" id="conversationOverviewPane"></div>
-                  <div class="conversation-detail-pane info-pane" data-conversation-detail-pane="disposition" id="conversationDispositionPane"></div>
+                  <div class="conversation-detail-pane info-pane" data-conversation-detail-pane="overview" id="conversationOverviewPane">
+                    <div class="conversation-info-card"><strong>客户概览</strong><span class="table-meta">正在加载客户资料…</span></div>
+                  </div>
+                  <div class="conversation-detail-pane info-pane" data-conversation-detail-pane="disposition" id="conversationDispositionPane">
+                    <div class="conversation-info-card"><strong>处理结果与跟进</strong><span class="table-meta">正在加载处理记录…</span></div>
+                  </div>
                 </div>
               </section>
             </div>
@@ -7286,12 +8032,15 @@
                 <div class="panel-head">
                   <div class="panel-title">
                     <strong>群发任务列表</strong>
-                    <span>执行中任务支持暂停，失败目标可单独重试</span>
+                    <span>从草稿到完成，所有群发任务都在这里处理</span>
                   </div>
                   <div class="filters">
                     <button class="tab active" data-broadcast-filter="全部">全部</button>
-                    <button class="tab" data-broadcast-filter="执行中">执行中</button>
-                    <button class="tab" data-broadcast-filter="待审批">待审批</button>
+                    <button class="tab" data-broadcast-filter="草稿">草稿</button>
+                    <button class="tab" data-broadcast-filter="审批中">审批中</button>
+                    <button class="tab" data-broadcast-filter="待定时发送">待定时发送</button>
+                    <button class="tab" data-broadcast-filter="待员工确认">待员工确认</button>
+                    <button class="tab" data-broadcast-filter="发送中">发送中</button>
                     <button class="tab" data-broadcast-filter="已完成">已完成</button>
                   </div>
                 </div>
@@ -7316,7 +8065,7 @@
                 <div class="panel-head">
                   <div class="panel-title">
                     <strong id="broadcastDetailHead">群发任务详情</strong>
-                    <span id="broadcastDetailSub">点击左侧任务可查看内容、目标、素材和执行状态</span>
+                    <span id="broadcastDetailSub">选择一条任务，查看发送对象、进度和下一步操作</span>
                   </div>
                 </div>
                 <div class="stepper">
@@ -7327,13 +8076,13 @@
                 <div class="form-area" id="broadcastDetailBody">
                   <div class="material">
                     <strong>七夕皮肤管理复购提醒</strong>
-                    <span class="table-meta">内容：水光复购文案 + 七夕焕肤海报；目标：1,250 位潜客；时间：2026-07-15 14:30。</span>
+                    <span class="table-meta">内容：水光复购文案 + 七夕焕肤海报；目标：1,250 位客户；时间：2026-07-15 14:30。</span>
                   </div>
                   <div class="form-row">
                     <label>目标与防打扰规则</label>
                     <div class="material">
-                      <strong>1,250 位潜客 / 42 个群</strong>
-                      <span class="table-meta">已自动排除 38 位近 7 天触达过的潜客。</span>
+                      <strong>1,250 位客户 / 42 个客户群</strong>
+                      <span class="table-meta">已自动排除 38 位近 7 天触达过的客户。</span>
                       <div class="tag-wrap">
                         <span class="chip rose">水光复购</span>
                         <span class="chip">高意向咨询</span>
@@ -7888,12 +8637,12 @@
               <strong>当前上下文</strong>
               <div class="assistant-rail-context">
                 <span>正在查看</span>
-                <strong id="assistantRailContextText">工作台 · 优先处理风险会话、复购提醒和待审批群发</strong>
+                <strong id="assistantRailContextText">工作台 · 优先处理风险会话、复购提醒和审批中群发</strong>
                 <details class="assistant-context-details" id="assistantContextDetails">
                   <summary>查看其余 3 项待办</summary>
                   <ul>
                     <li>高意向咨询跟进 · 12 人</li>
-                    <li>水光复购群发 · 待审批</li>
+                    <li>水光复购群发 · 审批中</li>
                     <li>素材审核 · 2 项待处理</li>
                   </ul>
                 </details>
@@ -7915,13 +8664,13 @@
               <strong>推荐操作</strong>
               <div class="assistant-rail-actions" id="assistantRailActions">
                 <button class="assistant-rail-action is-primary" data-assistant-command="dashboard-risk" aria-label="处理风险会话：打开会话并写入安抚回复"><iconify-icon icon="icon-park-outline:attention"></iconify-icon><strong>处理风险</strong></button>
-                <button class="assistant-rail-action" data-assistant-command="dashboard-approval" aria-label="进入群发审批：筛出待审批任务并准备执行"><iconify-icon icon="icon-park-outline:check-correct"></iconify-icon><strong>群发审批</strong></button>
+                <button class="assistant-rail-action" data-assistant-command="dashboard-approval" aria-label="处理群发审批：筛出审批中任务并决定下一步"><iconify-icon icon="icon-park-outline:check-correct"></iconify-icon><strong>处理审批</strong></button>
                 <button class="assistant-rail-action" data-assistant-command="dashboard-broadcast" aria-label="生成复购群发草稿：预填目标标签、素材和发送时间"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon><strong>生成群发</strong></button>
               </div>
             </div>
           </div>
         </aside>
-        <button class="assistant-rail-reopen" id="assistantRailExpand" type="button" data-toggle-assistant-rail aria-label="展开 AI 运营助手" aria-expanded="false"><iconify-icon icon="lucide:sparkles"></iconify-icon><span>展开 AI 助手</span></button>
+        <button class="assistant-rail-reopen" id="assistantRailExpand" type="button" data-toggle-assistant-rail data-assistant-rail-drag aria-label="展开 AI 运营助手；可拖动调整位置" aria-expanded="false" title="拖动调整位置，点击展开 AI 运营助手"><iconify-icon icon="lucide:sparkles"></iconify-icon><span>展开 AI 助手</span></button>
       </section>
     </main>
   </div>
@@ -8001,7 +8750,7 @@
   </div>
 
   <div class="modal-backdrop" id="groupDetailModal" aria-hidden="true">
-    <div class="modal customer-detail-modal" role="dialog" aria-modal="true" aria-labelledby="groupDetailTitle">
+    <div class="modal customer-detail-modal group-detail-modal" role="dialog" aria-modal="true" aria-labelledby="groupDetailTitle">
       <div class="modal-head">
         <div class="customer-detail-heading">
           <strong id="groupDetailTitle">群聊详情</strong>
@@ -8009,7 +8758,7 @@
         </div>
         <button class="btn small ghost" data-close-modal aria-label="关闭群聊详情"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
       </div>
-      <div class="customer-detail-body" id="groupDetailBody"></div>
+      <div class="customer-detail-body group-detail-body" id="groupDetailBody"></div>
     </div>
   </div>
 
@@ -8055,26 +8804,26 @@
   </div>
 
   <div class="modal-backdrop" id="wizardModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="wizardTitle">
+    <div class="modal broadcast-wizard-modal" role="dialog" aria-modal="true" aria-labelledby="wizardTitle">
       <div class="modal-head">
-        <strong id="wizardTitle">新建群发任务</strong>
+        <div class="broadcast-modal-title"><strong id="wizardTitle">新建群发任务</strong><span>按步骤完成对象、内容和发送安排</span></div>
         <button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
       </div>
       <div class="modal-body">
-        <div class="stepper" style="padding:0" id="broadcastStepper">
-          <span class="step active" data-wizard-step-label="1"><b>1</b>选择内容</span><span class="step-line"></span>
-          <span class="step" data-wizard-step-label="2"><b>2</b>选择目标</span><span class="step-line"></span>
-          <span class="step" data-wizard-step-label="3"><b>3</b>设置时间</span>
+        <div class="stepper broadcast-stepper" style="padding:0" id="broadcastStepper">
+          <span class="step active" data-wizard-step-label="1"><b>1</b>选择发送对象</span><span class="step-line"></span>
+          <span class="step" data-wizard-step-label="2"><b>2</b>编辑群发内容</span><span class="step-line"></span>
+          <span class="step" data-wizard-step-label="3"><b>3</b>设置发送策略</span>
         </div>
-        <div class="wizard-step-pane active" data-wizard-pane="1">
-          <div class="form-row">
-            <label>任务标题</label>
-            <input class="field" id="broadcastTitleInput" value="七夕皮肤管理复购提醒" />
-          </div>
-          <div class="form-row">
-            <label>发送内容</label>
+        <div class="wizard-step-pane" data-wizard-pane="2">
+          <div class="broadcast-step-intro"><span>第 2 步</span><strong>编辑客户会收到的内容</strong></div>
+          <div class="form-row broadcast-composer-panel">
+            <div class="broadcast-composer-head"><div><label>文案编辑区</label><span>点击下方文本框，直接修改本次群发文案。</span></div><span class="broadcast-edit-state"><iconify-icon icon="icon-park-outline:edit"></iconify-icon>可编辑</span></div>
             <textarea class="textarea" id="broadcastContentInput">张女士您好，近期肌肤屏障修护季已开启，可根据上次皮肤检测结果安排一次补水修护方案。</textarea>
+            <div class="broadcast-editor-tools" aria-label="文案编辑工具"><span>插入变量</span><button class="btn small" type="button" data-insert-broadcast-variable="{客户姓名}">{客户姓名}</button><button class="btn small" type="button" data-insert-broadcast-variable="{消费项目}">{消费项目}</button><button class="btn small" type="button" data-insert-broadcast-variable="{到店时间}">{到店时间}</button></div>
+            <div class="broadcast-copy-suggestions" aria-label="推荐文案"><span>推荐文案</span><button type="button" data-broadcast-template="repurchase">复购提醒</button><button type="button" data-broadcast-template="consult">咨询答疑</button><button type="button" data-broadcast-template="event">到店活动</button></div>
           </div>
+          <div class="material broadcast-message-preview"><div class="broadcast-preview-head"><strong id="broadcastPreviewTitle">客户私聊预览</strong><span>实时预览</span></div><div class="bubble" id="broadcastMessagePreview">张女士您好，近期肌肤屏障修护季已开启，可根据上次皮肤检测结果安排一次补水修护方案。</div><div class="broadcast-media-preview" id="broadcastMediaPreview"></div><span class="table-meta">预览仅用于核对内容，发送前仍会进入审批。</span></div>
           <div class="material asset-picker">
             <div class="asset-picker-head">
               <div>
@@ -8087,63 +8836,74 @@
             <div class="asset-picker-list" id="broadcastAssetChoices"></div>
           </div>
         </div>
-        <div class="wizard-step-pane" data-wizard-pane="2">
-          <div class="form-row">
-            <label>目标类型</label>
-            <div class="radio-row">
-              <button class="choice active" data-target-type="潜客">按潜客</button>
-              <button class="choice" data-target-type="客户群">按客户群</button>
+        <div class="wizard-step-pane active" data-wizard-pane="1">
+          <div class="broadcast-step-intro"><span>第 1 步</span><strong>选择发送对象</strong></div>
+          <section class="broadcast-audience-workspace" aria-label="触达对象设置">
+            <div class="broadcast-decision-section broadcast-audience-panel">
+              <div class="broadcast-panel-heading"><strong>触达方式</strong><span>客户与客户群使用独立名单和消息预览。</span></div>
+              <div class="form-row" id="broadcastTargetTypeRow">
+                <div class="radio-row broadcast-target-toggle">
+                  <button class="choice active" data-target-type="潜客">发给客户</button>
+                  <button class="choice" data-target-type="客户群">发给客户群</button>
+                </div>
+              </div>
             </div>
-          </div>
-          <div class="form-row">
-            <label>筛选条件</label>
-            <div class="filters">
-              <select class="field" id="broadcastTagInput"><option>水光复购</option><option>高意向咨询</option><option>抗衰咨询</option><option>术后回访</option></select>
-              <select class="field" id="broadcastOwnerInput"><option>全部员工</option><option>李运营</option><option>王专员</option><option>赵运营</option></select>
+            <div class="broadcast-decision-section broadcast-source-panel">
+              <div class="broadcast-panel-heading broadcast-mode-heading"><strong>名单来源</strong><span>先用条件圈选；需要精准增减时再进入名单调整。</span></div>
+              <div class="broadcast-mode-options">
+                <button class="broadcast-mode-card active" data-broadcast-filter-mode="smart"><span class="broadcast-mode-icon"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon></span><span><strong>按条件筛选</strong><small>适合批量触达相同需求的人群</small></span><iconify-icon class="broadcast-mode-check" icon="icon-park-outline:check"></iconify-icon></button>
+                <button class="broadcast-mode-card" data-broadcast-filter-mode="manual"><span class="broadcast-mode-icon"><iconify-icon icon="icon-park-outline:every-user"></iconify-icon></span><span><strong>手动挑选</strong><small>适合少量、重点客户或社群</small></span></button>
+              </div>
             </div>
-          </div>
-          <div class="material">
-            <strong id="broadcastTargetCount">1,250 位潜客 / 42 个群</strong>
-            <span class="table-meta">已自动排除 38 位近 7 天触达过的潜客。</span>
-            <div class="tag-wrap"><span class="chip rose">水光复购</span><span class="chip">高意向咨询</span><span class="chip amber">沉睡 30 天</span></div>
+            <div class="broadcast-decision-section broadcast-filter-panel">
+              <div class="form-row" id="broadcastTargetFilterRow">
+                <label>筛选条件</label>
+                <div class="broadcast-condition-grid">
+                  <label class="broadcast-condition-field"><span>客户标签</span><div class="broadcast-tag-selector" id="broadcastTagSelector"><input id="broadcastTagInput" type="hidden" value="水光复购"><div class="broadcast-tag-selection" id="broadcastTagSelection"></div><button class="broadcast-tag-trigger" type="button" id="toggleBroadcastTags">选择标签<iconify-icon icon="icon-park-outline:down"></iconify-icon></button><div class="broadcast-tag-menu" id="broadcastTagMenu" hidden><label><input type="checkbox" data-broadcast-tag="水光复购">水光复购</label><label><input type="checkbox" data-broadcast-tag="高意向咨询">高意向咨询</label><label><input type="checkbox" data-broadcast-tag="抗衰咨询">抗衰咨询</label><label><input type="checkbox" data-broadcast-tag="术后回访">术后回访</label><button type="button" class="broadcast-tag-done" id="closeBroadcastTags">完成</button></div></div></label>
+                  <label class="broadcast-condition-field"><span>选择发送者</span><span class="broadcast-owner-select"><select class="field" id="broadcastOwnerInput"><option>全部员工</option><option>李运营</option><option>王专员</option><option>赵运营</option></select><iconify-icon icon="icon-park-outline:down"></iconify-icon></span></label>
+                  <div class="actions broadcast-recipient-actions"><button class="btn small" id="manualBroadcastRecipients"><iconify-icon icon="icon-park-outline:edit"></iconify-icon>调整名单</button></div>
+                </div>
+                <p class="broadcast-rule-note">系统会自动去重，并排除黑名单及近 7 天已触达对象。</p>
+              </div>
+            </div>
+          </section>
+          <div class="broadcast-risk-banner"><iconify-icon icon="icon-park-outline:attention"></iconify-icon><span><strong>发现 1 条 P0 术后客诉风险客户，已默认排除</strong></span><button type="button" class="broadcast-risk-link" data-show-broadcast-risk>查看名单 <iconify-icon icon="icon-park-outline:right"></iconify-icon></button></div>
+          <div class="material" id="broadcastTargetEstimate">
+            <div class="broadcast-estimate-main"><span class="broadcast-estimate-icon"><iconify-icon icon="icon-park-outline:every-user"></iconify-icon></span><div class="broadcast-estimate-result"><span class="broadcast-estimate-label">预计触达</span><strong id="broadcastTargetCount">1,250 位客户</strong><span class="broadcast-exclusion">已自动排除 38 位近 7 天触达用户、黑名单及术后风险客户。</span></div></div><div class="broadcast-estimate-rule"><label class="check-line"><input type="checkbox" id="broadcastRiskExclude" checked> 自动排除术后风险 / 逾期回访客户</label><p>同一客户 / 社群单日仅可接收 1 条营销群发。</p></div>
           </div>
         </div>
         <div class="wizard-step-pane" data-wizard-pane="3">
-          <div class="form-row">
-            <label>发送方式</label>
-            <div class="radio-row">
-              <button class="choice" data-send-type="立即发送">立即发送</button>
-              <button class="choice active" data-send-type="定时发送">定时发送</button>
-            </div>
-          </div>
-          <div class="form-row">
-            <label>发送时间</label>
-            <input class="field" id="broadcastTimeInput" type="datetime-local" min="2026-07-10T00:00" value="2026-07-15T14:30" />
-            <div class="time-presets">
-              <button class="btn small" data-time-preset="2026-07-10T16:30">今天 16:30</button>
-              <button class="btn small" data-time-preset="2026-07-11T10:00">明天 10:00</button>
-              <button class="btn small" data-time-preset="2026-07-15T14:30">7月15日 14:30</button>
-            </div>
-          </div>
-          <div class="form-row">
-            <label>执行员工</label>
-            <div class="checks">
-              <button class="choice active" data-operator-choice="李运营">李运营</button>
-              <button class="choice active" data-operator-choice="王专员">王专员</button>
-              <button class="choice active" data-operator-choice="赵运营">赵运营</button>
-            </div>
-          </div>
-          <div class="material">
-            <strong>确认信息</strong>
-            <span class="table-meta" id="broadcastConfirmText">内容、目标和时间确认后会生成任务，并进入任务列表。</span>
-          </div>
+          <div class="broadcast-step-intro"><span>第 3 步</span><strong>安排发送并提交审批</strong></div>
+          <section class="broadcast-settings-panel">
+            <strong class="broadcast-section-title">发送设置</strong>
+            <div class="broadcast-time-shortcuts" role="group" aria-label="发送模式"><button class="broadcast-time-card" data-send-type="立即发送"><strong>立即发送</strong><span>审批通过后开始发送</span></button><button class="broadcast-time-card active" data-send-type="定时单次"><strong>定时发送</strong><span>指定日期与时间发送</span></button></div>
+            <div class="form-row"><label>发送时间</label><input class="field" id="broadcastTimeInput" type="datetime-local" min="2026-07-10T00:00" value="2026-07-15T14:30" /></div>
+            <div class="form-row"><label>发送间隔</label><select class="field" id="broadcastIntervalInput"><option>5 秒（推荐）</option><option>3 秒</option><option>8 秒</option><option>10 秒</option></select><span class="table-meta">系统会按此间隔分批发送。</span></div>
+            <div class="form-row"><label>执行方式</label><div class="radio-row"><button class="choice active" data-execution-mode="管理员直发">管理员后台直发</button><button class="choice" data-execution-mode="员工确认">顾问人工确认</button></div></div>
+          </section>
+          <section class="broadcast-task-panel">
+            <strong class="broadcast-section-title">任务信息</strong>
+            <div class="form-row"><label>任务标题</label><input class="field" id="broadcastTitleInput" value="七夕皮肤管理复购提醒" /></div>
+            <div class="form-row"><label>活动归属</label><select class="field" id="broadcastCampaignInput"><option>水光复购</option><option>术后回访</option><option>节日活动</option><option>项目咨询</option></select></div>
+            <div class="form-row"><label>运营备注 <span class="table-meta">选填</span></label><input class="field" id="broadcastNoteInput" placeholder="例如：7 月老客到店权益提醒" /></div>
+            <div class="material broadcast-confirm-card"><strong>提交前请确认</strong><span class="table-meta" id="broadcastConfirmText">确认后提交审批；通过后会按设定的方式进入待发送。</span></div>
+          </section>
         </div>
       </div>
       <div class="modal-foot">
+        <button class="btn" id="saveBroadcastDraft">保存草稿</button>
         <button class="btn" id="broadcastPrev">上一步</button>
         <button class="btn" data-close-modal>取消</button>
         <button class="btn primary" id="submitWizard">下一步</button>
       </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="broadcastActionModal" aria-hidden="true">
+    <div class="modal broadcast-action-modal" role="dialog" aria-modal="true" aria-labelledby="broadcastActionTitle">
+      <div class="modal-head"><strong id="broadcastActionTitle">群发任务操作</strong><button class="btn small ghost" data-close-modal><iconify-icon icon="icon-park-outline:close"></iconify-icon></button></div>
+      <div class="modal-body" id="broadcastActionBody"></div>
+      <div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn primary" id="broadcastActionConfirm">确认</button></div>
     </div>
   </div>
 
@@ -8602,11 +9362,47 @@
     ];
 
     const broadcasts = [
-      { title: "七夕皮肤管理活动", target: 5000, success: 4820, fail: 180, status: "执行中", creator: "林主管", time: "07-10", tag: "高意向咨询", assets: ["七夕焕肤海报", "水光复购文案"], operators: ["李运营", "王专员", "赵运营"], sendType: "定时发送" },
+      { title: "七夕皮肤管理活动", target: 5000, success: 4820, fail: 180, status: "发送中", creator: "林主管", time: "07-10", tag: "高意向咨询", assets: ["七夕焕肤海报", "水光复购文案"], operators: ["李运营", "王专员", "赵运营"], sendType: "定时发送" },
       { title: "水光复购提醒", target: 1250, success: 1250, fail: 0, status: "已完成", creator: "李运营", time: "07-09", tag: "水光复购", assets: ["水光复购文案"], operators: ["李运营"], sendType: "定时发送" },
-      { title: "光电抗衰科普", target: 860, success: 0, fail: 0, status: "待审批", creator: "陈内容", time: "07-10", tag: "抗衰咨询", assets: ["光电抗衰科普"], operators: ["陈内容"], sendType: "定时发送" },
-      { title: "术后关怀第 3 天", target: 88, success: 82, fail: 6, status: "已完成", creator: "王专员", time: "07-08", tag: "术后回访", assets: ["术后注意事项"], operators: ["王专员"], sendType: "立即发送" }
+      { title: "光电抗衰科普", target: 860, success: 0, fail: 0, status: "审批中", creator: "陈内容", time: "07-10", tag: "抗衰咨询", assets: ["光电抗衰科普"], operators: ["陈内容"], sendType: "定时发送" },
+      { title: "术后关怀第 3 天", target: 88, success: 82, fail: 6, status: "已完成", creator: "王专员", time: "07-08", tag: "术后回访", assets: ["术后注意事项"], operators: ["王专员"], sendType: "立即发送" },
+      { title: "老客权益预热草稿", target: 520, success: 0, fail: 0, status: "草稿", creator: "李运营", time: "07-16", tag: "水光复购", assets: ["水光复购文案"], operators: ["李运营"], sendType: "定时发送" },
+      { title: "高意向客户预约提醒", target: 360, success: 0, fail: 0, status: "待定时发送", creator: "林主管", time: "07-17", tag: "高意向咨询", assets: ["七夕焕肤海报"], operators: ["李运营"], sendType: "定时发送" },
+      { title: "VIP 水光复购群", target: 12, success: 0, fail: 0, status: "待员工确认", creator: "王专员", time: "07-17", targetType: "客户群", executionMode: "员工确认", tag: "VIP群", assets: ["水光复购文案"], operators: ["王专员"], sendType: "定时发送" },
+      { title: "敏感肌活动调整", target: 260, success: 0, fail: 0, status: "已驳回", creator: "陈内容", time: "07-15", tag: "抗衰咨询", assets: ["水光复购文案"], operators: ["陈内容"], sendType: "定时发送" },
+      { title: "历史节日触达", target: 420, success: 0, fail: 0, status: "已终止", creator: "林主管", time: "07-12", tag: "高意向咨询", assets: ["七夕焕肤海报"], operators: ["李运营"], sendType: "定时发送" }
     ];
+
+    // 群发任务只通过 transitionBroadcast() 改变状态；列表、审批队列和详情共用此模型。
+    const broadcastStates = {
+      "草稿": { tone: "", next: ["审批中"] },
+      "审批中": { tone: "rose", next: ["待定时发送", "待员工确认", "已驳回", "已终止"] },
+      "待定时发送": { tone: "amber", next: ["发送中", "已终止"] },
+      "待员工确认": { tone: "amber", next: ["发送中", "已终止"] },
+      "发送中": { tone: "amber", next: ["已完成", "已终止"] },
+      "已完成": { tone: "green", next: [] },
+      "已驳回": { tone: "rose", next: ["草稿"] },
+      "已终止": { tone: "red", next: [] }
+    };
+    const legacyBroadcastStatus = { "执行中": "发送中", "待审批": "审批中", "待执行": "待定时发送", "已退回": "已驳回" };
+    function broadcastNow() { return "2026-07-16 10:30"; }
+    function normalizeBroadcast(task, index) {
+      const status = legacyBroadcastStatus[task.status] || task.status || "草稿";
+      const targetType = task.targetType || (index === 3 ? "客户群" : "客户");
+      const executionMode = task.executionMode || (index === 2 ? "员工确认" : "管理员直发");
+      const target = Number(task.target) || 0;
+      return {
+        ...task, id: task.id || `broadcast-${index + 1}`, status, targetType,
+        sendMode: task.sendMode || task.sendType || "定时发送", executionMode,
+        riskResult: task.riskResult || { checkedAt: "2026-07-10 09:00", items: [{ name: "频控", level: "通过", affected: 0 }, { name: "P0 客诉冲突", level: "通过", affected: 0 }, { name: "高风险人群", level: "已排除", affected: 0 }] },
+        approvalHistory: task.approvalHistory || (status === "审批中" ? [{ node: "提交审批", operator: task.creator, time: "2026-07-10 10:00", note: "已提交内容、客群与时段复核" }] : []),
+        execution: task.execution || { paused: false, pending: Math.max(0, target - (Number(task.success) || 0) - (Number(task.fail) || 0)), failureReasons: task.fail ? [{ reason: "客户拒收或会话不可达", count: task.fail }] : [], p0Alert: false },
+        review: task.review || (status === "已完成" ? { clickRate: targetType === "客户群" ? "18.6% 群互动" : "22.4% 点击", conversion: targetType === "客户群" ? "6.3% 入群留存" : "8.7% 到店", churn: targetType === "客户群" ? "退群 0.8%" : "退订 0.3%" } : null),
+        archived: Boolean(task.archived), recipients: task.recipients || Array.from({ length: Math.min(target, 6) }, (_, i) => ({ id: `${task.id || index}-${i}`, name: targetType === "客户群" ? `客户群 ${i + 1}` : `客户 ${i + 1}`, issue: i === 0 ? "近 7 天已触达" : "" })),
+        operationLog: task.operationLog || []
+      };
+    }
+    broadcasts.splice(0, broadcasts.length, ...broadcasts.map(normalizeBroadcast));
 
     const assets = [
       { title: "七夕焕肤海报", type: "图片", dir: "节日营销", project: "皮肤管理", channel: "朋友圈", status: "可用", creator: "陈内容", updated: "07-10", size: "1080×1440", package: "七夕焕肤活动包", tags: ["七夕活动", "朋友圈", "高意向"], uses: 28, favorite: true, icon: "icon-park-outline:pic", image: "assets/materials/qixi-skin-care-poster.png", refs: ["七夕皮肤管理活动", "朋友圈：七夕焕肤活动"] },
@@ -9020,6 +9816,8 @@
     };
     let selectedCustomerIndex = 0;
     let checkedCustomerIndexes = new Set([0, 1, 2]);
+    let checkedGroupIds = new Set();
+    let broadcastSource = "all";
     let tagSelection = new Set();
     let tagMode = "batch";
     let tagTargetScope = "selected";
@@ -9030,7 +9828,9 @@
     let editingAccountId = null;
     let broadcastStep = 1;
     let broadcastTargetType = "潜客";
-    let broadcastSendType = "定时发送";
+    let broadcastSendType = "定时单次";
+    let broadcastFilterMode = "smart";
+    let broadcastExecutionMode = "管理员直发";
     let broadcastOperators = new Set(["李运营", "王专员", "赵运营"]);
     let activeThreadId = "c1";
     let conversationDetailTab = "record";
@@ -9139,7 +9939,7 @@
     }
 
     function tagUsage(tag) {
-      if (tag.type === "群标签") return groups.filter((group) => group.tag === tag.name).length;
+      if (tag.type === "群标签") return groups.filter((group) => groupTagNames(group).includes(tag.name)).length;
       return customers.filter((customer) => customer.tags.includes(tag.name)).length;
     }
 
@@ -9147,6 +9947,17 @@
       return tagCatalog
         .filter((tag) => tag.type === "客户标签" && tag.status === "启用")
         .map((tag) => tag.name);
+    }
+
+    function activeGroupTags() {
+      return tagCatalog
+        .filter((tag) => tag.type === "群标签" && tag.status === "启用")
+        .map((tag) => tag.name);
+    }
+
+    function groupTagNames(group) {
+      const tags = Array.isArray(group?.tags) && group.tags.length ? group.tags : [group?.tag];
+      return tags.filter(Boolean);
     }
 
     function tagGroupsForType(type) {
@@ -9214,7 +10025,8 @@
     function renderTagChoices() {
       const list = $("#tagChoiceList");
       if (!list) return;
-      list.innerHTML = activeCustomerTags().slice(0, 12).map((tag) => `
+      const tags = tagMode === "group" ? activeGroupTags() : activeCustomerTags();
+      list.innerHTML = tags.slice(0, 12).map((tag) => `
         <button class="choice ${tagSelection.has(tag) ? "active" : ""}" data-tag-choice="${tag}">${tag}</button>
       `).join("");
     }
@@ -9236,7 +10048,7 @@
           <td>${tagUsage(tag).toLocaleString()}${tag.type === "群标签" ? " 群" : " 人"}</td>
           <td><span class="chip ${tag.status === "停用" ? "neutral" : ""}">${tag.status}</span></td>
           <td>${tag.updated}</td>
-          <td>
+          <td><input type="checkbox" class="groupCheck" data-group-check="${group.id}" ${checkedGroupIds.has(group.id) ? "checked" : ""}></td><td>
             <div class="tag-actions">
               <button class="btn small" data-edit-managed-tag="${tag.id}">编辑</button>
               ${tag.type === "客户标签" ? `<button class="btn small" data-apply-managed-tag="${tag.id}">应用</button>` : ""}
@@ -9427,8 +10239,8 @@
       const experimentHost = $("#experimentReview");
       const roiHost = $("#roiReview");
       if (!approvalHost || !experimentHost || !roiHost) return;
-      const pending = broadcasts.filter((item) => item.status === "待审批");
-      approvalHost.innerHTML = `<div class="governance-section"><div class="governance-title-row"><strong>待审批任务</strong><button class="btn small" data-open-approval-policy>配置规则</button></div><div class="governance-policy">${approvalPolicy.scope} · ${approvalPolicy.rule}<br>${approvalPolicy.approvers} · SLA ${approvalPolicy.sla}</div>${pending.length ? pending.map((item) => `<div class="governance-row"><div><b>${item.title}</b><span>${item.tag} · ${item.target} 人 · 提交人 ${item.creator}</span></div><div class="actions"><button class="btn small" data-broadcast-approval="reject" data-broadcast-title="${item.title}">退回</button><button class="btn small primary" data-broadcast-approval="approve" data-broadcast-title="${item.title}">通过</button></div></div>`).join("") : `<div class="empty"><strong>无待审批任务</strong><span>新的群发草稿会进入此处。</span></div>`}</div>`;
+      const pending = broadcasts.filter((item) => item.status === "审批中" && !item.archived);
+      approvalHost.innerHTML = `<div class="governance-section"><div class="governance-title-row"><strong>审批中任务</strong><button class="btn small" data-open-approval-policy>配置规则</button></div><div class="governance-policy">${approvalPolicy.scope} · ${approvalPolicy.rule}<br>${approvalPolicy.approvers} · SLA ${approvalPolicy.sla}</div>${pending.length ? pending.map((item) => `<div class="governance-row"><div><b>${item.title}</b><span>${item.targetType} · ${item.target} 个目标 · 提交人 ${item.creator}</span></div><div class="actions"><button class="btn small primary" data-open-approval="${item.id}">处理审批</button></div></div>`).join("") : `<div class="empty"><strong>无审批中任务</strong><span>草稿通过前置风控后会进入此处。</span></div>`}</div>`;
       experimentHost.innerHTML = `<div class="governance-section"><strong>实验对照</strong>${growthExperiments.map((item) => `<div class="experiment-row"><b>${item.name}</b><span>${item.channel} · ${item.audience} · ${item.sample}</span><div><em>A ${item.control}</em><em>B ${item.variant}</em><strong>${item.lift}</strong></div><span>${item.confidence}</span><small>${item.guardrail}</small><span class="chip ${item.status === "进行中" ? "amber" : ""}">${item.status}</span></div>`).join("")}</div>`;
       roiHost.innerHTML = `<div class="governance-section"><strong>渠道利润 ROI</strong>${roiReviews.map((item) => `<div class="roi-row"><div><b>${item.channel}</b><span>投放 ${item.spend} · ${item.leads} 线索 / ${item.appointments} 预约</span></div><div><strong>利润 ROI ${item.profitRoi}</strong><span>贡献利润 ${item.profit}</span></div><p>营收 ${item.revenue} · ${item.attribution} · 已扣除投放、优惠、履约与退款口径<br>${item.insight}</p></div>`).join("")}</div>`;
     }
@@ -9496,6 +10308,11 @@
       $("#screen-todos").classList.add("active");
       renderTodoPage();
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    function closeTodoPage() {
+      activateScreen("dashboard");
+      window.scrollTo({ top: 0, behavior: "auto" });
+      requestAnimationFrame(drawTrendChart);
     }
 
     function completeTodoByRoute(route, result) {
@@ -9731,7 +10548,7 @@
       const tag = $("#groupTagFilter")?.value || "标签：全部";
       const filtered = groups.filter((group) => {
         const keywordMatch = !keyword || group.name.includes(keyword) || group.owner.includes(keyword) || group.meta.includes(keyword);
-        const tagMatch = tag === "标签：全部" || group.tag === tag;
+        const tagMatch = tag === "标签：全部" || groupTagNames(group).includes(tag);
         return keywordMatch && tagMatch;
       });
       if (filtered.length && !filtered.some((group) => group.id === selectedGroupId)) selectedGroupId = filtered[0].id;
@@ -9763,25 +10580,56 @@
       if ($("#groupPageText")) $("#groupPageText").textContent = `第 ${groupPage} / ${totalPages} 页 · ${from}-${to} / ${filtered.length} 个群聊`;
       if ($("#groupPrevPage")) $("#groupPrevPage").disabled = groupPage <= 1;
       if ($("#groupNextPage")) $("#groupNextPage").disabled = groupPage >= totalPages;
+      if ($("#selectAllGroups")) $("#selectAllGroups").checked = pageRows.length > 0 && pageRows.every((group) => checkedGroupIds.has(group.id));
+      updateGroupBatchbar();
       refreshAssistantMini();
+    }
+
+    function updateGroupBatchbar() {
+      const bar = $("#groupBatchbar");
+      if (!bar) return;
+      bar.classList.toggle("show", checkedGroupIds.size > 0);
+      bar.querySelector("span").textContent = `已选 ${checkedGroupIds.size} 个客户群`;
     }
 
     function openGroupDetail(groupId) {
       const group = groups.find((item) => item.id === groupId) || groups[0];
       if (!group) return;
+      const isRepurchase = groupTypeLabel(group) === "老客复购";
+      const isConsultation = groupTypeLabel(group) === "项目咨询";
+      const engagement = Math.min(96, 68 + (group.members % 25));
+      const weeklyInteractions = Math.round(group.members * (isConsultation ? .52 : .38));
+      const highIntent = Math.max(8, Math.round(group.members * (isConsultation ? .28 : .18)));
+      const pendingFollowUps = Math.max(3, Math.round(highIntent * .22));
+      const memberMix = isRepurchase
+        ? [{ label: "近期待复购", value: 46, tone: "teal" }, { label: "已到店老客", value: 32, tone: "mint" }, { label: "待激活", value: 22, tone: "amber" }]
+        : isConsultation
+          ? [{ label: "高意向咨询", value: 38, tone: "teal" }, { label: "项目了解中", value: 41, tone: "mint" }, { label: "待跟进", value: 21, tone: "amber" }]
+          : [{ label: "活跃会员", value: 44, tone: "teal" }, { label: "权益待领取", value: 35, tone: "mint" }, { label: "低活跃成员", value: 21, tone: "amber" }];
+      const nextAction = isRepurchase ? "发送本周复购档期与权益提醒" : isConsultation ? "补发项目恢复期答疑素材" : "同步本周福利与预约入口";
       selectedGroupId = group.id;
       $("#groupDetailTitle").textContent = group.name;
       $("#groupDetailStatus").textContent = "活跃";
       $("#groupDetailBody").innerHTML = `
-        <div class="customer-detail-top">
-          <span class="group-avatar ${groupAvatarClass(group)}"><iconify-icon icon="icon-park-outline:peoples"></iconify-icon></span>
-          <div><div class="tag-wrap"><span class="chip ${chipClass(group.tag)}">${group.tag}</span><span class="chip">${groupTypeLabel(group)}</span></div><h3>${group.name}</h3><div class="sub">${group.members} 人 · 群主 ${group.owner} · ${group.store || "已同步外部客户群"}</div></div>
+        <section class="group-detail-hero">
+          <div class="group-detail-identity">
+            <span class="group-avatar ${groupAvatarClass(group)}"><iconify-icon icon="icon-park-outline:peoples"></iconify-icon></span>
+            <div class="group-detail-title"><div class="tag-wrap">${groupTagNames(group).map((tag) => `<span class="chip ${chipClass(tag)}">${tag}</span>`).join("")}<span class="chip neutral">${groupTypeLabel(group)}</span></div><h3>${group.name}</h3><p>${group.store || "已同步外部客户群"} · 群主 ${group.owner} · 创建于 ${group.created || "2026-03-15"}</p></div>
+          </div>
+          <div class="group-engagement" style="--engagement:${engagement}%" aria-label="群活跃指数 ${engagement}"><div><strong>${engagement}</strong><span>活跃指数</span></div></div>
+        </section>
+        <section class="group-detail-metrics" aria-label="群组核心指标">
+          <div><span class="group-detail-metric-icon"><iconify-icon icon="icon-park-outline:every-user"></iconify-icon></span><span>群成员</span><strong>${group.members}<small>人</small></strong></div>
+          <div><span class="group-detail-metric-icon"><iconify-icon icon="icon-park-outline:message"></iconify-icon></span><span>本周互动</span><strong>${weeklyInteractions}<small>次</small></strong></div>
+          <div><span class="group-detail-metric-icon"><iconify-icon icon="icon-park-outline:star"></iconify-icon></span><span>高意向成员</span><strong>${highIntent}<small>人</small></strong></div>
+          <div><span class="group-detail-metric-icon"><iconify-icon icon="icon-park-outline:alarm"></iconify-icon></span><span>待跟进</span><strong>${pendingFollowUps}<small>人</small></strong></div>
+        </section>
+        <div class="group-detail-layout">
+          <section class="group-detail-section group-member-mix"><div class="group-detail-section-head"><div><strong>群成员画像</strong><span>用于判断本轮触达重点</span></div><span class="chip neutral">${groupTypeLabel(group)}</span></div><div class="group-member-bars">${memberMix.map((item) => `<div class="group-member-bar"><div><span>${item.label}</span><strong>${item.value}%</strong></div><i class="${item.tone}" style="--member-ratio:${item.value}%"></i></div>`).join("")}</div><p class="group-insight"><iconify-icon icon="icon-park-outline:attention"></iconify-icon>${highIntent} 位成员处于高意向阶段，建议优先承接到顾问或预约入口。</p></section>
+          <section class="group-detail-section group-operations"><div class="group-detail-section-head"><div><strong>运营节奏</strong><span>把群状态转成下一步动作</span></div></div><ol class="group-activity-timeline"><li class="done"><span><iconify-icon icon="icon-park-outline:check-one"></iconify-icon></span><div><strong>群基础信息已同步</strong><small>群主 ${group.owner} · ${group.members} 位成员</small></div></li><li class="done"><span><iconify-icon icon="icon-park-outline:message"></iconify-icon></span><div><strong>最近互动：${group.active}</strong><small>本周累计 ${weeklyInteractions} 次互动</small></div></li><li class="next"><span><iconify-icon icon="icon-park-outline:send-one"></iconify-icon></span><div><strong>建议下一步：${nextAction}</strong><small>发送前请复核人群范围与触达频次</small></div></li></ol></section>
         </div>
-        <div class="customer-detail-grid">
-          <div><span>群类型</span><strong>${groupTypeLabel(group)}</strong></div><div><span>运营标签</span><strong>${group.tag}</strong></div><div><span>创建时间</span><strong>${group.created || "2026-03-15"}</strong></div><div><span>最近活跃</span><strong>${group.active}</strong></div>
-        </div>
-        <div class="material"><strong>群公告 / 运营提示</strong><span>${group.notice || "请按标准口径回复群内咨询，异常情况及时转交门店顾问。"}</span></div>
-        <div class="detail-actions"><button class="btn primary" data-open-thread="${group.id}"><iconify-icon icon="icon-park-outline:comment"></iconify-icon>进群回复</button><button class="btn" data-open-wizard><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>发起群发</button><button class="btn" data-open-tags><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon>编辑标签</button></div>
+        <section class="group-notice-card"><span><iconify-icon icon="icon-park-outline:announcement"></iconify-icon></span><div><strong>群公告与运营口径</strong><p>${group.notice || "请按标准口径回复群内咨询，异常情况及时转交门店顾问。"}</p></div></section>
+        <div class="group-detail-actions"><button class="btn primary" data-open-thread="${group.id}"><iconify-icon icon="icon-park-outline:comment"></iconify-icon>进群回复</button><button class="btn" data-open-wizard><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>发起群发</button><button class="btn" data-open-tags data-edit-group-tags="${group.id}"><iconify-icon icon="icon-park-outline:tag-one"></iconify-icon>编辑标签</button></div>
       `;
       renderGroups();
       refreshAssistantMini();
@@ -10328,7 +11176,7 @@
         target,
         size,
         groups: 0,
-        status: "待执行",
+        status: source === "save" ? "草稿" : "审批中",
         welcome: $("#tagGroupWelcomeInput").value.trim()
       });
       closeModal("#tagGroupTaskModal");
@@ -10489,67 +11337,56 @@
       $("#migrationFailStat").textContent = migrationTasks.filter((task) => task.status === "失败").reduce((sum, task) => sum + task.count, 0).toLocaleString();
     }
 
+    function broadcastIndex(id) { return broadcasts.findIndex((task) => task.id === id); }
+    function transitionBroadcast(task, next, action, note = "") {
+      if (!task || !broadcastStates[next] || !broadcastStates[task.status]?.next.includes(next)) return false;
+      const from = task.status;
+      task.status = next;
+      task.operationLog.unshift({ action, from, to: next, note, operator: currentAccount().name, time: broadcastNow() });
+      recordOperation(action, task.title, `${from} → ${next}${note ? ` · ${note}` : ""}`);
+      return true;
+    }
+    function broadcastAction(task, index) {
+      if (task.status === "草稿" || task.status === "已驳回") return `<button class="btn small primary" data-submit-broadcast="${task.id}">提交审批</button>`;
+      if (task.status === "审批中") return `<button class="btn small" data-open-approval="${task.id}">处理审批</button>`;
+      if (task.status === "待定时发送") return `<button class="btn small primary" data-run-broadcast="${index}">开始发送</button>`;
+      if (task.status === "待员工确认") return `<button class="btn small primary" data-run-broadcast="${index}">员工确认</button>`;
+      return `<button class="btn small" data-detail-broadcast="${index}">详情</button>`;
+    }
     function renderBroadcasts() {
-      const rows = broadcasts.map((item, index) => ({ ...item, index })).filter((item) => broadcastFilter === "全部" || item.status === broadcastFilter);
+      const rows = broadcasts.map((item, index) => ({ ...item, index })).filter((item) => !item.archived && (broadcastFilter === "全部" || item.status === broadcastFilter));
       if (!rows.some((item) => item.index === selectedBroadcastIndex)) selectedBroadcastIndex = rows[0]?.index ?? 0;
-      $("#broadcastRows").innerHTML = rows.length ? rows.map((item) => `
-        <tr data-broadcast-row="${item.index}" class="${item.index === selectedBroadcastIndex ? "broadcast-selected" : ""}">
-          <td><strong>${item.title}</strong><div class="table-meta">${item.status === "执行中" ? "发送进度 96%" : `素材：${(item.assets || ["水光复购文案"]).join("、")}`}</div></td>
-          <td>${item.target}</td>
-          <td>${item.success}</td>
-          <td>${item.fail}</td>
-          <td><span class="chip ${item.status === "执行中" ? "amber" : item.status === "待审批" ? "rose" : ""}">${item.status}</span></td>
-          <td>${item.creator}</td>
-          <td>${item.time}</td>
-          <td class="broadcast-action-cell">${
-            item.status === "待执行" || item.status === "待审批"
-              ? `<button class="btn small primary" data-run-broadcast="${item.index}">执行</button>`
-              : item.fail > 0
-                ? `<button class="btn small" data-retry-broadcast="${item.index}">重试失败</button>`
-                : `<button class="btn small" data-detail-broadcast="${item.index}">详情</button>`
-          }</td>
-        </tr>
-      `).join("") : `<tr><td colspan="8"><div class="empty"><strong>暂无${broadcastFilter}任务</strong><span>可新建群发或切换状态筛选。</span></div></td></tr>`;
+      $("#broadcastRows").innerHTML = rows.length ? rows.map((item) => {
+        const progress = item.target ? Math.round(((item.success + item.fail) / item.target) * 100) : 0;
+        return `<tr data-broadcast-row="${item.index}" class="${item.index === selectedBroadcastIndex ? "broadcast-selected" : ""}">
+          <td><strong>${item.title}</strong><div class="table-meta">${item.targetType} · ${item.status === "发送中" ? `发送进度 ${progress}%` : `素材：${item.assets.join("、")}`}</div></td>
+          <td>${item.target.toLocaleString()}</td><td>${item.success.toLocaleString()}</td><td>${item.fail.toLocaleString()}</td>
+          <td><span class="chip ${broadcastStates[item.status]?.tone || ""}">${item.status}</span></td><td>${item.creator}</td><td>${item.time}</td>
+          <td class="broadcast-action-cell">${broadcastAction(item, item.index)}</td></tr>`;
+      }).join("") : `<tr><td colspan="8"><div class="empty"><strong>暂无${broadcastFilter}任务</strong><span>可新建群发或切换状态筛选。</span></div></td></tr>`;
       $$("[data-broadcast-filter]").forEach((button) => button.classList.toggle("active", button.dataset.broadcastFilter === broadcastFilter));
       renderBroadcastDetail(selectedBroadcastIndex);
     }
-
     function renderBroadcastDetail(index = selectedBroadcastIndex) {
-      const task = broadcasts[index] || broadcasts[0];
-      if (!task || !$("#broadcastDetailBody")) return;
+      const task = broadcasts[index] || broadcasts[0]; if (!task || !$("#broadcastDetailBody")) return;
       selectedBroadcastIndex = broadcasts.indexOf(task);
-      const assetsText = (task.assets || ["水光复购文案"]).join("、");
-      const operators = (task.operators || [task.creator]).join("、");
-      const progress = task.target ? Math.round((Number(task.success) / Number(task.target)) * 100) : 0;
+      const progress = task.target ? Math.round(((task.success + task.fail) / task.target) * 100) : 0;
+      const failureRate = task.target ? ((task.fail / task.target) * 100).toFixed(1) : "0.0";
+      const riskRows = task.riskResult.items.map((item) => `<li><strong>${item.name}</strong><span>${item.level} · 影响 ${item.affected} 个</span></li>`).join("");
+      const history = task.approvalHistory.map((item) => `<li><strong>${item.node}</strong><span>${item.operator} · ${item.time}<br>${item.note}</span></li>`).join("") || "<li><span>尚无审批记录</span></li>";
+      const actionButtons = [];
+      if (["草稿", "已驳回"].includes(task.status)) actionButtons.push(`<button class="btn primary" data-submit-broadcast="${task.id}">提交审批</button>`);
+      if (task.status === "审批中") actionButtons.push(`<button class="btn primary" data-open-approval="${task.id}">处理审批</button>`);
+      if (["待定时发送", "待员工确认"].includes(task.status)) actionButtons.push(`<button class="btn primary" data-run-broadcast="${index}">${task.status === "待员工确认" ? "员工确认并发送" : "管理员开始发送"}</button><button class="btn" data-remind-broadcast="${task.id}">发送前提醒</button><button class="btn" data-edit-broadcast="${task.id}">编辑时间</button><button class="btn danger" data-terminate-broadcast="${task.id}">终止</button>`);
+      if (task.status === "发送中") actionButtons.push(`<button class="btn" data-pause-broadcast="${task.id}">${task.execution.paused ? "继续发送" : "暂停发送"}</button><button class="btn danger" data-terminate-broadcast="${task.id}">终止</button>`);
+      if (task.status === "已完成") actionButtons.push(`<button class="btn primary" data-review-broadcast="${task.id}">查看复盘</button>${task.fail ? `<button class="btn" data-retry-broadcast="${index}">发起失败补发</button>` : ""}<button class="btn" data-copy-broadcast="${task.id}">复制任务</button><button class="btn" data-export-broadcast="${task.id}">导出明细</button><button class="btn" data-archive-broadcast="${task.id}">归档</button>`);
       $("#broadcastDetailHead").textContent = "群发任务详情";
-      $("#broadcastDetailSub").textContent = `${task.status} · ${task.creator} 创建 · ${task.time}`;
-      $("#broadcastDetailBody").innerHTML = `
-        <div class="material">
-          <strong>${task.title}</strong>
-          <span class="table-meta">素材：${assetsText}；目标：${task.target.toLocaleString()} 位潜客；发送方式：${task.sendType || "定时发送"}。</span>
-          <div class="tag-wrap"><span class="chip ${chipClass(task.tag || "")}">${task.tag || "水光复购"}</span><span class="chip ${chipClass(task.status)}">${task.status}</span></div>
-        </div>
-        <div class="metric-row" style="padding:0;border:0">
-          <div class="mini-stat"><span>目标数</span><strong>${task.target.toLocaleString()}</strong></div>
-          <div class="mini-stat"><span>成功</span><strong>${task.success.toLocaleString()}</strong></div>
-          <div class="mini-stat"><span>失败</span><strong>${task.fail.toLocaleString()}</strong></div>
-          <div class="mini-stat"><span>完成率</span><strong>${progress}%</strong></div>
-        </div>
-        <div class="material">
-          <strong>执行进度</strong>
-          <span class="table-meta">${task.status === "执行中" ? "发送中，可继续观察失败目标并重试。" : "任务状态已记录，可查看结果或再次执行相似任务。"}</span>
-          <div class="bar" style="width:100%;margin-top:12px"><i style="width:${Math.min(progress, 100)}%"></i></div>
-        </div>
-        <div class="form-row">
-          <label>执行员工</label>
-          <div class="tag-wrap">${operators.split("、").map((name) => `<span class="chip">${name}</span>`).join("")}</div>
-        </div>
-        <div class="actions">
-          ${task.status === "待执行" || task.status === "待审批" ? `<button class="btn primary" data-run-broadcast="${selectedBroadcastIndex}">执行任务</button>` : ""}
-          ${task.fail > 0 ? `<button class="btn" data-retry-broadcast="${selectedBroadcastIndex}">重试失败</button>` : ""}
-          <button class="btn" data-open-wizard>复制为新群发</button>
-        </div>
-      `;
+      $("#broadcastDetailSub").textContent = `${task.status} · ${task.targetType} · ${task.executionMode}`;
+      $("#broadcastDetailBody").innerHTML = `<div class="material"><strong>${task.title}</strong><span class="table-meta">${task.targetType === "客户群" ? "客户群" : "客户"}目标 ${task.target.toLocaleString()} · ${task.sendMode} · ${task.executionMode}</span><div class="tag-wrap"><span class="chip ${chipClass(task.tag)}">${task.tag}</span><span class="chip ${broadcastStates[task.status]?.tone || ""}">${task.status}</span></div></div>
+        <div class="metric-row" style="padding:0;border:0"><div class="mini-stat"><span>目标</span><strong>${task.target}</strong></div><div class="mini-stat"><span>成功</span><strong>${task.success}</strong></div><div class="mini-stat"><span>待发</span><strong>${task.execution.pending}</strong></div><div class="mini-stat"><span>失败</span><strong>${task.fail}</strong></div></div>
+        <div class="material"><strong>执行监控 ${task.status === "发送中" ? `· ${progress}%` : ""}</strong><span class="table-meta">${task.status === "待员工确认" ? "需由指定员工在企微侧确认后开始；当前为 Demo 状态模拟。" : task.status === "待定时发送" ? "管理员直发队列，发送前 30 分钟会产生提醒。" : "任务状态、失败原因和风险回写均保留在此任务。"}</span><div class="bar" style="width:100%;margin-top:12px"><i style="width:${Math.min(progress, 100)}%"></i></div>${task.fail ? `<div class="broadcast-alert ${Number(failureRate) > 10 ? "risk" : ""}">失败率 ${failureRate}% · ${task.execution.failureReasons.map((r) => `${r.reason} ${r.count}`).join("；")}</div>` : ""}${task.execution.p0Alert ? `<div class="broadcast-alert risk">新增 P0 客诉风险：已暂停新增风险对象，需人工复核。</div>` : ""}</div>
+        <div class="broadcast-detail-grid"><div><strong>前置风控</strong><ul class="broadcast-history">${riskRows}</ul></div><div><strong>审批留痕</strong><ul class="broadcast-history">${history}</ul></div></div>
+        ${task.review ? `<div class="material"><strong>完成复盘</strong><div class="tag-wrap"><span class="chip green">成功率 ${task.target ? ((task.success/task.target)*100).toFixed(1) : 0}%</span><span class="chip">${task.review.clickRate}</span><span class="chip">${task.review.conversion}</span><span class="chip">${task.review.churn}</span></div></div>` : ""}<div class="actions">${actionButtons.join("")}</div>`;
       refreshAssistantMini();
       $$("tr[data-broadcast-row]").forEach((row) => row.classList.toggle("broadcast-selected", Number(row.dataset.broadcastRow) === selectedBroadcastIndex));
     }
@@ -11237,7 +12074,7 @@
 
     function setBroadcastTime(value) {
       $("#broadcastTimeInput").value = value;
-      broadcastSendType = "定时发送";
+      broadcastSendType = "定时单次";
       $$("[data-send-type]").forEach((item) => item.classList.toggle("active", item.dataset.sendType === broadcastSendType));
       renderBroadcastWizard();
     }
@@ -11466,17 +12303,23 @@
         </div>
       `).join("");
       $("#conversationOverviewTab").textContent = thread.type === "群聊" ? "群聊概览" : "客户概览";
+      const conversationCustomer = thread.type === "单客" ? customers.find((customer) => customer.name === thread.title) : null;
+      const lastMessage = thread.messages[thread.messages.length - 1];
+      const followups = conversationCustomer?.followups || [];
       $("#conversationOverviewPane").innerHTML = `
         <div class="conversation-info-card">
           <div class="thread-side-title">
             <strong>${thread.type === "群聊" ? "群聊概览" : "客户概览"}</strong>
             ${thread.type === "单客" ? `<button class="btn small ghost" data-open-customer-from-thread>查看客户详情</button>` : `<span class="chip rose">群聊</span>`}
           </div>
-          <div class="conversation-info-row"><span>来源</span><strong>${thread.side.source}</strong></div>
-          <div class="conversation-info-row"><span>项目</span><strong>${thread.side.project}</strong></div>
+          <div class="conversation-info-row"><span>${thread.type === "群聊" ? "群来源" : "客户来源"}</span><strong>${thread.side.source}</strong></div>
+          <div class="conversation-info-row"><span>归属员工</span><strong>${conversationCustomer?.owner || thread.owner || "未分配"}</strong></div>
+          <div class="conversation-info-row"><span>${thread.type === "群聊" ? "当前主题" : "关注项目"}</span><strong>${thread.side.project}</strong></div>
+          <div class="conversation-info-row"><span>当前状态</span><strong>${conversationCustomer?.status || thread.status || "待跟进"}</strong></div>
+          <div class="conversation-info-row"><span>最近联系</span><strong>${conversationCustomer?.time || lastMessage?.time || "暂无记录"}</strong></div>
           <div class="conversation-info-row"><span>关键标签</span><div class="tag-wrap">${thread.tags.map((tag) => `<span class="chip ${chipClass(tag)}">${tag}</span>`).join("")}</div></div>
           <div class="conversation-info-row"><span>风险等级</span><strong><span class="chip ${riskClass}">${riskText}</span></strong></div>
-          <p class="conversation-info-note">${thread.side.note}</p>
+          <div class="conversation-info-row"><span>建议动作</span><strong>${thread.side.note}</strong></div>
         </div>`;
       const dispositionChoice = thread.dispositionChoice || "processed";
       const dispositionHistory = thread.dispositionHistory || [];
@@ -11484,16 +12327,19 @@
         <div class="conversation-info-card">
           <div class="thread-side-title"><strong>处理结果与跟进</strong><span class="chip">${dispositionHistory.length} 条记录</span></div>
           <div class="risk-actions">
-            <button type="button" class="choice ${dispositionChoice === "processed" ? "active" : ""}" data-disposition-choice="processed">标记已处理</button>
-            <button type="button" class="choice ${dispositionChoice === "ignored" ? "active" : ""}" data-disposition-choice="ignored">误报 / 忽略</button>
+            <button type="button" class="choice ${dispositionChoice === "processed" ? "active" : ""}" data-disposition-choice="processed">已处理</button>
+            <button type="button" class="choice ${dispositionChoice === "ignored" ? "active" : ""}" data-disposition-choice="ignored">无需跟进</button>
           </div>
           <div class="form-row">
-            <label>备注（选填）</label>
-            <textarea class="textarea" id="riskNote" maxlength="200" placeholder="记录处理过程、沟通要点或后续跟进计划">${escapeHtml(thread.lastDispositionNote || "已转交门店顾问，承诺 30 分钟内回电。")}</textarea>
+            <label>处理备注</label>
+            <textarea class="textarea" id="riskNote" maxlength="200" placeholder="记录本次处理结果和后续安排">${escapeHtml(thread.lastDispositionNote || "")}</textarea>
           </div>
           <span class="risk-note-footer">0 / 200</span>
-          <button class="btn primary risk-submit" id="disposeRisk">提交处理结果</button>
-          ${dispositionHistory.length ? `
+          <div class="actions">
+            ${conversationCustomer ? `<button class="btn" type="button" data-open-thread-follow>添加跟进</button>` : ""}
+            <button class="btn primary risk-submit" id="disposeRisk">保存处理结果</button>
+          </div>
+          ${(dispositionHistory.length || followups.length) ? `
             <div class="conversation-history">
               <div class="thread-side-title"><strong>最近跟进记录</strong></div>
               ${dispositionHistory.slice(0, 3).map((item) => `
@@ -11501,6 +12347,13 @@
                   <span class="chip ${item.choice === "误报 / 忽略" ? "" : "green"}">${item.choice}</span>
                   <span><strong>${escapeHtml(item.note || "未填写备注")}</strong></span>
                   <span>${escapeHtml(item.time)} · ${escapeHtml(item.operator)}</span>
+                </div>
+              `).join("")}
+              ${followups.slice(0, 3).map((item) => `
+                <div class="conversation-history-item">
+                  <span class="chip green">${escapeHtml(item.type)}</span>
+                  <span><strong>${escapeHtml(item.note || "已创建跟进")}</strong></span>
+                  <span>${escapeHtml(item.time)}</span>
                 </div>
               `).join("")}
             </div>
@@ -11620,7 +12473,17 @@
       showToast(thread.type === "群聊" ? "群聊回复已发送" : "客户会话回复已发送");
     }
 
+    function renderBroadcastTagSelector() {
+      const input = $("#broadcastTagInput");
+      if (!input) return;
+      const tags = input.value.split("、").filter(Boolean);
+      const selection = $("#broadcastTagSelection");
+      if (selection) selection.innerHTML = tags.map((tag) => `<span class="broadcast-tag-chip">${tag}<button type="button" data-remove-broadcast-tag="${tag}" aria-label="移除${tag}"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button></span>`).join("") || '<span class="broadcast-tag-empty">请选择标签</span>';
+      $$('[data-broadcast-tag]').forEach((checkbox) => { checkbox.checked = tags.includes(checkbox.dataset.broadcastTag); });
+    }
+
     function renderBroadcastWizard() {
+      if (broadcastStep !== 1 && $("#broadcastTagMenu")) $("#broadcastTagMenu").hidden = true;
       $$("[data-wizard-step-label]").forEach((label) => {
         label.classList.toggle("active", Number(label.dataset.wizardStepLabel) <= broadcastStep);
       });
@@ -11628,80 +12491,128 @@
         pane.classList.toggle("active", Number(pane.dataset.wizardPane) === broadcastStep);
       });
       $("#broadcastPrev").style.visibility = broadcastStep === 1 ? "hidden" : "visible";
-      $("#submitWizard").textContent = broadcastStep === 3 ? "提交任务" : "下一步";
+      $("#submitWizard").textContent = broadcastStep === 3 ? "提交审批" : "下一步";
       const title = $("#broadcastTitleInput")?.value || "七夕皮肤管理复购提醒";
       const tag = $("#broadcastTagInput")?.value || "水光复购";
       const time = formatBroadcastTime($("#broadcastTimeInput")?.value);
-      const operators = Array.from(broadcastOperators).join("、") || "未选择";
       const assetText = Array.from(selectedBroadcastAssets).join("、") || "未选择素材";
+      const selectedTargetText = broadcastSource === "selected-customers" ? `已选 ${checkedCustomerIndexes.size} 位客户` : broadcastSource === "selected-groups" ? `已选 ${checkedGroupIds.size} 个客户群` : `按${broadcastTargetType === "客户群" ? "客户群" : "客户"}筛选「${tag}」`;
+      const hasSelectedTargets = broadcastSource === "selected-customers" || broadcastSource === "selected-groups";
+      ["#broadcastTargetTypeRow", "#broadcastTargetFilterRow", "#broadcastTargetEstimate"].forEach((selector) => {
+        const node = $(selector); if (node) node.hidden = hasSelectedTargets;
+      });
       if ($("#broadcastTimeInput")) $("#broadcastTimeInput").disabled = broadcastSendType === "立即发送";
+      $$('[data-send-type]').forEach((card) => card.classList.toggle("active", card.dataset.sendType === broadcastSendType));
+      $$('[data-execution-mode]').forEach((button) => button.classList.toggle("active", button.dataset.executionMode === broadcastExecutionMode));
+      const content = $("#broadcastContentInput")?.value || "";
+      renderBroadcastTagSelector();
+      if ($("#broadcastContentGuard")) $("#broadcastContentGuard").textContent = "支持变量：{客户姓名}、{消费项目}、{到店时间}；内容可直接进入下一步预览发送效果。";
+      if ($("#broadcastMessagePreview")) $("#broadcastMessagePreview").textContent = content.replaceAll("{客户姓名}", "张女士").replaceAll("{消费项目}", "水光项目").replaceAll("{到店时间}", "本周六 14:00");
+      if ($("#broadcastPreviewTitle")) $("#broadcastPreviewTitle").textContent = broadcastTargetType === "客户群" ? "客户群聊预览" : "客户私聊预览";
+      const previewImage = assets.find((asset) => selectedBroadcastAssets.has(asset.title) && asset.type === "图片" && asset.image);
+      if ($("#broadcastMediaPreview")) {
+        $("#broadcastMediaPreview").hidden = !previewImage;
+        $("#broadcastMediaPreview").innerHTML = previewImage ? `<img src="${previewImage.image}" alt="${previewImage.title}"><span>${previewImage.title}</span>` : "";
+      }
       renderBroadcastAssetPicker();
+      const recipients = (broadcastSource === "selected-customers" || (broadcastFilterMode === "manual" && broadcastTargetType === "潜客"))
+        ? Array.from(checkedCustomerIndexes).map((index) => customers[index]).filter(Boolean).map((item) => ({ name: item.name, meta: item.tags.join(" · ") }))
+        : (broadcastSource === "selected-groups" || (broadcastFilterMode === "manual" && broadcastTargetType === "客户群"))
+          ? Array.from(checkedGroupIds).map((id) => groups.find((item) => item.id === id)).filter(Boolean).map((item) => ({ name: item.name, meta: `${item.members} 人 · 群主 ${item.owner}` }))
+          : [];
+      if ($("#broadcastSelectionTitle")) $("#broadcastSelectionTitle").textContent = (broadcastSource === "selected-groups" || (broadcastFilterMode === "manual" && broadcastTargetType === "客户群")) ? "手动勾选客户群" : (broadcastSource === "selected-customers" || broadcastFilterMode === "manual") ? "手动勾选客户" : "按标签筛选客户";
+      if ($("#broadcastSelectionCount")) $("#broadcastSelectionCount").textContent = recipients.length ? `${recipients.length} 个对象` : "智能筛选";
+      if ($("#broadcastRecipientList")) $("#broadcastRecipientList").innerHTML = recipients.length ? recipients.slice(0, 5).map((item) => `<div><strong>${item.name}</strong><span>${item.meta}</span></div>`).join("") + (recipients.length > 5 ? `<span class="table-meta">另有 ${recipients.length - 5} 个对象已选</span>` : "") : `<span class="table-meta">切换到勾选群发后，这里会展示已选对象，可返回列表调整。</span>`;
       if ($("#broadcastConfirmText")) {
-        const timeText = broadcastSendType === "立即发送" ? "立即发送" : `定时发送 ${time}`;
-        $("#broadcastConfirmText").textContent = `${title} · 按${broadcastTargetType}筛选「${tag}」 · 素材：${assetText} · ${timeText} · 执行员工：${operators}`;
+        const timeText = broadcastSendType === "立即发送" ? "立即发送" : `定时单次 ${time}`;
+        $("#broadcastConfirmText").textContent = `${title} · ${selectedTargetText} · 素材：${assetText} · ${timeText} · 执行方式：${broadcastExecutionMode}`;
       }
     }
 
     function resetBroadcastWizard() {
       broadcastStep = 1;
-      broadcastTargetType = "潜客";
-      broadcastSendType = "定时发送";
+      broadcastTargetType = broadcastSource === "selected-groups" ? "客户群" : "潜客";
+      broadcastSendType = "定时单次";
+      broadcastFilterMode = "smart";
+      broadcastExecutionMode = "管理员直发";
       broadcastOperators = new Set(["李运营", "王专员", "赵运营"]);
       selectedBroadcastAssets = new Set(["水光复购文案", "七夕焕肤海报"]);
       renderBroadcastWizard();
       $$("[data-target-type]").forEach((item) => item.classList.toggle("active", item.dataset.targetType === broadcastTargetType));
+      $$("[data-broadcast-filter-mode]").forEach((item) => item.classList.toggle("active", item.dataset.broadcastFilterMode === broadcastFilterMode));
       $$("[data-send-type]").forEach((item) => item.classList.toggle("active", item.dataset.sendType === broadcastSendType));
       $$("[data-operator-choice]").forEach((item) => item.classList.toggle("active", broadcastOperators.has(item.dataset.operatorChoice)));
     }
 
-    function createBroadcastTask(source = "modal") {
-      const title = source === "draft" ? "七夕皮肤管理复购提醒" : ($("#broadcastTitleInput").value.trim() || "未命名群发任务");
-      const tag = source === "draft" ? "水光复购" : $("#broadcastTagInput").value;
-      const time = source === "draft" ? "2026-07-15 14:30" : formatBroadcastTime($("#broadcastTimeInput").value);
-      const target = tag === "水光复购" ? 1250 : tag === "高意向咨询" ? 860 : 520;
-      broadcasts.unshift({
-        title,
-        target,
-        success: 0,
-        fail: 0,
-        status: "待执行",
-        creator: currentAccount().name,
-        time: broadcastSendType === "立即发送" ? "立即" : time.slice(5, 10).replace("-", "-"),
-        targetType: broadcastTargetType,
-        tag,
-        operators: Array.from(broadcastOperators),
-        sendType: broadcastSendType,
-        assets: Array.from(selectedBroadcastAssets)
-      });
-      selectedBroadcastIndex = 0;
-      renderBroadcasts();
-      closeModals();
-      activateScreen("marketing");
-      recordOperation("创建群发", title, `${target.toLocaleString()} 个目标 · ${broadcastSendType}`);
-      showToast(`群发任务已提交：${title}`);
+    let pendingBroadcastId = "";
+    function taskFromWizard() {
+      const tag = $("#broadcastTagInput").value;
+      const manual = broadcastFilterMode === "manual";
+      const target = (broadcastSource === "selected-customers" || (manual && broadcastTargetType === "潜客")) ? checkedCustomerIndexes.size : (broadcastSource === "selected-groups" || (manual && broadcastTargetType === "客户群")) ? checkedGroupIds.size : (tag === "水光复购" ? 1250 : tag === "高意向咨询" ? 860 : 520);
+      const targetType = broadcastSource === "selected-groups" || broadcastTargetType === "客户群" ? "客户群" : "客户";
+      const time = broadcastSendType === "立即发送" ? "立即" : formatBroadcastTime($("#broadcastTimeInput").value);
+      return normalizeBroadcast({ id: `broadcast-${Date.now()}`, title: $("#broadcastTitleInput").value.trim() || "未命名群发任务", target, success: 0, fail: 0, status: "草稿", creator: currentAccount().name, time, targetType, sendMode: broadcastSendType, executionMode: broadcastExecutionMode, interval: $("#broadcastIntervalInput").value, tag: broadcastSource === "selected-groups" ? "已选客户群" : tag, operators: Array.from(broadcastOperators), assets: Array.from(selectedBroadcastAssets), campaign: $("#broadcastCampaignInput").value, note: $("#broadcastNoteInput").value.trim(), content: $("#broadcastContentInput").value.trim(), recipients: targetType === "客户群" ? Array.from(checkedGroupIds).map((id) => ({ id, name: groups.find((g) => g.id === id)?.name || "客户群", issue: "" })) : [] }, broadcasts.length + 1);
     }
-
+    function evaluateBroadcastRisk(task) {
+      const frequent = task.targetType === "客户" ? Math.min(38, Math.round(task.target * .03)) : Math.min(3, Math.round(task.target * .08));
+      const p0 = task.tag === "术后回访" || task.targetType === "客户";
+      const exclude = $("#broadcastRiskExclude")?.checked !== false;
+      task.riskResult = { checkedAt: broadcastNow(), items: [
+        { name: "频控", level: frequent ? "已排除近 7 天触达" : "通过", affected: frequent },
+        { name: "P0 客诉冲突", level: p0 ? (exclude ? "需二次确认，已排除风险对象" : "需二次确认") : "通过", affected: p0 ? 1 : 0 },
+        { name: "高风险人群", level: exclude ? "已排除" : "保留，需确认", affected: exclude ? (p0 ? 1 : 0) : 0 }
+      ] };
+      return { hard: false, confirm: p0 || !exclude, task };
+    }
+    function renderBroadcastRiskModal(result) {
+      pendingBroadcastId = result.task.id;
+      $("#broadcastActionTitle").textContent = result.hard ? "风控拦截" : "提交审批前风险确认";
+      $("#broadcastActionBody").innerHTML = `<div class="workflow-summary"><strong>${result.task.title}</strong><span>已执行频控、P0 客诉与高风险人群检查。</span></div><ul class="broadcast-history">${result.task.riskResult.items.map((item) => `<li><strong>${item.name}</strong><span>${item.level} · 影响 ${item.affected} 个</span></li>`).join("")}</ul>${result.confirm ? `<label class="check-line"><input type="checkbox" id="broadcastRiskConfirm">我已确认 P0 / 频控风险处理结果并同意继续提交</label>` : ""}`;
+      $("#broadcastActionConfirm").textContent = "确认提交审批";
+      $("#broadcastActionConfirm").dataset.broadcastRiskConfirm = "submit";
+      openModal("#broadcastActionModal");
+    }
+    function createBroadcastTask(source = "submit") {
+      const task = taskFromWizard(); broadcasts.unshift(task); selectedBroadcastIndex = 0;
+      if (source === "save") { task.operationLog.unshift({ action: "保存草稿", from: "", to: "草稿", note: "尚未发起风控与审批", operator: currentAccount().name, time: broadcastNow() }); renderBroadcasts(); closeModals(); activateScreen("marketing"); recordOperation("保存群发草稿", task.title, `${task.target} 个目标`); return; }
+      const result = evaluateBroadcastRisk(task); renderBroadcastRiskModal(result); renderBroadcasts(); closeModal("#wizardModal"); activateScreen("marketing");
+    }
+    function submitBroadcastForApproval(task) {
+      if (!transitionBroadcast(task, "审批中", "提交群发审批", "风控检查已写入任务")) return;
+      task.approvalHistory.unshift({ node: "提交审批", operator: currentAccount().name, time: broadcastNow(), note: "提交内容、客群、时段与风控结果复核" });
+      renderBroadcasts(); renderGrowthGovernance(); closeModal("#broadcastActionModal"); showToast("任务已进入审批中队列");
+    }
+    function completeBroadcastTask(task) {
+      if (task.status !== "发送中" || task.execution.paused) return;
+      const fail = Math.max(1, Math.round(task.target * (task.targetType === "客户群" ? .04 : .12)));
+      task.fail = fail; task.success = task.target - fail; task.execution.pending = 0; task.execution.failureReasons = [{ reason: "客户拒收或会话不可达", count: fail }]; task.execution.p0Alert = task.tag === "术后回访";
+      transitionBroadcast(task, "已完成", "完成群发", `成功 ${task.success} · 失败 ${task.fail}`);
+      task.review = { clickRate: task.targetType === "客户群" ? "19.2% 群互动" : "21.8% 点击", conversion: task.targetType === "客户群" ? "7.1% 入群留存" : "8.4% 到店", churn: task.targetType === "客户群" ? "退群 0.9%" : "退订 0.4%" };
+      renderBroadcasts(); renderBroadcastDetail(broadcastIndex(task.id));
+    }
     function runBroadcast(index) {
-      const task = broadcasts[index];
-      if (!task) return;
-      selectedBroadcastIndex = index;
-      task.status = "执行中";
-      renderBroadcasts();
-      renderBroadcastDetail(index);
-      recordOperation("执行群发", task.title, `${task.target} 个目标开始执行`);
-      showToast(`${task.title} 已开始执行`);
-      setTimeout(() => {
-        task.status = "已完成";
-        task.success = Math.max(0, Number(task.target) - 12);
-        task.fail = 12;
-        if (task.title.includes("七夕")) completeTodoByRoute("broadcast-approval", `群发任务已完成，成功 ${task.success} 个目标`);
-        if (task.title.includes("水光") || task.tag === "水光复购") completeTodoByRoute("broadcast-running", `复购提醒已完成，成功 ${task.success} 个目标`);
-        renderBroadcasts();
-        renderBroadcastDetail(index);
-        markOperationFeedback("#broadcastRows tr:first-child");
-        recordOperation("完成群发", task.title, `成功 ${task.success} · 失败 ${task.fail}`);
-        showToast(`${task.title} 执行完成：成功 ${task.success}，失败 ${task.fail}`);
-      }, 700);
+      const task = broadcasts[index]; if (!task || !["待定时发送", "待员工确认"].includes(task.status)) return;
+      transitionBroadcast(task, "发送中", task.status === "待员工确认" ? "员工确认发送" : "管理员开始发送", task.executionMode);
+      task.execution.pending = Math.max(0, Math.round(task.target * .25)); renderBroadcasts(); renderBroadcastDetail(index);
+      setTimeout(() => completeBroadcastTask(task), 700);
+    }
+    function openBroadcastAction(title, body, action, taskId, confirm = "确认") {
+      pendingBroadcastId = taskId; $("#broadcastActionTitle").textContent = title; $("#broadcastActionBody").innerHTML = body; $("#broadcastActionConfirm").textContent = confirm; $("#broadcastActionConfirm").dataset.broadcastRiskConfirm = action; openModal("#broadcastActionModal");
+    }
+    function handleBroadcastAction(action) {
+      if (action === "manualRecipients") { const selected = $$('[data-manual-recipient]:checked').map((input) => input.dataset.manualRecipient); if (broadcastTargetType === "客户群") { checkedGroupIds = new Set(selected); } else { checkedCustomerIndexes = new Set(selected.map(Number)); } broadcastFilterMode = "manual"; renderBroadcastWizard(); closeModal("#broadcastActionModal"); return; }
+      const task = broadcasts.find((item) => item.id === pendingBroadcastId); if (!task) return;
+      const note = $("#broadcastActionNote")?.value.trim() || "";
+      if (action === "submit") { if ($("#broadcastRiskConfirm") && !$("#broadcastRiskConfirm").checked) return showToast("请确认风险处理结果"); return submitBroadcastForApproval(task); }
+      if (action === "blocked") return closeModal("#broadcastActionModal");
+      if (["reject", "terminate"].includes(action) && !note) return showToast("请填写原因后再继续");
+      if (action === "approve") { const next = task.executionMode === "员工确认" ? "待员工确认" : "待定时发送"; transitionBroadcast(task, next, "审批通过", note || "审批通过"); task.approvalHistory.unshift({ node: "审批通过", operator: currentAccount().name, time: broadcastNow(), note: note || "同意按计划执行" }); }
+      if (action === "reject") { transitionBroadcast(task, "已驳回", "驳回修改", note); task.approvalHistory.unshift({ node: "驳回修改", operator: currentAccount().name, time: broadcastNow(), note }); }
+      if (action === "terminate") { transitionBroadcast(task, "已终止", "终止任务", note); task.approvalHistory.unshift({ node: "终止", operator: currentAccount().name, time: broadcastNow(), note }); }
+      if (action === "edit") { task.time = $("#broadcastActionTime").value || task.time; task.operationLog.unshift({ action: "编辑发送时间", from: task.status, to: task.status, note: task.time, operator: currentAccount().name, time: broadcastNow() }); }
+      if (action === "retry") { const retry = normalizeBroadcast({ ...task, id: `broadcast-${Date.now()}`, title: `${task.title} · 失败补发`, target: task.fail, success: 0, fail: 0, status: "草稿", recipients: task.recipients.filter((_, i) => i < task.fail), review: null }, broadcasts.length + 1); retry.operationLog.unshift({ action: "创建失败补发", from: task.id, to: "草稿", note: `来源任务失败 ${task.fail} 个`, operator: currentAccount().name, time: broadcastNow() }); broadcasts.unshift(retry); selectedBroadcastIndex = 0; }
+      if (action === "archive") { task.archived = true; task.operationLog.unshift({ action: "归档任务", from: task.status, to: task.status, note: "已从活动列表隐藏", operator: currentAccount().name, time: broadcastNow() }); }
+      renderBroadcasts(); renderGrowthGovernance(); closeModal("#broadcastActionModal");
     }
 
     function currentAccount() {
@@ -11847,16 +12758,24 @@
       const canvas = $("#trendCanvas");
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
-      const series = [
-        { color: "#1f7a68", width: 4, points: [78, 68, 46, 58, 42, 52, 30, 40, 32] },
-        { color: "#c76a61", width: 3, points: [96, 88, 76, 82, 72, 80, 64, 68, 56] },
-        { color: "#d58a2a", width: 3, points: [108, 103, 96, 99, 92, 95, 86, 88, 78] }
-      ];
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const period = $("#trendPeriod")?.value || "7";
+      const isMonthly = period === "30";
+      const series = isMonthly
+        ? [{ color: "#1f7a68", width: 3, points: [86, 78, 74, 68, 63, 59, 55, 50] }, { color: "#c76a61", width: 3, points: [100, 96, 88, 91, 80, 84, 72, 76] }, { color: "#d58a2a", width: 3, points: [108, 104, 100, 102, 94, 96, 89, 91] }]
+        : [{ color: "#1f7a68", width: 3, points: [78, 68, 46, 58, 42, 52, 30] }, { color: "#c76a61", width: 3, points: [96, 88, 76, 82, 72, 80, 64] }, { color: "#d58a2a", width: 3, points: [108, 103, 96, 99, 92, 95, 86] }];
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      const width = Math.max(1, Math.round(rect.width * ratio));
+      const height = Math.max(1, Math.round(rect.height * ratio));
+      if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      const drawWidth = rect.width;
+      const drawHeight = rect.height;
+      ctx.clearRect(0, 0, drawWidth, drawHeight);
       series.forEach((line) => {
         ctx.beginPath();
         line.points.forEach((y, index) => {
-          const x = index * (canvas.width / (line.points.length - 1));
+          const x = index * (drawWidth / (line.points.length - 1));
           if (index === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         });
@@ -11866,6 +12785,12 @@
         ctx.lineJoin = "round";
         ctx.stroke();
       });
+      const axis = $("#trendAxis");
+      if (axis) axis.innerHTML = (isMonthly ? ["06/17", "06/21", "06/25", "06/29", "07/03", "07/07", "07/11", "今天"] : ["周四", "周五", "周六", "周日", "周一", "周二", "今天"]).map((label) => `<span>${label}</span>`).join("");
+      const summary = $("#trendSummary");
+      if (summary) summary.innerHTML = isMonthly
+        ? `<div><span>累计新增潜客</span><strong>1,846</strong></div><div><span>高意向咨询</span><strong>542</strong></div><div><span>预约到店</span><strong>216</strong></div>`
+        : `<div><span>今日新增潜客</span><strong>86</strong></div><div><span>高意向咨询</span><strong>54</strong></div><div><span>今日预约</span><strong>21</strong></div>`;
     }
 
     function updateBatchbar() {
@@ -11921,26 +12846,37 @@
         choice.classList.toggle("active", tagSelection.has(choice.dataset.tagChoice));
       });
       const targetIndexes = tagTargetIndexes();
+      const group = tagMode === "group" ? groups.find((item) => item.id === selectedGroupId) : null;
       const sampleNames = targetIndexes.slice(0, 3).map((index) => customers[index]?.name).filter(Boolean).join("、");
-      $("#tagTargetScopeRow").style.display = tagMode === "single" ? "none" : "grid";
+      $("#tagTargetScopeRow").style.display = tagMode === "batch" ? "grid" : "none";
       $$("[data-tag-scope]").forEach((choice) => {
         choice.classList.toggle("active", choice.dataset.tagScope === tagTargetScope);
       });
-      $("#tagScopeHint").textContent = tagMode === "single"
-        ? ""
-        : `当前目标：${tagScopeLabel()} · ${targetIndexes.length} 位。样本：${sampleNames || "暂无匹配潜客"}`;
-      $("#tagTargetText").textContent = tagMode === "single"
-        ? `将为 ${customers[selectedCustomerIndex].name} 添加标签`
-        : `将为「${tagScopeLabel()}」中的 ${targetIndexes.length} 位潜客添加标签`;
+      $("#tagScopeHint").textContent = tagMode === "batch"
+        ? `当前目标：${tagScopeLabel()} · ${targetIndexes.length} 位。样本：${sampleNames || "暂无匹配潜客"}`
+        : "";
+      $("#tagTargetText").textContent = tagMode === "group"
+        ? `正在编辑「${group?.name || "当前群组"}」的群标签`
+        : tagMode === "single"
+          ? `将为 ${customers[selectedCustomerIndex].name} 添加标签`
+          : `将为「${tagScopeLabel()}」中的 ${targetIndexes.length} 位潜客添加标签`;
     }
 
     function openTagModal(trigger) {
-      tagMode = trigger.closest("#customerDetailModal") || trigger.dataset.tagMode === "single" ? "single" : "batch";
-      if (tagMode !== "single") {
+      const group = groups.find((item) => item.id === trigger.dataset.editGroupTags);
+      tagMode = group ? "group" : (trigger.closest("#customerDetailModal") || trigger.dataset.tagMode === "single" ? "single" : "batch");
+      if (tagMode === "group") {
+        selectedGroupId = group.id;
+        tagSelection = new Set(groupTagNames(group));
+      } else if (tagMode !== "single") {
         const entry = trigger.dataset.tagEntry || "";
         tagTargetScope = entry === "dashboard" ? "high-intent" : "selected";
+        tagSelection = new Set();
+      } else {
+        tagSelection = new Set();
       }
-      tagSelection = new Set();
+      $("#tagTitle").textContent = tagMode === "group" ? "编辑群标签" : tagMode === "single" ? "添加客户标签" : "批量打标签";
+      $("#confirmTags").textContent = tagMode === "group" ? "保存标签" : "确认添加";
       $("#tagSearchInput").value = "";
       renderTagSelection();
       openModal("#tagModal");
@@ -12080,7 +13016,7 @@
       const activeScreen = $(".screen.active")?.id?.replace("screen-", "") || "dashboard";
       const activeSubscreen = $(`#screen-${activeScreen} .subscreen.active`)?.dataset.subscreen || "";
       const map = {
-        dashboard: "工作台 · 优先处理风险会话、复购提醒和待审批群发",
+        dashboard: "工作台 · 优先处理风险会话、复购提醒和审批中群发",
         customers: activeSubscreen === "conversations"
           ? "客户运营 · 基于当前会话生成回复、风险摘要和待办"
           : activeSubscreen === "groups"
@@ -12269,7 +13205,7 @@
           },
           actions: [
             { command: "dashboard-risk", title: "处理张女士风险会话", desc: "打开会话并写入安抚回复", icon: "icon-park-outline:attention", priority: "primary" },
-            { command: "dashboard-approval", title: "进入群发审批", desc: "筛出待审批任务并准备执行", icon: "icon-park-outline:check-correct" },
+            { command: "dashboard-approval", title: "处理群发审批", desc: "查看审批中任务并决定下一步", icon: "icon-park-outline:check-correct" },
             { command: "dashboard-broadcast", title: "生成复购群发草稿", desc: "预填目标标签、素材和发送时间", icon: "icon-park-outline:send-one" }
           ]
         };
@@ -12335,7 +13271,7 @@
         return {
           context: `营销中心 · ${broadcast.title}`,
           insightTitle: "群发任务需要发送前校验",
-          insightText: `${broadcast.title}当前状态为「${broadcast.status}」，目标 ${broadcast.target.toLocaleString()} 位潜客，建议先做防打扰和素材完整性检查。`,
+          insightText: `${broadcast.title}当前状态为「${broadcast.status}」，目标 ${broadcast.target.toLocaleString()} ${broadcast.targetType === "客户群" ? "个客户群" : "位客户"}，建议先核对防打扰和素材完整性。`,
           tags: [broadcast.tag, broadcast.status],
           actions: [
             { command: "marketing-precheck", title: "检查防打扰与重复触达", desc: "排除近 7 天已触达和高风险对象", icon: "icon-park-outline:radar" },
@@ -12464,6 +13400,54 @@
       collapseButton?.setAttribute("aria-expanded", String(!collapsed));
       expandButton?.setAttribute("aria-expanded", String(!collapsed));
       if (collapsed) closeAssistantMini();
+    }
+
+    function bindAssistantRailReopenDrag() {
+      const button = $("[data-assistant-rail-drag]");
+      if (!button) return;
+      let pointerId = null;
+      let startY = 0;
+      let initialTop = 0;
+      let didDrag = false;
+
+      const clampTop = (top) => Math.min(Math.max(12, top), Math.max(12, window.innerHeight - button.offsetHeight - 12));
+      const finishDrag = () => {
+        if (pointerId === null) return;
+        button.classList.remove("is-dragging");
+        button.dataset.didDrag = String(didDrag);
+        pointerId = null;
+      };
+
+      button.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        pointerId = event.pointerId;
+        startY = event.clientY;
+        initialTop = button.getBoundingClientRect().top;
+        didDrag = false;
+        button.setPointerCapture(pointerId);
+        button.classList.add("is-dragging");
+      });
+
+      button.addEventListener("pointermove", (event) => {
+        if (event.pointerId !== pointerId) return;
+        const offset = event.clientY - startY;
+        if (Math.abs(offset) > 4) didDrag = true;
+        button.style.setProperty("--assistant-rail-reopen-top", `${clampTop(initialTop + offset)}px`);
+      });
+
+      button.addEventListener("pointerup", finishDrag);
+      button.addEventListener("pointercancel", finishDrag);
+      button.addEventListener("click", (event) => {
+        if (button.dataset.didDrag !== "true") return;
+        event.preventDefault();
+        event.stopPropagation();
+        button.dataset.didDrag = "false";
+      }, true);
+
+      window.addEventListener("resize", () => {
+        const currentTop = Number.parseFloat(getComputedStyle(button).top);
+        if (Number.isFinite(currentTop)) button.style.setProperty("--assistant-rail-reopen-top", `${clampTop(currentTop)}px`);
+      });
     }
 
     function focusAssistantRail() {
@@ -12759,7 +13743,9 @@
     function activateDashboardView(view) {
       $$("[data-dashboard-view]").forEach((button) => button.classList.toggle("active", button.dataset.dashboardView === view));
       if (view === "overview") {
+        activateScreen("dashboard");
         renderStores("全部项目");
+        requestAnimationFrame(drawTrendChart);
         showToast("已回到经营总览");
         return;
       }
@@ -12892,7 +13878,7 @@
       }
       if (command === "dashboard-approval") {
         handleTodoAction(2);
-        updateAssistantOutput("已定位待审批群发", "已进入营销中心并筛选待审批任务，可点击执行完成审批演示。", ["待审批", "群发"]);
+        updateAssistantOutput("已定位审批中群发", "已进入营销中心并筛选审批中任务，可通过、驳回或终止。", ["审批中", "群发"]);
         return;
       }
       if (command === "dashboard-broadcast") {
@@ -13041,7 +14027,7 @@
         $("#broadcastTimeInput").value = "2026-07-10T16:30";
         renderBroadcastWizard();
         openModal("#wizardModal");
-        updateAssistantOutput("已生成群发草稿", "已根据水光复购标签生成触达文案、目标标签和建议发送时间，进入向导后可继续选择目标和执行员工。", ["水光复购", "老客"], { reason: "水光护理后 28–35 天是复购与复测的高相关窗口", risk: "已建议排除 7 天内触达客户，发送前需复核权益与用语", effect: "预计带来 38–52 次预约咨询" });
+        updateAssistantOutput("已生成群发草稿", "已根据水光复购标签生成触达文案、目标标签和建议发送时间，进入向导后可继续选择对象和发送方式。", ["水光复购", "老客"], { reason: "水光护理后 28–35 天是复购与复测的高相关窗口", risk: "已建议排除 7 天内触达客户，发送前需复核权益与用语", effect: "预计带来 38–52 次预约咨询" });
         showToast("AI 已生成群发任务草稿");
         return;
       }
@@ -13089,18 +14075,18 @@
         activateScreen("marketing");
         const broadcastButton = document.querySelector('[data-subtarget="broadcast"]');
         if (broadcastButton) switchSubscreen(broadcastButton);
-        broadcastFilter = "待审批";
+        broadcastFilter = "审批中";
         renderBroadcasts();
-        showToast("已进入待审批群发任务，可点击执行完成审批演示");
+        showToast("已进入审批中群发任务，可处理通过、驳回或终止");
         return;
       }
       if (todo.route === "broadcast-running") {
         activateScreen("marketing");
         const broadcastButton = document.querySelector('[data-subtarget="broadcast"]');
         if (broadcastButton) switchSubscreen(broadcastButton);
-        broadcastFilter = "执行中";
+        broadcastFilter = "发送中";
         renderBroadcasts();
-        showToast("已进入执行中群发任务，可查看进度或重试失败目标");
+        showToast("已进入发送中群发任务，可暂停、继续或终止");
         return;
       }
       if (todo.route === "asset-review") {
@@ -13186,13 +14172,15 @@
     document.addEventListener("click", (event) => {
       if (!event.target.closest("#tagFilterSelect")) $("#tagFilterSelect")?.classList.remove("open");
       if (!event.target.closest("#scopeSelectBox")) $("#scopeSelectBox")?.classList.remove("open");
+      if (!event.target.closest("#broadcastTagSelector")) $("#broadcastTagMenu")?.setAttribute("hidden", "");
       if (!event.target.closest("#blacklistCustomerSelectBox") && !event.target.closest("#blacklistReasonSelectBox")) closeBlacklistSelects();
       if (!event.target.closest(".more-actions")) $$(".more-actions.open").forEach((item) => item.classList.remove("open"));
       if (event.target.classList?.contains("modal-backdrop") && event.target.classList.contains("show")) {
+        if (["wizardModal", "broadcastActionModal"].includes(event.target.id)) return;
         closeModal(`#${event.target.id}`);
         return;
       }
-      const target = event.target.closest(".kpi, [data-toggle-assistant], [data-toggle-assistant-rail], [data-close-assistant], [data-close-assistant-mini], [data-expand-assistant], [data-ai-action], [data-thread-ai-action], [data-assistant-command], [data-dashboard-view], [data-open-store-data], [data-close-store-data], [data-open-todo-page], [data-todo-page-filter], [data-customer-filter], [data-conversation-filter], [data-show-conversation-record], [data-open-customer-from-thread], [data-broadcast-filter], [data-import-method], [data-open-follow], [data-open-tags], [data-open-tag-editor], [data-open-tag-group-editor], [data-edit-managed-tag], [data-toggle-managed-tag], [data-delete-managed-tag], [data-apply-managed-tag], [data-toggle-tag-actions], [data-remove-blacklist], [data-blacklist-customer-option], [data-blacklist-reason-option], [data-view-channel], [data-view-form], [data-run-tag-group], [data-view-moment], [data-use-script], [data-download-promo], [data-radar-tag], [data-block-fraud], [data-open-live], [data-open-wizard], [data-open-upload], [data-open-original], [data-preview-asset], [data-package-sort], [data-asset-favorite], [data-asset-type], [data-asset-status], [data-asset-scope], [data-asset-dir], [data-asset-view], [data-reset-asset-filters], [data-create-asset-package], [data-asset-package], [data-edit-asset-package], [data-asset-open], [data-asset-select], [data-clear-asset-selection], [data-open-medical-sop], [data-run-today-operation], [data-close-asset-drawer], [data-asset-batch-action], [data-toggle-broadcast-asset], [data-time-preset], [data-tag-scope], [data-toggle-tag-filter], [data-tag-filter-option], [data-toggle-scope-filter], [data-scope-option], [data-close-modal], [data-finish-todo], [data-open-thread], [data-open-customer-thread], [data-thread-id], [data-group-detail], [data-switch-account], [data-edit-account], [data-toggle-account], [data-run-broadcast], [data-retry-broadcast], [data-detail-broadcast], [data-target-type], [data-send-type], [data-operator-choice], .subnav-button, tr[data-customer], tr[data-broadcast-row], tr[data-group-row], tr[data-form-row]");
+      const target = event.target.closest(".kpi, [data-broadcast-filter-mode], [data-toggle-assistant], [data-toggle-assistant-rail], [data-close-assistant], [data-close-assistant-mini], [data-expand-assistant], [data-ai-action], [data-thread-ai-action], [data-assistant-command], [data-dashboard-view], [data-open-store-data], [data-close-store-data], [data-close-todo-page], [data-open-todo-page], [data-todo-page-filter], [data-customer-filter], [data-conversation-filter], [data-show-conversation-record], [data-broadcast-filter], [data-import-method], [data-open-follow], [data-open-tags], [data-open-tag-editor], [data-open-tag-group-editor], [data-edit-managed-tag], [data-toggle-managed-tag], [data-delete-managed-tag], [data-apply-managed-tag], [data-toggle-tag-actions], [data-remove-blacklist], [data-blacklist-customer-option], [data-blacklist-reason-option], [data-view-channel], [data-view-form], [data-run-tag-group], [data-view-moment], [data-use-script], [data-download-promo], [data-radar-tag], [data-block-fraud], [data-open-live], [data-open-wizard], [data-open-upload], [data-open-original], [data-preview-asset], [data-package-sort], [data-asset-favorite], [data-asset-type], [data-asset-status], [data-asset-scope], [data-asset-dir], [data-reset-asset-filters], [data-create-asset-package], [data-asset-package], [data-edit-asset-package], [data-asset-open], [data-asset-select], [data-clear-asset-selection], [data-open-medical-sop], [data-open-wizard], [data-open-upload], [data-open-medical-sop], [data-run-today-operation], [data-close-asset-drawer], [data-asset-batch-action], [data-toggle-broadcast-asset], [data-insert-broadcast-variable], [data-time-preset], [data-send-now], [data-broadcast-template], [data-tag-scope], [data-toggle-tag-filter], [data-tag-filter-option], [data-toggle-scope-filter], [data-scope-option], [data-close-modal], [data-finish-todo], [data-open-thread], [data-open-customer-thread], [data-thread-id], [data-group-detail], [data-switch-account], [data-edit-account], [data-toggle-account], [data-run-broadcast], [data-retry-broadcast], [data-detail-broadcast], [data-submit-broadcast], [data-open-approval], [data-approval-choice], [data-remind-broadcast], [data-edit-broadcast], [data-terminate-broadcast], [data-pause-broadcast], [data-review-broadcast], [data-copy-broadcast], [data-export-broadcast], [data-archive-broadcast], #viewBroadcastRecipients, #toggleBroadcastTags, [data-broadcast-tag], [data-remove-broadcast-tag], [data-target-type], [data-send-type], [data-operator-choice], .subnav-button, tr[data-customer], tr[data-broadcast-row], tr[data-group-row], tr[data-form-row]");
       if (!target) return;
       if (target.matches("[data-toggle-tag-actions]")) {
         const wrapper = target.closest(".more-actions");
@@ -13212,7 +14200,7 @@
         const item = todayOperations.find((operation) => operation.id === target.dataset.runTodayOperation);
         if (!item) return;
         if (item.route === "sop-hydration") openMedicalSop("hydration");
-        else if (item.route === "broadcast") { activateScreen("marketing"); renderBroadcastDetail(0); showToast("已打开待审批群发草稿"); }
+        else if (item.route === "broadcast") { activateScreen("marketing"); renderBroadcastDetail(0); showToast("已打开群发任务详情"); }
         else runAssistantAction(item.route);
       }
       if (target.matches("[data-thread-ai-action]")) applyThreadAiAction(target.dataset.threadAiAction);
@@ -13220,6 +14208,7 @@
       if (target.matches("[data-dashboard-view]")) activateDashboardView(target.dataset.dashboardView);
       if (target.matches("[data-open-store-data]")) openStoreDataPage();
       if (target.matches("[data-close-store-data]")) closeStoreDataPage();
+      if (target.matches("[data-close-todo-page]")) closeTodoPage();
       if (target.matches("[data-open-todo-page]")) openTodoPage(target.dataset.openTodoPage);
       if (target.matches("[data-todo-page-filter]")) {
         todoPageFilter = target.dataset.todoPageFilter;
@@ -13274,6 +14263,24 @@
           showToast("当前群聊没有单独客户档案");
         }
       }
+      if (target.matches("[data-show-broadcast-risk]")) {
+        openWorkflow({
+          title: "自动排除规则",
+          hideConfirm: true,
+          cancelLabel: "关闭",
+          body: `<div class="workflow-summary"><strong>本次群发已启用自动保护</strong><span>以下对象不会进入发送名单，可在筛选步骤调整后再次核对。</span></div><div class="workflow-list"><div class="workflow-list-item"><strong>近 7 天已触达</strong><span>排除 24 位客户</span></div><div class="workflow-list-item"><strong>黑名单客户</strong><span>排除 8 位客户</span></div><div class="workflow-list-item"><strong>术后风险 / 逾期回访</strong><span>排除 6 位客户</span></div></div>`
+        });
+      }
+      if (target.matches("[data-open-thread-follow]")) {
+        const thread = currentThread();
+        const index = customers.findIndex((customer) => customer.name === thread.title);
+        if (index >= 0) {
+          selectedCustomerIndex = index;
+          openFollowModal();
+        } else {
+          showToast("当前群聊请在群聊管理中创建运营待办");
+        }
+      }
       if (target.matches("[data-broadcast-filter]")) {
         broadcastFilter = target.dataset.broadcastFilter;
         renderBroadcasts();
@@ -13309,7 +14316,9 @@
             customer.tags = customer.tags.filter((item) => item !== tag.name);
           });
           groups.forEach((group) => {
-            if (group.tag === tag.name) group.tag = "未分组";
+            const remainingTags = groupTagNames(group).filter((item) => item !== tag.name);
+            group.tags = remainingTags;
+            group.tag = remainingTags[0] || "未分组";
           });
           renderTagManagement();
           renderCustomers(selectedCustomerIndex);
@@ -13449,6 +14458,7 @@
         showToast(`已打开「${selectedLiveTitle}」观看客户列表，可批量打标签`);
       }
       if (target.matches("[data-open-wizard]")) {
+        broadcastSource = target.dataset.broadcastSource || "all";
         resetBroadcastWizard();
         openModal("#wizardModal");
       }
@@ -13603,28 +14613,61 @@
           showToast(`${account.name} 已${account.status}`);
         }
       }
+      if (target.matches("[data-submit-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.submitBroadcast); if (task) renderBroadcastRiskModal(evaluateBroadcastRisk(task)); }
+      if (target.matches("[data-open-approval]")) { const id = target.dataset.openApproval; openBroadcastAction("处理审批", `<div class="workflow-summary"><strong>审批三操作</strong><span>通过后将按执行模式进入待定时发送或待员工确认队列；驳回与终止必须填写原因。</span></div><div class="form-row"><label>审批意见</label><textarea class="textarea" id="broadcastActionNote" placeholder="通过可选填；驳回或终止必须填写原因"></textarea></div><div class="actions"><button class="btn primary" data-approval-choice="approve">通过</button><button class="btn" data-approval-choice="reject">驳回修改</button><button class="btn danger" data-approval-choice="terminate">终止</button></div>`, "", id, "确认"); }
+      if (target.matches("[data-approval-choice]")) { $("#broadcastActionConfirm").dataset.broadcastRiskConfirm = target.dataset.approvalChoice; $("#broadcastActionConfirm").textContent = target.textContent; }
+      if (target.matches("[data-remind-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.remindBroadcast); if (task) { task.operationLog.unshift({ action: "发送前提醒", from: task.status, to: task.status, note: "已向执行员工发送 30 分钟前提醒", operator: currentAccount().name, time: broadcastNow() }); renderBroadcastDetail(broadcastIndex(task.id)); } }
+      if (target.matches("[data-edit-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.editBroadcast); if (task) openBroadcastAction("编辑发送时间", `<div class="workflow-summary"><strong>${task.title}</strong><span>发送前可以修改时间，修改会保留在操作记录中。</span></div><div class="form-row"><label>发送时间</label><input class="field" id="broadcastActionTime" value="${task.time}"></div>`, "edit", task.id, "保存时间"); }
+      if (target.matches("[data-terminate-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.terminateBroadcast); if (task) openBroadcastAction("终止任务", `<div class="form-row"><label>终止原因</label><textarea class="textarea" id="broadcastActionNote" placeholder="必须填写终止原因"></textarea></div>`, "terminate", task.id, "确认终止"); }
+      if (target.matches("[data-pause-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.pauseBroadcast); if (task) { task.execution.paused = !task.execution.paused; task.operationLog.unshift({ action: task.execution.paused ? "暂停发送" : "继续发送", from: task.status, to: task.status, note: "执行控制已回写", operator: currentAccount().name, time: broadcastNow() }); if (!task.execution.paused) setTimeout(() => completeBroadcastTask(task), 500); renderBroadcastDetail(broadcastIndex(task.id)); } }
       if (target.matches("[data-run-broadcast]")) runBroadcast(Number(target.dataset.runBroadcast));
-      if (target.matches("[data-retry-broadcast]")) {
-        const index = Number(target.dataset.retryBroadcast);
-        const task = broadcasts[index];
-        if (task) {
-          selectedBroadcastIndex = index;
-          task.success += task.fail;
-          task.fail = 0;
-          renderBroadcasts();
-          renderBroadcastDetail(index);
-          showToast(`${task.title} 的失败目标已重试成功`);
-        }
-      }
+      if (target.matches("[data-retry-broadcast]")) { const task = broadcasts[Number(target.dataset.retryBroadcast)]; if (task) openBroadcastAction("创建失败补发", `<div class="workflow-summary"><strong>${task.title}</strong><span>将为 ${task.fail} 个失败对象创建独立草稿，原任务数据不会被覆盖。</span></div>`, "retry", task.id, "创建补发草稿"); }
+      if (target.matches("[data-review-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.reviewBroadcast); if (task) openBroadcastAction("任务复盘", `<div class="workflow-summary"><strong>${task.title}</strong><span>成功率 ${task.target ? ((task.success / task.target) * 100).toFixed(1) : 0}% · ${task.review?.clickRate} · ${task.review?.conversion} · ${task.review?.churn}</span></div>`, "blocked", task.id, "关闭"); }
+      if (target.matches("[data-copy-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.copyBroadcast); if (task) { const copy = normalizeBroadcast({ ...task, id: `broadcast-${Date.now()}`, title: `${task.title}（副本）`, status: "草稿", success: 0, fail: 0, review: null, approvalHistory: [] }, broadcasts.length + 1); broadcasts.unshift(copy); selectedBroadcastIndex = 0; renderBroadcasts(); } }
+      if (target.matches("[data-export-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.exportBroadcast); if (task) { downloadTextFile(`${task.title}-发送明细.csv`, ["对象,结果,失败原因", ...task.recipients.map((item, i) => `${item.name},${i < task.fail ? "失败" : "成功"},${i < task.fail ? "客户拒收或会话不可达" : ""}`)].join("\n")); task.operationLog.unshift({ action: "导出发送明细", from: task.status, to: task.status, note: "CSV 已下载", operator: currentAccount().name, time: broadcastNow() }); renderBroadcastDetail(broadcastIndex(task.id)); } }
+      if (target.matches("[data-archive-broadcast]")) { const task = broadcasts.find((item) => item.id === target.dataset.archiveBroadcast); if (task) openBroadcastAction("归档任务", `<div class="workflow-summary"><strong>${task.title}</strong><span>归档后将在活动列表中隐藏，但保留任务与操作记录。</span></div>`, "archive", task.id, "确认归档"); }
+      if (target.matches("[data-remove-recipient]")) { target.closest(".workflow-list-item")?.remove(); const count = Number(("" + $("#broadcastTargetCount")?.textContent).replace(/\D/g, "")) || 0; if ($("#broadcastTargetCount")) $("#broadcastTargetCount").textContent = `${Math.max(0, count - 1).toLocaleString()} ${broadcastTargetType === "客户群" ? "个客户群" : "位客户"}`; }
       if (target.matches("[data-detail-broadcast]")) {
         openBroadcastDetail(Number(target.dataset.detailBroadcast));
         showToast("已打开群发任务详情");
       }
+      if (target.matches("#toggleBroadcastTags")) {
+        const menu = $("#broadcastTagMenu");
+        if (menu) menu.hidden = !menu.hidden;
+      }
+      if (target.matches("[data-broadcast-tag]")) {
+        const input = $("#broadcastTagInput");
+        if (input) {
+          const tags = input.value.split("、").filter(Boolean);
+          const tag = target.dataset.broadcastTag;
+          const next = target.checked ? [...new Set([...tags, tag])] : tags.filter((item) => item !== tag);
+          input.value = next.join("、");
+          renderBroadcastWizard();
+        }
+      }
+      if (target.matches("[data-remove-broadcast-tag]")) {
+        const input = $("#broadcastTagInput");
+        if (input) {
+          input.value = input.value.split("、").filter((item) => item && item !== target.dataset.removeBroadcastTag).join("、");
+          renderBroadcastWizard();
+        }
+      }
       if (target.matches("[data-target-type]")) {
         broadcastTargetType = target.dataset.targetType;
+        broadcastFilterMode = "smart";
+        checkedCustomerIndexes = new Set();
+        checkedGroupIds = new Set();
         $$("[data-target-type]").forEach((item) => item.classList.toggle("active", item === target));
-        $("#broadcastTargetCount").textContent = broadcastTargetType === "潜客" ? "1,250 位潜客 / 42 个群" : "42 个客户群";
+        $("#broadcastTargetCount").textContent = broadcastTargetType === "潜客" ? "1,250 位客户" : "42 个客户群";
+        showToast("已切换目标类型，请重新设置筛选条件");
         renderBroadcastWizard();
+      }
+      if (target.matches("[data-broadcast-filter-mode]")) {
+        broadcastFilterMode = target.dataset.broadcastFilterMode;
+        if (broadcastFilterMode === "manual" && broadcastTargetType === "客户群" && !checkedGroupIds.size) groups.slice(0, 2).forEach((group) => checkedGroupIds.add(group.id));
+        $$('[data-broadcast-filter-mode]').forEach((item) => item.classList.toggle("active", item === target));
+        renderBroadcastWizard();
+        showToast(broadcastFilterMode === "manual" ? "已切换为手动勾选，当前勾选对象会直接写入任务" : "已切换为标签批量筛选，人数由筛选条件计算");
       }
       if (target.matches("[data-send-type]")) {
         broadcastSendType = target.dataset.sendType;
@@ -13632,8 +14675,32 @@
         renderBroadcastWizard();
       }
       if (target.matches("[data-time-preset]")) {
+        broadcastSendType = "定时单次";
         setBroadcastTime(target.dataset.timePreset);
         showToast(`已选择发送时间：${formatBroadcastTime(target.dataset.timePreset)}`);
+      }
+      if (target.matches("[data-send-now]")) {
+        broadcastSendType = "立即发送";
+        $$("[data-send-type]").forEach((item) => item.classList.toggle("active", item.dataset.sendType === broadcastSendType));
+        renderBroadcastWizard();
+      }
+      if (target.matches("[data-insert-broadcast-variable]")) {
+        const input = $("#broadcastContentInput");
+        if (!input) return;
+        const variable = target.dataset.insertBroadcastVariable;
+        const start = input.selectionStart ?? input.value.length;
+        const end = input.selectionEnd ?? input.value.length;
+        input.value = `${input.value.slice(0, start)}${variable}${input.value.slice(end)}`;
+        input.focus();
+        input.setSelectionRange(start + variable.length, start + variable.length);
+        renderBroadcastWizard();
+      }
+      if (target.matches("[data-broadcast-template]")) {
+        const templates = { repurchase: ["七夕皮肤管理复购提醒", "张女士您好，近期肌肤屏障修护季已开启，可根据上次皮肤检测结果安排一次补水修护方案。"], consult: ["项目咨询答疑提醒", "为帮助您更好了解项目安排，已整理恢复期与常见问题说明。如需个性化建议，可直接回复咨询。"], event: ["本周到店福利通知", "本周福利已更新，回复「预约」即可为您保留到店权益与顾问咨询时段。"] };
+        const [title, content] = templates[target.dataset.broadcastTemplate];
+        $("#broadcastTitleInput").value = title; $("#broadcastContentInput").value = content;
+        $$("[data-broadcast-template]").forEach((item) => item.classList.toggle("active", item === target));
+        renderBroadcastWizard();
       }
       if (target.matches("[data-operator-choice]")) {
         const name = target.dataset.operatorChoice;
@@ -13669,6 +14736,23 @@
         showToast("请先选择至少 1 个标签");
         return;
       }
+      if (tagMode === "group") {
+        const group = groups.find((item) => item.id === selectedGroupId);
+        if (!group) {
+          showToast("未找到当前群组，请重新打开详情");
+          return;
+        }
+        const tags = Array.from(tagSelection);
+        tags.forEach((tag) => ensureManagedTag(tag, "群标签", "群运营"));
+        group.tags = tags;
+        group.tag = tags[0] || "未分组";
+        closeModal("#tagModal");
+        renderTagManagement();
+        openGroupDetail(group.id);
+        recordOperation("编辑群标签", group.name, tags.join("、"));
+        showToast(`已更新「${group.name}」的 ${tags.length} 个群标签`);
+        return;
+      }
       const targetIndexes = tagTargetIndexes();
       if (!targetIndexes.length) {
         showToast("当前目标范围没有匹配潜客，请重新选择打标对象");
@@ -13694,7 +14778,7 @@
         showToast("请输入标签名称");
         return;
       }
-      ensureManagedTag(value);
+      ensureManagedTag(value, tagMode === "group" ? "群标签" : "客户标签", tagMode === "group" ? "群运营" : "需求阶段");
       tagSelection.add(value);
       renderTagSelection();
       showToast(`已加入标签：${value}`);
@@ -13706,15 +14790,42 @@
 
     $("#submitWizard").addEventListener("click", () => {
       if (broadcastStep < 3) {
+        if (broadcastStep === 1) {
+          const manualCount = broadcastTargetType === "客户群" ? checkedGroupIds.size : checkedCustomerIndexes.size;
+          if (broadcastFilterMode === "manual" && !manualCount) return showToast("请至少勾选 1 个发送对象");
+        }
         broadcastStep += 1;
         renderBroadcastWizard();
         return;
       }
-      if (!broadcastOperators.size) {
-        showToast("请至少选择 1 位执行员工");
-        return;
-      }
       createBroadcastTask("modal");
+    });
+
+    $("#saveBroadcastDraft").addEventListener("click", () => createBroadcastTask("save"));
+    $("#broadcastActionConfirm").addEventListener("click", () => handleBroadcastAction($("#broadcastActionConfirm").dataset.broadcastRiskConfirm || "blocked"));
+    $("#broadcastContentInput").addEventListener("input", renderBroadcastWizard);
+    $("#closeBroadcastTags").addEventListener("click", () => { $("#broadcastTagMenu").hidden = true; });
+    $("#broadcastRiskExclude").addEventListener("change", (event) => {
+      if (!event.target.checked) openBroadcastAction("确认保留 P0 风险对象", `<div class="broadcast-alert risk">取消过滤会把术后逾期或 P0 客诉对象保留在名单中。请确认后继续；提交审批时仍需再次确认。</div>`, "blocked", "", "我已知悉");
+      renderBroadcastWizard();
+    });
+    document.addEventListener("click", (event) => {
+      const execution = event.target.closest("[data-execution-mode]");
+      if (execution) { broadcastExecutionMode = execution.dataset.executionMode; renderBroadcastWizard(); }
+      const manual = event.target.closest("#manualBroadcastRecipients");
+      if (manual) {
+        const isGroup = broadcastTargetType === "客户群";
+        const list = isGroup ? groups.slice(0, 8).map((item) => ({ id: item.id, name: item.name, meta: `群主 ${item.owner} · ${item.members} 人`, risk: item.members < 30 ? "低活跃" : "可触达" })) : customers.slice(0, 10).map((item, index) => ({ id: String(index), name: item.name, meta: `${item.tags.join(" · ")} · 上次触达 ${item.time}`, risk: index === 1 ? "P0 风险" : "可触达" }));
+        const chosen = isGroup ? checkedGroupIds : new Set(Array.from(checkedCustomerIndexes).map(String));
+        openBroadcastAction("手动调整名单", `<div class="workflow-summary"><strong>完整匹配名单 · ${list.length} 个对象</strong><span>左侧勾选决定是否发送；右侧清晰展示风险标签、归属信息和上次触达。</span></div><div class="workflow-list">${list.map((item) => `<label class="workflow-list-item"><input type="checkbox" data-manual-recipient="${item.id}" ${chosen.has(item.id) ? "checked" : ""}><div><strong>${item.name}</strong><span>${item.meta}</span></div><span class="chip ${item.risk === "可触达" ? "green" : "rose"}">${item.risk}</span></label>`).join("")}</div>`, "manualRecipients", "", "确认名单");
+      }
+    });
+    document.addEventListener("click", (event) => {
+      const remove = event.target.closest("[data-remove-recipient]");
+      if (!remove) return;
+      remove.closest(".workflow-list-item")?.remove();
+      const count = Number(("" + $("#broadcastTargetCount")?.textContent).replace(/\D/g, "")) || 0;
+      if ($("#broadcastTargetCount")) $("#broadcastTargetCount").textContent = `${Math.max(0, count - 1).toLocaleString()} ${broadcastTargetType === "客户群" ? "个客户群" : "位客户"}`;
     });
 
     $("#broadcastPrev").addEventListener("click", () => {
@@ -13724,7 +14835,7 @@
       }
     });
 
-    $("#wizardNext").addEventListener("click", () => createBroadcastTask("draft"));
+    $("#wizardNext").addEventListener("click", () => createBroadcastTask("submit"));
     document.addEventListener("click", (event) => {
       const detailTab = event.target.closest("[data-conversation-detail-tab]");
       if (detailTab) {
@@ -13950,6 +15061,7 @@
       recordOperation("添加跟进", item.name, `${type} · ${time}`);
       closeModals();
       renderCustomers(selectedCustomerIndex);
+      if (conversationThreads.some((thread) => thread.title === item.name)) renderConversationThread();
       showToast(`已为 ${item.name} 添加跟进：${type}`);
     });
     $("#confirmMigration").addEventListener("click", () => {
@@ -13986,6 +15098,7 @@
       renderTodos();
       showToast("已生成流失预警待办");
     });
+    $("#trendPeriod").addEventListener("change", drawTrendChart);
     $("#createChannelCode").addEventListener("click", () => {
       openWorkflow({
         title: "新建渠道活码配置",
@@ -14443,6 +15556,15 @@
       refreshAssistantMini();
     });
 
+    $("#selectAllGroups").addEventListener("change", (event) => {
+      $$(".groupCheck").forEach((check) => {
+        if (event.target.checked) checkedGroupIds.add(check.dataset.groupCheck);
+        else checkedGroupIds.delete(check.dataset.groupCheck);
+        check.checked = event.target.checked;
+      });
+      updateGroupBatchbar();
+    });
+
     document.addEventListener("change", (event) => {
       if (event.target.classList.contains("rowCheck")) {
         const index = Number(event.target.dataset.checkIndex);
@@ -14451,6 +15573,14 @@
         updatePageSelectAll();
         updateBatchbar();
         refreshAssistantMini();
+      }
+      if (event.target.classList.contains("groupCheck")) {
+        const id = event.target.dataset.groupCheck;
+        if (event.target.checked) checkedGroupIds.add(id);
+        else checkedGroupIds.delete(id);
+        const checks = $$(".groupCheck");
+        if ($("#selectAllGroups")) $("#selectAllGroups").checked = checks.length > 0 && checks.every((check) => check.checked);
+        updateGroupBatchbar();
       }
     });
 
@@ -14681,9 +15811,8 @@
       const task = broadcasts.find((item) => item.title === approval.dataset.broadcastTitle);
       if (!task) return;
       const approved = approval.dataset.broadcastApproval === "approve";
-      task.status = approved ? "待执行" : "已退回";
-      task.approvalNote = approved ? "已通过内容、客群与发送时段复核" : "需调整宣传表述与实验分组后重新提交";
-      recordOperation(approved ? "群发审批通过" : "群发审批退回", task.title, task.approvalNote);
+      const next = approved ? (task.executionMode === "员工确认" ? "待员工确认" : "待定时发送") : "已驳回";
+      transitionBroadcast(task, next, approved ? "群发审批通过" : "群发审批退回", approved ? "已通过内容、客群与发送时段复核" : "需调整宣传表述与实验分组后重新提交");
       renderBroadcasts();
       renderGrowthGovernance();
       showToast(approved ? `「${task.title}」已审批通过，可进入实验执行` : `「${task.title}」已退回修改`);
@@ -14710,6 +15839,7 @@
     renderAccounts();
     $$('[data-close-modal]:not([aria-label])').forEach((button) => button.setAttribute("aria-label", "关闭弹窗"));
     bindAssistantHover();
+    bindAssistantRailReopenDrag();
     bindPointerGlow();
     drawTrendChart();
   
