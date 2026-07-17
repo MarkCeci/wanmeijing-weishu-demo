@@ -6,16 +6,19 @@
   <title>万美京微枢AI私域托管系统-交互demo</title>
   <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
   <!-- @inline-block:style-01 -->
+  <script>
+    // source/template.html is a build template, not a standalone preview.
+    // Redirect accidental direct opens to the generated demo without affecting built output.
+    if (!document.querySelector("style")) {
+      window.location.replace(new URL("../medical-beauty-ops-demo.html", window.location.href).href);
+    }
+  </script>
 </head>
 <body>
   <div class="app">
     <aside class="sidebar" aria-label="主导航">
       <div class="brand">
-        <img class="brand-mark" src="assets/logo/weishu-logo-mark-v2.png" alt="万美京微枢 logo" />
-        <div>
-          <h1>万美京微枢</h1>
-          <p>AI私域托管系统</p>
-        </div>
+        <img class="brand-lockup" src="assets/logo/aimira-mirahub-logo.gif" alt="AIMIRA MiraHub" />
       </div>
 
       <div class="nav-section">

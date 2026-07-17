@@ -4,6 +4,7 @@
       --surface: #ffffff;
       --surface-soft: #eef7f3;
       --surface-glow: #f7fcfa;
+      --sidebar-bg: #fbfdfa;
       --surface-rose: #fbf0ea;
       --ink: #1d2522;
       --muted: #66736e;
@@ -78,9 +79,7 @@
     }
 
     .sidebar {
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(250, 253, 251, .94)),
-        linear-gradient(135deg, rgba(31, 122, 104, .06), transparent 42%);
+      background: var(--sidebar-bg);
       border-right: 1px solid var(--line);
       padding: 0 18px 22px;
       display: flex;
@@ -95,33 +94,28 @@
       display: flex;
       height: var(--app-chrome-height);
       align-items: center;
-      gap: 12px;
-      padding: 0 4px;
-      border-bottom: 1px solid var(--line);
+      justify-content: center;
+      margin-inline: -18px;
+      padding: 0 8px;
+      position: relative;
     }
 
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
+    .brand::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      bottom: 0;
+      left: 18px;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .brand-lockup {
+      display: block;
+      width: 100%;
+      max-width: none;
+      height: calc(var(--app-chrome-height) - 2px);
       object-fit: contain;
-      background: var(--shine);
-      border: 1px solid #d8e8e1;
-      padding: 4px;
-      box-shadow: 0 12px 24px rgba(31, 122, 104, .16), inset 0 1px 0 rgba(255, 255, 255, .82);
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.2;
-      font-weight: 760;
-    }
-
-    .brand p {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 12px;
     }
 
     .nav-section {
