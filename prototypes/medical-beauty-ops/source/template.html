@@ -1200,6 +1200,7 @@
         </div>
         <aside class="assistant-rail" id="assistantRail" aria-label="AI 运营助手常驻栏">
           <div class="assistant-rail-head">
+            <button class="assistant-rail-drag-handle" type="button" data-assistant-rail-panel-drag aria-label="拖动调整 AI 运营助手位置" title="拖动调整位置"><iconify-icon icon="lucide:grip-horizontal"></iconify-icon></button>
             <button class="assistant-rail-collapse" id="assistantRailCollapse" type="button" data-toggle-assistant-rail aria-label="收起 AI 运营助手" aria-expanded="true" title="收起 AI 运营助手"><iconify-icon icon="lucide:panel-right-close"></iconify-icon></button>
             <div class="assistant-hero-copy">
               <iconify-icon icon="icon-park-outline:magic"></iconify-icon>
@@ -1252,7 +1253,7 @@
     </main>
   </div>
 
-  <button class="assistant-launcher" id="assistantLauncher" data-toggle-assistant aria-label="打开 AI 运营助手" aria-expanded="false">
+  <button class="assistant-launcher" id="assistantLauncher" data-toggle-assistant data-assistant-launcher-drag aria-label="打开 AI 运营助手；可拖动调整位置" aria-expanded="false" title="拖动调整位置，点击打开 AI 运营助手">
     <iconify-icon icon="icon-park-outline:magic"></iconify-icon>
     <span class="assistant-launcher-text">
       <strong>AI助手</strong>
@@ -1809,6 +1810,30 @@
       </div>
       <div class="modal-body" id="assetPackagePreviewBody"></div>
       <div class="modal-foot" id="assetPackagePreviewActions"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="assetPackageCreateModal" aria-hidden="true">
+    <div class="modal asset-package-create-modal" role="dialog" aria-modal="true" aria-labelledby="assetPackageCreateTitle">
+      <div class="modal-head">
+        <div><strong id="assetPackageCreateTitle">新建素材包</strong><span class="table-meta">按业务用途整理可复用素材</span></div>
+        <button class="btn small ghost" data-close-modal aria-label="关闭新建素材包"><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+      </div>
+      <div class="asset-package-create-steps" aria-label="创建素材包步骤"><span class="active" data-asset-package-step="1"><b>1</b>定义素材包</span><span data-asset-package-step="2"><b>2</b>选择素材</span><span data-asset-package-step="3"><b>3</b>确认创建</span></div>
+      <div class="modal-body asset-package-create-body">
+        <section class="asset-package-create-pane" data-asset-package-pane="1">
+          <div class="form-row"><label for="assetPackageCreateName">素材包名称 <em>*</em></label><input class="field" id="assetPackageCreateName" placeholder="例如：七夕水光复购权益包" /></div>
+          <div class="asset-package-create-grid"><div class="form-row"><label for="assetPackageCreateDir">所属目录</label><select class="field" id="assetPackageCreateDir"><option>客户运营</option><option>节日营销</option><option>项目科普</option></select></div><div class="form-row"><label for="assetPackageCreateProject">适用项目</label><select class="field" id="assetPackageCreateProject"><option>水光项目</option><option>光电抗衰</option><option>全项目</option></select></div></div>
+          <div class="form-row"><label for="assetPackageCreateScene">使用场景</label><input class="field" id="assetPackageCreateScene" value="复购运营" /></div>
+          <div class="form-row"><label for="assetPackageCreateTags">标签</label><input class="field" id="assetPackageCreateTags" value="素材包" placeholder="用逗号分隔，例如：老客，复购" /></div>
+        </section>
+        <section class="asset-package-create-pane" data-asset-package-pane="2" hidden>
+          <div class="asset-package-selection-head"><div><strong>加入素材</strong><span>可从当前库中选择，或先创建空素材包，稍后再补充。</span></div><span class="chip" id="assetPackageDraftCount">已选 0 项</span></div>
+          <div class="asset-package-draft-list" id="assetPackageDraftList"></div>
+        </section>
+        <section class="asset-package-create-pane" data-asset-package-pane="3" hidden><div class="asset-package-confirm" id="assetPackageCreateSummary"></div></section>
+      </div>
+      <div class="modal-foot"><button class="btn" data-close-modal>取消</button><button class="btn" id="assetPackageCreatePrev" hidden>上一步</button><button class="btn primary" id="assetPackageCreateNext">下一步</button><button class="btn primary" id="assetPackageCreateConfirm" hidden>创建素材包</button></div>
     </div>
   </div>
 

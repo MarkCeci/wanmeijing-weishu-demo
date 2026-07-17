@@ -593,6 +593,8 @@
     let selectedAssetPackageDetail = "";
     let assetPackageSort = { key: "updated", direction: "desc" };
     let selectedAssetTitles = new Set();
+    let assetPackageCreateStep = 1;
+    let assetPackageDraftTitles = new Set();
     let customerFilter = "全部潜客";
     let customerPage = 1;
     let dashboardCustomerTotal = 12847;
@@ -795,7 +797,7 @@
           <td>${tagUsage(tag).toLocaleString()}${tag.type === "群标签" ? " 群" : " 人"}</td>
           <td><span class="chip ${tag.status === "停用" ? "neutral" : ""}">${tag.status}</span></td>
           <td>${tag.updated}</td>
-          <td><input type="checkbox" class="groupCheck" data-group-check="${group.id}" ${checkedGroupIds.has(group.id) ? "checked" : ""}></td><td>
+          <td>
             <div class="tag-actions">
               <button class="btn small" data-edit-managed-tag="${tag.id}">编辑</button>
               ${tag.type === "客户标签" ? `<button class="btn small" data-apply-managed-tag="${tag.id}">应用</button>` : ""}
@@ -2294,6 +2296,66 @@
       $("#assetActiveFilters").innerHTML = labels.length
         ? `<span class="active-filter-label">当前筛选</span>${labels.map((label) => `<span class="chip">${label}</span>`).join("")}<button class="active-filter-clear" data-reset-asset-filters><iconify-icon icon="icon-park-outline:close-small"></iconify-icon><span>清空筛选</span></button>`
         : `<span>当前筛选：全部素材</span>`;
+    }
+
+    function renderAssetPackageCreate() {
+      const selected = assets.filter((asset) => assetPackageDraftTitles.has(asset.title));
+      $$("[data-asset-package-pane]").forEach((pane) => pane.hidden = Number(pane.dataset.assetPackagePane) !== assetPackageCreateStep);
+      $$("[data-asset-package-step]").forEach((step) => step.classList.toggle("active", Number(step.dataset.assetPackageStep) === assetPackageCreateStep));
+      $("#assetPackageCreatePrev").hidden = assetPackageCreateStep === 1;
+      $("#assetPackageCreateNext").hidden = assetPackageCreateStep === 3;
+      $("#assetPackageCreateConfirm").hidden = assetPackageCreateStep !== 3;
+      $("#assetPackageDraftCount").textContent = `已选 ${selected.length} 项`;
+      $("#assetPackageDraftList").innerHTML = assets.map((asset) => `<label class="asset-package-draft-row"><input type="checkbox" data-asset-package-draft-select="${escapeHtml(asset.title)}" ${assetPackageDraftTitles.has(asset.title) ? "checked" : ""}><div><strong>${escapeHtml(asset.title)}</strong><span>${escapeHtml(asset.type)} · ${escapeHtml(asset.dir)} · ${escapeHtml(asset.package)}</span></div><span class="chip ${chipClass(asset.status)}">${escapeHtml(asset.status)}</span></label>`).join("");
+      if (assetPackageCreateStep === 3) {
+        const title = $("#assetPackageCreateName").value.trim();
+        const tags = $("#assetPackageCreateTags").value.split(/[，,]/).map((tag) => tag.trim()).filter(Boolean);
+        const types = selected.reduce((counts, asset) => ({ ...counts, [asset.type]: (counts[asset.type] || 0) + 1 }), {});
+        $("#assetPackageCreateSummary").innerHTML = `<div class="material"><strong>${escapeHtml(title)}</strong><span class="table-meta">${escapeHtml($("#assetPackageCreateDir").value)} · ${escapeHtml($("#assetPackageCreateProject").value)} · ${escapeHtml($("#assetPackageCreateScene").value)}</span><div class="tag-wrap">${tags.length ? tags.map((tag) => `<span class="chip">${escapeHtml(tag)}</span>`).join("") : `<span class="chip neutral">未添加标签</span>`}</div></div><div class="material"><strong>${selected.length ? `将加入 ${selected.length} 项素材` : "创建空素材包"}</strong><span class="table-meta">${selected.length ? Object.entries(types).map(([type, count]) => `${type} ${count} 项`).join(" · ") : "创建后可从素材库继续加入内容。"}</span></div>`;
+      }
+    }
+
+    function openAssetPackageCreate() {
+      assetPackageCreateStep = 1;
+      assetPackageDraftTitles = new Set(selectedAssetTitles);
+      $("#assetPackageCreateName").value = "";
+      $("#assetPackageCreateDir").value = ["客户运营", "节日营销", "项目科普"].includes(assetDirFilter) ? assetDirFilter : "客户运营";
+      $("#assetPackageCreateProject").value = "水光项目";
+      $("#assetPackageCreateScene").value = "复购运营";
+      $("#assetPackageCreateTags").value = "素材包";
+      renderAssetPackageCreate();
+      openModal("#assetPackageCreateModal");
+      $("#assetPackageCreateName").focus();
+    }
+
+    function advanceAssetPackageCreate(direction) {
+      if (direction > 0 && assetPackageCreateStep === 1) {
+        const title = $("#assetPackageCreateName").value.trim();
+        if (!title) { showToast("请先填写素材包名称"); $("#assetPackageCreateName").focus(); return; }
+        if (assetPackages.some((pack) => pack.title === title)) { showToast("素材包名称已存在，请换一个名称"); $("#assetPackageCreateName").focus(); return; }
+      }
+      assetPackageCreateStep = Math.min(3, Math.max(1, assetPackageCreateStep + direction));
+      renderAssetPackageCreate();
+    }
+
+    function createAssetPackage() {
+      const title = $("#assetPackageCreateName").value.trim();
+      if (!title || assetPackages.some((pack) => pack.title === title)) { assetPackageCreateStep = 1; renderAssetPackageCreate(); showToast(title ? "素材包名称已存在，请换一个名称" : "请填写素材包名称"); return; }
+      const selected = assets.filter((asset) => assetPackageDraftTitles.has(asset.title));
+      const types = { 图片: 0, 文本: 0, 视频: 0, 文件: 0 };
+      selected.forEach((asset) => types[asset.type] = (types[asset.type] || 0) + 1);
+      const tags = $("#assetPackageCreateTags").value.split(/[，,]/).map((tag) => tag.trim()).filter(Boolean).slice(0, 5);
+      assetPackages.unshift({ title, dir: $("#assetPackageCreateDir").value, project: $("#assetPackageCreateProject").value, scene: $("#assetPackageCreateScene").value.trim() || "未设置场景", updated: "刚刚", count: selected.length, uses: 0, types, tags: tags.length ? tags : ["素材包"], owners: [currentAccount().name.slice(0, 1)], createdBy: currentAccount().name, status: "可用" });
+      selected.forEach((asset) => asset.package = title);
+      selectedAssetTitles.clear();
+      selectedAssetPackage = title;
+      activeAssetModule = "collections";
+      assetViewMode = "packs";
+      syncAssetModuleTabs("collections");
+      closeModal("#assetPackageCreateModal");
+      renderAssets();
+      recordOperation("创建素材包", title, `${selected.length} 项素材 · ${$("#assetPackageCreateScene").value.trim() || "未设置场景"}`);
+      showToast(selected.length ? `已创建「${title}」并加入 ${selected.length} 项素材` : `已创建空素材包「${title}」`);
     }
 
     function renderAssetDetail() {
@@ -4197,6 +4259,124 @@
       });
     }
 
+    function bindAssistantRailPanelDrag() {
+      const handle = $("[data-assistant-rail-panel-drag]");
+      const rail = $("#assistantRail");
+      if (!handle || !rail) return;
+      let pointerId = null;
+      let startY = 0;
+      let initialTop = 0;
+      let didDrag = false;
+
+      const clampTop = (top) => Math.min(Math.max(12, top), Math.max(12, window.innerHeight - Math.min(rail.offsetHeight, window.innerHeight - 24) - 12));
+      const finishDrag = () => {
+        if (pointerId === null) return;
+        handle.classList.remove("is-dragging");
+        handle.dataset.didDrag = String(didDrag);
+        pointerId = null;
+      };
+
+      handle.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        pointerId = event.pointerId;
+        startY = event.clientY;
+        initialTop = rail.getBoundingClientRect().top;
+        didDrag = false;
+        handle.setPointerCapture(pointerId);
+        handle.classList.add("is-dragging");
+      });
+
+      handle.addEventListener("pointermove", (event) => {
+        if (event.pointerId !== pointerId) return;
+        const offset = event.clientY - startY;
+        if (Math.abs(offset) > 4) didDrag = true;
+        rail.style.setProperty("--assistant-rail-top", `${clampTop(initialTop + offset)}px`);
+      });
+
+      handle.addEventListener("pointerup", finishDrag);
+      handle.addEventListener("pointercancel", finishDrag);
+      handle.addEventListener("click", (event) => {
+        if (handle.dataset.didDrag !== "true") return;
+        event.preventDefault();
+        event.stopPropagation();
+        handle.dataset.didDrag = "false";
+      }, true);
+    }
+
+    function bindAssistantLauncherDrag() {
+      const launcher = $("[data-assistant-launcher-drag]");
+      if (!launcher) return;
+      let pointerId = null;
+      let grabOffsetX = 0;
+      let grabOffsetY = 0;
+      let didDrag = false;
+
+      const clampPosition = (left, top) => ({
+        left: Math.min(Math.max(12, left), Math.max(12, window.innerWidth - launcher.offsetWidth - 12)),
+        top: Math.min(Math.max(12, top), Math.max(12, window.innerHeight - launcher.offsetHeight - 12))
+      });
+
+      const positionOverlays = (left, top) => {
+        [$("#assistantMini"), $("#assistantDrawer")].forEach((overlay) => {
+          if (!overlay) return;
+          const overlayLeft = Math.min(Math.max(12, left + launcher.offsetWidth - overlay.offsetWidth), Math.max(12, window.innerWidth - overlay.offsetWidth - 12));
+          const overlayTop = Math.min(Math.max(12, top - overlay.offsetHeight - 12), Math.max(12, window.innerHeight - overlay.offsetHeight - 12));
+          overlay.classList.add("assistant-positioned");
+          overlay.style.left = `${overlayLeft}px`;
+          overlay.style.top = `${overlayTop}px`;
+        });
+      };
+
+      const setPosition = (left, top) => {
+        const next = clampPosition(left, top);
+        launcher.classList.add("is-positioned");
+        launcher.style.setProperty("--assistant-launcher-left", `${next.left}px`);
+        launcher.style.setProperty("--assistant-launcher-top", `${next.top}px`);
+        positionOverlays(next.left, next.top);
+      };
+
+      const finishDrag = () => {
+        if (pointerId === null) return;
+        launcher.classList.remove("is-dragging");
+        launcher.dataset.didDrag = String(didDrag);
+        pointerId = null;
+      };
+
+      launcher.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        const rect = launcher.getBoundingClientRect();
+        pointerId = event.pointerId;
+        grabOffsetX = event.clientX - rect.left;
+        grabOffsetY = event.clientY - rect.top;
+        didDrag = false;
+        launcher.setPointerCapture(pointerId);
+        launcher.classList.add("is-dragging");
+      });
+
+      launcher.addEventListener("pointermove", (event) => {
+        if (event.pointerId !== pointerId) return;
+        const left = event.clientX - grabOffsetX;
+        const top = event.clientY - grabOffsetY;
+        if (Math.abs(left - launcher.getBoundingClientRect().left) > 4 || Math.abs(top - launcher.getBoundingClientRect().top) > 4) didDrag = true;
+        setPosition(left, top);
+      });
+
+      launcher.addEventListener("pointerup", finishDrag);
+      launcher.addEventListener("pointercancel", finishDrag);
+      launcher.addEventListener("click", (event) => {
+        if (launcher.dataset.didDrag !== "true") return;
+        event.preventDefault();
+        event.stopPropagation();
+        launcher.dataset.didDrag = "false";
+      }, true);
+
+      window.addEventListener("resize", () => {
+        if (!launcher.classList.contains("is-positioned")) return;
+        const rect = launcher.getBoundingClientRect();
+        setPosition(rect.left, rect.top);
+      });
+    }
+
     function focusAssistantRail() {
       const rail = $("#assistantRail");
       if (!rail) return;
@@ -4927,7 +5107,7 @@
         closeModal(`#${event.target.id}`);
         return;
       }
-      const target = event.target.closest(".kpi, [data-broadcast-filter-mode], [data-toggle-assistant], [data-toggle-assistant-rail], [data-close-assistant], [data-close-assistant-mini], [data-expand-assistant], [data-ai-action], [data-thread-ai-action], [data-assistant-command], [data-dashboard-view], [data-open-store-data], [data-close-store-data], [data-close-todo-page], [data-open-todo-page], [data-todo-page-filter], [data-customer-filter], [data-conversation-filter], [data-show-conversation-record], [data-broadcast-filter], [data-import-method], [data-open-follow], [data-open-tags], [data-open-tag-editor], [data-open-tag-group-editor], [data-edit-managed-tag], [data-toggle-managed-tag], [data-delete-managed-tag], [data-apply-managed-tag], [data-toggle-tag-actions], [data-remove-blacklist], [data-blacklist-customer-option], [data-blacklist-reason-option], [data-view-channel], [data-view-form], [data-run-tag-group], [data-view-moment], [data-use-script], [data-download-promo], [data-radar-tag], [data-block-fraud], [data-open-live], [data-open-wizard], [data-open-upload], [data-open-original], [data-preview-asset], [data-package-sort], [data-asset-favorite], [data-asset-type], [data-asset-status], [data-asset-scope], [data-asset-dir], [data-reset-asset-filters], [data-create-asset-package], [data-asset-package], [data-edit-asset-package], [data-asset-open], [data-asset-select], [data-clear-asset-selection], [data-open-medical-sop], [data-open-wizard], [data-open-upload], [data-open-medical-sop], [data-run-today-operation], [data-close-asset-drawer], [data-asset-batch-action], [data-toggle-broadcast-asset], [data-insert-broadcast-variable], [data-time-preset], [data-send-now], [data-broadcast-template], [data-tag-scope], [data-toggle-tag-filter], [data-tag-filter-option], [data-toggle-scope-filter], [data-scope-option], [data-close-modal], [data-finish-todo], [data-open-thread], [data-open-customer-thread], [data-thread-id], [data-group-detail], [data-switch-account], [data-edit-account], [data-toggle-account], [data-run-broadcast], [data-retry-broadcast], [data-detail-broadcast], [data-submit-broadcast], [data-open-approval], [data-approval-choice], [data-remind-broadcast], [data-edit-broadcast], [data-terminate-broadcast], [data-pause-broadcast], [data-review-broadcast], [data-copy-broadcast], [data-export-broadcast], [data-archive-broadcast], #viewBroadcastRecipients, #toggleBroadcastTags, [data-broadcast-tag], [data-remove-broadcast-tag], [data-target-type], [data-send-type], [data-operator-choice], .subnav-button, tr[data-customer], tr[data-broadcast-row], tr[data-group-row], tr[data-form-row]");
+      const target = event.target.closest(".kpi, [data-broadcast-filter-mode], [data-toggle-assistant], [data-toggle-assistant-rail], [data-close-assistant], [data-close-assistant-mini], [data-expand-assistant], [data-ai-action], [data-thread-ai-action], [data-assistant-command], [data-dashboard-view], [data-open-store-data], [data-close-store-data], [data-close-todo-page], [data-open-todo-page], [data-todo-page-filter], [data-customer-filter], [data-conversation-filter], [data-show-conversation-record], [data-broadcast-filter], [data-import-method], [data-open-follow], [data-open-tags], [data-open-tag-editor], [data-open-tag-group-editor], [data-edit-managed-tag], [data-toggle-managed-tag], [data-delete-managed-tag], [data-apply-managed-tag], [data-toggle-tag-actions], [data-remove-blacklist], [data-blacklist-customer-option], [data-blacklist-reason-option], [data-view-channel], [data-view-form], [data-run-tag-group], [data-view-moment], [data-use-script], [data-download-promo], [data-radar-tag], [data-block-fraud], [data-open-live], [data-open-wizard], [data-open-upload], [data-open-original], [data-preview-asset], [data-package-sort], [data-asset-favorite], [data-asset-type], [data-asset-status], [data-asset-scope], [data-asset-dir], [data-asset-view], [data-reset-asset-filters], [data-create-asset-package], [data-asset-package-draft-select], [data-asset-package], [data-edit-asset-package], [data-asset-open], [data-asset-select], [data-clear-asset-selection], [data-open-medical-sop], [data-open-wizard], [data-open-upload], [data-open-medical-sop], [data-run-today-operation], [data-close-asset-drawer], [data-asset-batch-action], [data-toggle-broadcast-asset], [data-insert-broadcast-variable], [data-time-preset], [data-send-now], [data-broadcast-template], [data-tag-scope], [data-toggle-tag-filter], [data-tag-filter-option], [data-toggle-scope-filter], [data-scope-option], [data-close-modal], [data-finish-todo], [data-open-thread], [data-open-customer-thread], [data-thread-id], [data-group-detail], [data-switch-account], [data-edit-account], [data-toggle-account], [data-run-broadcast], [data-retry-broadcast], [data-detail-broadcast], [data-submit-broadcast], [data-open-approval], [data-approval-choice], [data-remind-broadcast], [data-edit-broadcast], [data-terminate-broadcast], [data-pause-broadcast], [data-review-broadcast], [data-copy-broadcast], [data-export-broadcast], [data-archive-broadcast], #assetPackageCreateNext, #assetPackageCreatePrev, #assetPackageCreateConfirm, #viewBroadcastRecipients, #toggleBroadcastTags, [data-broadcast-tag], [data-remove-broadcast-tag], [data-target-type], [data-send-type], [data-operator-choice], .subnav-button, tr[data-customer], tr[data-broadcast-row], tr[data-group-row], tr[data-form-row]");
       if (!target) return;
       if (target.matches("[data-toggle-tag-actions]")) {
         const wrapper = target.closest(".more-actions");
@@ -5269,26 +5449,22 @@
         showToast("已重置素材筛选");
       }
       if (target.matches("[data-create-asset-package]")) {
-        const title = "新建医美运营素材包";
-        if (!assetPackages.some((pack) => pack.title === title)) {
-          assetPackages.unshift({
-            title,
-            dir: "客户运营",
-            project: "水光项目",
-            scene: "复购运营",
-            updated: "刚刚",
-            count: selectedAssetTitles.size || 0,
-            uses: 0,
-            types: { 图片: 0, 文案: selectedAssetTitles.size || 1, 视频: 0, 文件: 0 },
-            tags: ["待整理", "素材包"],
-            owners: [currentAccount().name.slice(0, 1)],
-            status: "可用"
-          });
-        }
-        selectedAssetPackage = title;
-        assetViewMode = "packs";
-        renderAssets();
-        showToast("已创建素材包，可继续补充素材");
+        openAssetPackageCreate();
+      }
+      if (target.matches("[data-asset-package-draft-select]")) {
+        const title = target.dataset.assetPackageDraftSelect;
+        if (target.checked) assetPackageDraftTitles.add(title);
+        else assetPackageDraftTitles.delete(title);
+        renderAssetPackageCreate();
+      }
+      if (target.matches("#assetPackageCreateNext")) {
+        advanceAssetPackageCreate(1);
+      }
+      if (target.matches("#assetPackageCreatePrev")) {
+        advanceAssetPackageCreate(-1);
+      }
+      if (target.matches("#assetPackageCreateConfirm")) {
+        createAssetPackage();
       }
       if (target.matches("[data-asset-package]")) {
         if (event.target.closest("[data-asset-batch-action]")) return;
@@ -6587,6 +6763,8 @@
     $$('[data-close-modal]:not([aria-label])').forEach((button) => button.setAttribute("aria-label", "关闭弹窗"));
     bindAssistantHover();
     bindAssistantRailReopenDrag();
+    bindAssistantRailPanelDrag();
+    bindAssistantLauncherDrag();
     bindPointerGlow();
     drawTrendChart();
   
