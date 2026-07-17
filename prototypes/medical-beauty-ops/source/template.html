@@ -20,11 +20,11 @@
 
       <div class="nav-section">
         <div class="nav-title">运营中心</div>
-        <button class="nav-button active" data-screen="dashboard"><iconify-icon icon="icon-park-outline:dashboard-one"></iconify-icon><span>工作台</span></button>
+        <button class="nav-button active" data-screen="dashboard"><iconify-icon icon="icon-park-outline:dashboard-one"></iconify-icon><span>经营总览</span></button>
         <button class="nav-button" data-screen="customers"><iconify-icon icon="icon-park-outline:people"></iconify-icon><span>客户运营</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
         <button class="nav-button" data-screen="marketing"><iconify-icon icon="icon-park-outline:send"></iconify-icon><span>营销中心</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
         <button class="nav-button" data-screen="assets"><iconify-icon icon="icon-park-outline:folder-open"></iconify-icon><span>素材与标签</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
-        <button class="nav-button" data-screen="ai"><iconify-icon icon="icon-park-outline:robot-one"></iconify-icon><span>AI助手</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
+        <button class="nav-button" data-screen="ai"><iconify-icon icon="icon-park-outline:robot-one"></iconify-icon><span>AI 能力中心</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
         <button class="nav-button" data-screen="data"><iconify-icon icon="icon-park-outline:chart-line"></iconify-icon><span>数据中心</span><iconify-icon class="nav-caret" icon="icon-park-outline:right"></iconify-icon></button>
       </div>
 
@@ -33,16 +33,25 @@
         <button class="nav-button" data-screen="settings"><iconify-icon icon="icon-park-outline:setting-two"></iconify-icon><span>系统管理</span></button>
       </div>
 
-      <button class="sidebar-account" id="accountSwitchBtn" aria-label="账号管理">
-        <span class="account-avatar" id="sidebarAccountAvatar" aria-hidden="true">林</span>
-        <span class="sidebar-account-label">
-          <strong id="sidebarAccountName">林主管</strong>
-          <span id="sidebarAccountRole">运营主管 · 当前账号</span>
-        </span>
-      </button>
     </aside>
 
     <main class="main">
+      <header class="topbar" aria-label="全局操作栏">
+        <div class="global-search" id="globalSearch">
+          <label class="sr-only" for="globalSearchInput">搜索客户、群聊或话术</label>
+          <iconify-icon class="global-search-icon" icon="icon-park-outline:search"></iconify-icon>
+          <input id="globalSearchInput" type="text" inputmode="search" autocomplete="off" placeholder="搜索客户 / 群聊 / 话术..." aria-controls="globalSearchResults" aria-expanded="false" />
+          <button class="global-search-clear" id="globalSearchClear" type="button" aria-label="清空搜索" hidden><iconify-icon icon="icon-park-outline:close"></iconify-icon></button>
+          <div class="global-search-results" id="globalSearchResults" role="listbox" aria-label="全局搜索结果" hidden></div>
+        </div>
+        <div class="top-right">
+          <button class="topbar-account" id="topAccountSwitch" type="button" aria-label="切换演示账号">
+            <span class="account-avatar" id="topbarAccountAvatar" aria-hidden="true">林</span>
+            <span class="topbar-account-copy"><strong id="topbarAccountName">林主管</strong><span id="topbarAccountRole">运营主管</span></span>
+            <iconify-icon icon="icon-park-outline:down"></iconify-icon>
+          </button>
+        </div>
+      </header>
       <section class="content" id="appContent">
         <div class="sync-line" id="syncLine"><span class="spinner"></span><span>正在同步企微潜客数据，预计 12 秒完成...</span></div>
 
@@ -106,7 +115,7 @@
                     <strong>机构 / 门店维度对比</strong>
                     <span id="tableHint">展示全部医美客户的经营表现</span>
                   </div>
-                  <div class="filters">
+                  <div class="filters group-list-toolbar">
                     <select class="field" id="categoryFilter">
                       <option>全部项目</option>
                       <option>皮肤管理</option>
@@ -300,24 +309,51 @@
             <div class="section-grid customer-list-layout">
               <div class="panel">
                 <div class="customer-toolbar">
-                  <div class="filters">
+                  <div class="customer-filter-tabs filters" aria-label="客户快捷筛选">
                     <button class="tab active" data-customer-filter="全部潜客">全部潜客</button>
                     <button class="tab" data-customer-filter="高意向">高意向</button>
                     <button class="tab" data-customer-filter="待回访">待回访</button>
                   </div>
-                  <div class="filters">
-                    <div class="search-wrap">
-                      <iconify-icon icon="icon-park-outline:search"></iconify-icon>
-                      <input class="field search" id="customerSearch" placeholder="搜索姓名 / 手机 / 项目意向" />
-                    </div>
-                    <div class="custom-select" id="tagFilterSelect">
-                      <input type="hidden" id="tagFilter" value="全部标签" />
-                      <button class="btn custom-select-trigger" type="button" data-toggle-tag-filter>
-                        <span id="tagFilterLabel">全部标签</span>
+                  <div class="customer-filter-grid" aria-label="客户组合筛选">
+                    <label class="customer-filter-field customer-filter-keyword">
+                      <span>客户姓名</span>
+                      <div class="search-wrap">
+                        <iconify-icon icon="icon-park-outline:search"></iconify-icon>
+                        <input class="field search" id="customerSearch" placeholder="支持姓名或手机号模糊搜索" />
+                      </div>
+                    </label>
+                    <div class="customer-filter-field customer-multi-select" id="customerAdvancedTagSelect">
+                      <span>客户标签</span>
+                      <button class="btn custom-select-trigger" type="button" data-toggle-customer-advanced-tags aria-expanded="false">
+                        <span id="customerAdvancedTagLabel">全部标签</span>
                         <iconify-icon icon="icon-park-outline:down"></iconify-icon>
                       </button>
-                      <div class="custom-select-menu" id="tagFilterMenu"></div>
+                      <div class="customer-filter-popover">
+                        <div class="customer-filter-popover-search"><iconify-icon icon="icon-park-outline:search"></iconify-icon><input id="customerTagFilterSearch" placeholder="搜索标签" autocomplete="off" /></div>
+                        <div class="customer-filter-options" id="customerAdvancedTagOptions"></div>
+                      </div>
                     </div>
+                    <label class="customer-filter-field">
+                      <span>归属员工</span>
+                      <select class="field" id="customerOwnerFilter"></select>
+                    </label>
+                    <div class="customer-filter-field customer-date-filter">
+                      <span>添加时间</span>
+                      <div class="customer-date-range"><input class="field" type="date" id="customerDateStart" aria-label="添加时间开始" /><span>至</span><input class="field" type="date" id="customerDateEnd" aria-label="添加时间结束" /></div>
+                    </div>
+                    <div class="customer-filter-field customer-multi-select" id="customerStatusFilterSelect">
+                      <span>客户状态</span>
+                      <button class="btn custom-select-trigger" type="button" data-toggle-customer-status-filter aria-expanded="false"><span id="customerStatusFilterLabel">全部状态</span><iconify-icon icon="icon-park-outline:down"></iconify-icon></button>
+                      <div class="customer-filter-popover customer-status-popover"><div class="customer-filter-options" id="customerStatusFilterOptions"></div></div>
+                    </div>
+                    <div class="customer-filter-actions">
+                      <button class="btn primary" type="button" data-apply-customer-filters><iconify-icon icon="icon-park-outline:filter"></iconify-icon>查询</button>
+                      <button class="btn" type="button" data-reset-customer-filters>重置</button>
+                    </div>
+                  </div>
+                  <div class="customer-sort-row">
+                    <span class="table-meta" id="customerFilterResultSummary">显示全部客户</span>
+                    <div class="customer-sort-controls"><span>排序</span><select class="field" id="customerSortField" aria-label="排序字段"><option value="lastContactAt">最近联系时间</option><option value="createdAt">添加时间</option></select><button class="btn small" type="button" id="customerSortDirection" data-toggle-customer-sort-direction aria-label="切换排序方向">降序</button></div>
                   </div>
                 </div>
                 <div class="batchbar" id="batchbar"><span>已选 3 位潜客</span><div class="actions"><button class="btn small" data-open-tags data-tag-entry="selected">批量打标签</button><button class="btn small primary" data-open-wizard data-broadcast-source="selected-customers"><iconify-icon icon="icon-park-outline:send-one"></iconify-icon>向已选客户群发</button></div></div>
@@ -1215,7 +1251,7 @@
               <strong>当前上下文</strong>
               <div class="assistant-rail-context">
                 <span>正在查看</span>
-                <strong id="assistantRailContextText">工作台 · 优先处理风险会话、复购提醒和审批中群发</strong>
+                <strong id="assistantRailContextText">经营总览 · 优先处理风险会话、复购提醒和审批中群发</strong>
                 <details class="assistant-context-details" id="assistantContextDetails">
                   <summary>查看其余 3 项待办</summary>
                   <ul>
@@ -1272,7 +1308,7 @@
     <div class="assistant-mini-body">
       <div class="assistant-context">
         <span>当前上下文</span>
-        <strong id="assistantContextText">工作台 · 优先处理风险会话和复购提醒</strong>
+        <strong id="assistantContextText">经营总览 · 优先处理风险会话和复购提醒</strong>
       </div>
       <div class="assistant-mini-actions">
         <button class="assistant-mini-action" data-ai-action="reply"><iconify-icon icon="icon-park-outline:message-sent"></iconify-icon><span>生成回复</span></button>

@@ -62,7 +62,15 @@
       ];
       const owners = ["李运营", "王专员", "赵运营", "陈内容", "沈管理员", "林主管"];
       const statuses = ["可触达", "咨询中", "待回访", "已预约", "沉默待唤醒"];
-      const result = customerSeeds.map((item) => ({ ...item, tags: [...item.tags] }));
+      const result = customerSeeds.map((item, index) => {
+        const createdAt = `2026-${item.time.replace(" ", "T")}:00`;
+        return {
+          ...item,
+          tags: [...item.tags],
+          createdAt,
+          lastContactAt: new Date(new Date(createdAt).getTime() + ((index % 7) - 3) * 36 * 60 * 1000).toISOString()
+        };
+      });
       for (let i = result.length; i < total; i += 1) {
         const seq = i + 1;
         const tags = tagGroups[i % tagGroups.length];
@@ -71,13 +79,16 @@
         const minute = String((i * 7) % 60).padStart(2, "0");
         const prefix = ["131", "132", "135", "136", "137", "138", "139", "150", "158", "159", "186", "188"][i % 12];
         const suffix = String(1000 + ((i * 37) % 9000)).padStart(4, "0");
+        const createdAt = `2026-07-${day}T${hour}:${minute}:00`;
         result.push({
           name: `${surnames[i % surnames.length]}女士${String(seq).padStart(3, "0")}`,
           phone: `${prefix}****${suffix}`,
           tags: [...tags],
           owner: owners[i % owners.length],
           time: `07-${day} ${hour}:${minute}`,
-          status: statuses[i % statuses.length]
+          status: statuses[i % statuses.length],
+          createdAt,
+          lastContactAt: new Date(new Date(createdAt).getTime() + ((i % 9) - 4) * 47 * 60 * 1000).toISOString()
         });
       }
       return result;
@@ -535,11 +546,11 @@
     ];
 
     const permissionModules = [
-      { key: "dashboard", label: "工作台" },
+      { key: "dashboard", label: "经营总览" },
       { key: "customers", label: "客户运营" },
       { key: "marketing", label: "营销中心" },
       { key: "assets", label: "素材与标签" },
-      { key: "ai", label: "AI助手" },
+      { key: "ai", label: "AI 能力中心" },
       { key: "data", label: "数据中心" },
       { key: "settings", label: "系统管理" }
     ];
@@ -597,6 +608,15 @@
     let assetPackageDraftTitles = new Set();
     let customerFilter = "全部潜客";
     let customerPage = 1;
+    let customerTagFilterSearch = "";
+    let customerAdvancedFilters = {
+      tags: new Set(),
+      owner: "",
+      dateStart: "",
+      dateEnd: "",
+      statuses: new Set()
+    };
+    let customerSort = { key: "lastContactAt", direction: "desc" };
     let dashboardCustomerTotal = 12847;
     let dashboardTodayNew = 86;
     let syncRunning = false;
@@ -643,6 +663,8 @@
     let selectedScriptIds = new Set(["sp-water-repurchase", "sp-aftercare-standard", "sp-complaint-care"]);
     let scriptAdvancedFilters = { creator: "全部", minConversion: 0 };
     let scriptSortMode = "默认排序";
+    let globalSearchTimer = null;
+    let globalSearchQuery = "";
     let dashboardTodoView = "todo";
     let todoPageFilter = "pending";
     const completedTodos = [];
@@ -685,6 +707,293 @@
         '"': "&quot;",
         "'": "&#39;"
       })[character]);
+    }
+
+    let openUnifiedSelect = null;
+    let unifiedSelectSequence = 0;
+    let unifiedSelectObserver = null;
+
+    function getUnifiedSelectState(select) {
+      return select?._unifiedSelectState || null;
+    }
+
+    function getUnifiedSelectedOption(select) {
+      return select?.options?.[select.selectedIndex] || select?.options?.[0] || null;
+    }
+
+    function getUnifiedSelectLabel(select) {
+      const labelledBy = select.getAttribute("aria-labelledby");
+      const labelledElement = labelledBy ? document.getElementById(labelledBy) : null;
+      const nearestLabel = select.closest("label");
+      return select.getAttribute("aria-label") || labelledElement?.textContent?.trim() || nearestLabel?.childNodes?.[0]?.textContent?.trim() || "选择选项";
+    }
+
+    function renderUnifiedSelectOptions(select) {
+      const state = getUnifiedSelectState(select);
+      if (!state) return;
+      state.menu.replaceChildren();
+      Array.from(select.options).forEach((option) => {
+        const optionButton = document.createElement("button");
+        optionButton.type = "button";
+        optionButton.className = `unified-select-option${option.selected ? " is-selected" : ""}`;
+        optionButton.disabled = option.disabled;
+        optionButton.setAttribute("role", "option");
+        optionButton.setAttribute("aria-selected", String(option.selected));
+        const label = document.createElement("span");
+        label.textContent = option.textContent.trim();
+        const check = document.createElement("iconify-icon");
+        check.setAttribute("icon", "icon-park-outline:check");
+        check.setAttribute("aria-hidden", "true");
+        optionButton.append(label, check);
+        optionButton.addEventListener("click", () => {
+          if (option.disabled) return;
+          select.value = option.value;
+          select.dispatchEvent(new Event("change", { bubbles: true }));
+          syncUnifiedSelectControl(select);
+          closeUnifiedSelect(select);
+          state.trigger.focus();
+        });
+        state.menu.append(optionButton);
+      });
+    }
+
+    function positionUnifiedSelectMenu(select) {
+      const state = getUnifiedSelectState(select);
+      if (!state || !state.menu.isConnected) return;
+      const rect = state.trigger.getBoundingClientRect();
+      const menu = state.menu;
+      const width = Math.max(Math.round(rect.width), 156);
+      menu.style.width = `${width}px`;
+      const left = Math.min(Math.max(12, rect.left), Math.max(12, window.innerWidth - width - 12));
+      menu.style.left = `${Math.round(left)}px`;
+      const menuHeight = Math.min(menu.scrollHeight, 280);
+      const availableBelow = window.innerHeight - rect.bottom - 12;
+      const opensUp = availableBelow < Math.min(menuHeight, 180) && rect.top > availableBelow;
+      menu.style.top = `${Math.round(opensUp ? Math.max(12, rect.top - menuHeight - 8) : rect.bottom + 8)}px`;
+      menu.classList.toggle("opens-up", opensUp);
+    }
+
+    function closeUnifiedSelect(select = openUnifiedSelect) {
+      const state = getUnifiedSelectState(select);
+      if (!state) return;
+      state.menu.remove();
+      state.control.classList.remove("is-open");
+      state.trigger.setAttribute("aria-expanded", "false");
+      if (openUnifiedSelect === select) openUnifiedSelect = null;
+    }
+
+    function syncUnifiedSelectControl(select) {
+      const state = getUnifiedSelectState(select);
+      if (!state) return;
+      const option = getUnifiedSelectedOption(select);
+      state.label.textContent = option?.textContent?.trim() || "请选择";
+      state.trigger.disabled = select.disabled;
+      state.trigger.setAttribute("aria-label", getUnifiedSelectLabel(select));
+      if (state.menu.isConnected) {
+        renderUnifiedSelectOptions(select);
+        positionUnifiedSelectMenu(select);
+      }
+    }
+
+    function openUnifiedSelectMenu(select) {
+      const state = getUnifiedSelectState(select);
+      if (!state || select.disabled) return;
+      if (openUnifiedSelect === select) {
+        closeUnifiedSelect(select);
+        return;
+      }
+      closeUnifiedSelect();
+      renderUnifiedSelectOptions(select);
+      document.body.append(state.menu);
+      state.control.classList.add("is-open");
+      state.trigger.setAttribute("aria-expanded", "true");
+      openUnifiedSelect = select;
+      positionUnifiedSelectMenu(select);
+    }
+
+    function enhanceUnifiedSelect(select) {
+      if (!(select instanceof HTMLSelectElement) || select.dataset.unifiedSelect === "true") return;
+      select.dataset.unifiedSelect = "true";
+      const control = document.createElement("span");
+      control.className = "unified-select";
+      const trigger = document.createElement("button");
+      trigger.type = "button";
+      trigger.className = "unified-select-trigger";
+      trigger.setAttribute("aria-haspopup", "listbox");
+      trigger.setAttribute("aria-expanded", "false");
+      const label = document.createElement("span");
+      const chevron = document.createElement("iconify-icon");
+      chevron.setAttribute("icon", "icon-park-outline:down");
+      chevron.setAttribute("aria-hidden", "true");
+      trigger.append(label, chevron);
+      const menu = document.createElement("div");
+      menu.className = "unified-select-menu";
+      menu.id = select.id ? `${select.id}-options` : `unified-select-menu-${++unifiedSelectSequence}`;
+      menu.setAttribute("role", "listbox");
+      trigger.setAttribute("aria-controls", menu.id);
+      select.parentNode.insertBefore(control, select);
+      control.append(select, trigger);
+      select.classList.add("unified-select-native");
+      select.tabIndex = -1;
+      select.setAttribute("aria-hidden", "true");
+      select._unifiedSelectState = { control, trigger, label, menu };
+      trigger.addEventListener("click", () => openUnifiedSelectMenu(select));
+      trigger.addEventListener("keydown", (event) => {
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          event.preventDefault();
+          if (!getUnifiedSelectState(select).menu.isConnected) openUnifiedSelectMenu(select);
+          const selected = getUnifiedSelectState(select).menu.querySelector(".unified-select-option.is-selected:not(:disabled)");
+          (selected || getUnifiedSelectState(select).menu.querySelector(".unified-select-option:not(:disabled)"))?.focus();
+        }
+      });
+      select.addEventListener("change", () => syncUnifiedSelectControl(select));
+      syncUnifiedSelectControl(select);
+    }
+
+    function setupUnifiedSelectControls() {
+      $$("select.field").forEach(enhanceUnifiedSelect);
+      document.addEventListener("pointerdown", (event) => {
+        if (!openUnifiedSelect) return;
+        const state = getUnifiedSelectState(openUnifiedSelect);
+        if (state && !state.control.contains(event.target) && !state.menu.contains(event.target)) closeUnifiedSelect();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && openUnifiedSelect) {
+          event.preventDefault();
+          const state = getUnifiedSelectState(openUnifiedSelect);
+          closeUnifiedSelect();
+          state?.trigger.focus();
+        }
+      });
+      window.addEventListener("resize", () => closeUnifiedSelect());
+      document.addEventListener("scroll", () => closeUnifiedSelect(), true);
+      unifiedSelectObserver = new MutationObserver((records) => {
+        const shouldSync = records.some((record) => record.type === "childList" && (
+          record.target.matches?.("select.field") ||
+          Array.from(record.addedNodes).some((node) => node.nodeType === Node.ELEMENT_NODE && (node.matches?.("select.field") || node.querySelector?.("select.field")))
+        ));
+        if (!shouldSync) return;
+        window.requestAnimationFrame(() => {
+          $$("select.field").forEach(enhanceUnifiedSelect);
+          $$('select[data-unified-select="true"]').forEach(syncUnifiedSelectControl);
+        });
+      });
+      unifiedSelectObserver.observe(document.body, { childList: true, subtree: true });
+    }
+
+    function highlightGlobalSearchMatch(value, query) {
+      const text = String(value || "");
+      const normalizedQuery = String(query || "").trim();
+      if (!normalizedQuery) return escapeHtml(text);
+      const lowerText = text.toLowerCase();
+      const index = lowerText.indexOf(normalizedQuery.toLowerCase());
+      if (index < 0) return escapeHtml(text);
+      return `${escapeHtml(text.slice(0, index))}<mark>${escapeHtml(text.slice(index, index + normalizedQuery.length))}</mark>${escapeHtml(text.slice(index + normalizedQuery.length))}`;
+    }
+
+    function closeGlobalSearch({ clear = false } = {}) {
+      const input = $("#globalSearchInput");
+      const results = $("#globalSearchResults");
+      const clearButton = $("#globalSearchClear");
+      if (clear && input) input.value = "";
+      globalSearchQuery = "";
+      if (globalSearchTimer) window.clearTimeout(globalSearchTimer);
+      if (results) {
+        results.hidden = true;
+        results.innerHTML = "";
+      }
+      if (input) input.setAttribute("aria-expanded", "false");
+      if (clearButton) clearButton.hidden = !(input?.value || "").trim();
+    }
+
+    function globalSearchMatches(query) {
+      const lowerQuery = query.toLowerCase();
+      const isPhoneSuffix = /^\d{4}$/.test(query);
+      const customerMatches = customers
+        .map((item, index) => ({ item, index }))
+        .filter(({ item }) => isPhoneSuffix ? item.phone.endsWith(query) : item.name.toLowerCase().includes(lowerQuery))
+        .slice(0, 5);
+      const groupMatches = groups
+        .filter((item) => item.name.toLowerCase().includes(lowerQuery))
+        .slice(0, 5);
+      const scriptMatches = scripts
+        .filter((item) => item.title.toLowerCase().includes(lowerQuery))
+        .slice(0, 5);
+      return { customerMatches, groupMatches, scriptMatches };
+    }
+
+    function renderGlobalSearchGroup(label, count, rows, renderRow) {
+      if (!rows.length) return "";
+      return `<section class="global-search-group"><div class="global-search-group-title"><strong>${label}</strong><span>${count}</span></div>${rows.map(renderRow).join("")}</section>`;
+    }
+
+    function renderGlobalSearchResults(query) {
+      const input = $("#globalSearchInput");
+      const results = $("#globalSearchResults");
+      const clearButton = $("#globalSearchClear");
+      if (!input || !results) return;
+      globalSearchQuery = query.trim();
+      clearButton.hidden = !globalSearchQuery;
+      const isNumericQuery = /^\d+$/.test(globalSearchQuery);
+      const canSearch = isNumericQuery ? globalSearchQuery.length === 4 : globalSearchQuery.length >= 2;
+      if (!canSearch) {
+        results.innerHTML = `<div class="global-search-hint">姓名、群聊和话术输入至少 2 个字；手机号请输入后 4 位</div>`;
+        results.hidden = false;
+        input.setAttribute("aria-expanded", "true");
+        return;
+      }
+      const { customerMatches, groupMatches, scriptMatches } = globalSearchMatches(globalSearchQuery);
+      const total = customerMatches.length + groupMatches.length + scriptMatches.length;
+      if (!total) {
+        results.innerHTML = `<div class="global-search-empty">未找到匹配结果</div>`;
+      } else {
+        results.innerHTML = [
+          renderGlobalSearchGroup("客户", customerMatches.length, customerMatches, ({ item, index }) => `
+            <button class="global-search-result" type="button" role="option" data-global-search-result="customer" data-global-search-key="${index}">
+              <span class="global-search-result-icon"><iconify-icon icon="icon-park-outline:people"></iconify-icon></span>
+              <span class="global-search-result-copy"><strong>${highlightGlobalSearchMatch(item.name, globalSearchQuery)}</strong><span>${highlightGlobalSearchMatch(item.phone, globalSearchQuery)} · ${escapeHtml(item.tags[0] || "未分类")}</span></span>
+              <span class="global-search-result-meta">${escapeHtml(item.owner)}</span>
+            </button>`),
+          renderGlobalSearchGroup("群聊", groupMatches.length, groupMatches, (item) => `
+            <button class="global-search-result" type="button" role="option" data-global-search-result="group" data-global-search-key="${escapeHtml(item.id)}">
+              <span class="global-search-result-icon"><iconify-icon icon="icon-park-outline:peoples"></iconify-icon></span>
+              <span class="global-search-result-copy"><strong>${highlightGlobalSearchMatch(item.name, globalSearchQuery)}</strong><span>${item.members} 人 · ${escapeHtml(groupTypeLabel(item))}</span></span>
+              <span class="global-search-result-meta">${escapeHtml(item.owner)}</span>
+            </button>`),
+          renderGlobalSearchGroup("话术", scriptMatches.length, scriptMatches, (item) => `
+            <button class="global-search-result" type="button" role="option" data-global-search-result="script" data-global-search-key="${escapeHtml(item.id)}">
+              <span class="global-search-result-icon"><iconify-icon icon="icon-park-outline:doc-detail"></iconify-icon></span>
+              <span class="global-search-result-copy"><strong>${highlightGlobalSearchMatch(item.title, globalSearchQuery)}</strong><span>${escapeHtml(item.scope)} · ${escapeHtml(item.collection)}</span></span>
+              <span class="global-search-result-meta">${escapeHtml(item.owner || item.creator || "内容运营")}</span>
+            </button>`)
+        ].join("");
+      }
+      results.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+    }
+
+    function navigateGlobalSearchResult(kind, key) {
+      if (kind === "customer") {
+        const index = Number(key);
+        if (!Number.isInteger(index) || !customers[index]) return;
+        customerFilter = "全部潜客";
+        resetCustomerPage();
+        goSubscreen("customers", "customer-list");
+        openCustomerDetail(index);
+      }
+      if (kind === "group") {
+        const group = groups.find((item) => item.id === key);
+        if (!group) return;
+        goSubscreen("customers", "groups");
+        openGroupDetail(group.id);
+      }
+      if (kind === "script") {
+        const script = scripts.find((item) => item.id === key);
+        if (!script) return;
+        goSubscreen("marketing", "scripts");
+        openScriptDetail(script);
+      }
+      closeGlobalSearch({ clear: true });
     }
 
     function tagUsage(tag) {
@@ -748,23 +1057,10 @@
       return tag;
     }
 
-    function renderCustomerTagFilter() {
-      const input = $("#tagFilter");
-      const label = $("#tagFilterLabel");
-      const menu = $("#tagFilterMenu");
-      if (!input || !label || !menu) return;
-      const current = input.value || "全部标签";
-      const options = ["全部标签", ...activeCustomerTags()];
-      input.value = options.includes(current) ? current : "全部标签";
-      label.textContent = input.value;
-      menu.innerHTML = options.map((tag) => `
-        <button class="custom-option ${tag === input.value ? "active" : ""}" type="button" data-tag-filter-option="${tag}">${tag}</button>
-      `).join("");
-    }
-
     function setCustomerTagFilter(value = "全部标签", rerender = true) {
-      $("#tagFilter").value = value;
-      renderCustomerTagFilter();
+      customerAdvancedFilters.tags = new Set(value === "全部标签" ? [] : [value]);
+      customerTagFilterSearch = "";
+      renderCustomerAdvancedFilterControls();
       if (rerender) {
         resetCustomerPage();
         renderCustomers(selectedCustomerIndex);
@@ -815,7 +1111,7 @@
       if ($("#tagManageTypeFilter")) $("#tagManageTypeFilter").value = tagManageTypeFilter;
       if ($("#tagTotalStat")) $("#tagTotalStat").textContent = tagCatalog.length;
       if ($("#tagUnusedStat")) $("#tagUnusedStat").textContent = tagCatalog.filter((tag) => tagUsage(tag) === 0).length;
-      renderCustomerTagFilter();
+      renderCustomerAdvancedFilterControls();
       renderTagChoices();
     }
 
@@ -1081,17 +1377,94 @@
       return true;
     }
 
+    function customerCreatedAt(item) {
+      return item.createdAt || `2026-${item.time.replace(" ", "T")}:00`;
+    }
+
+    function customerLastContactAt(item, index) {
+      return item.lastContactAt || new Date(new Date(customerCreatedAt(item)).getTime() + (index % 5) * 31 * 60 * 1000).toISOString();
+    }
+
+    function customerFilterOwners() {
+      return [...new Set(customers.map((item) => item.owner))];
+    }
+
+    function customerFilterStatuses() {
+      return [...new Set(customers.map((item) => item.status))];
+    }
+
+    function customerFilterLabel(selection, fallback, limit = 2) {
+      const values = [...selection];
+      if (!values.length) return fallback;
+      return values.length > limit ? `${values.slice(0, limit).join("、")} 等 ${values.length} 项` : values.join("、");
+    }
+
+    function renderCustomerAdvancedTagOptions() {
+      const host = $("#customerAdvancedTagOptions");
+      if (!host) return;
+      const query = customerTagFilterSearch.trim();
+      const tags = activeCustomerTags().filter((tag) => !query || tag.includes(query));
+      host.innerHTML = tags.length ? tags.map((tag) => `
+        <button class="customer-filter-option ${customerAdvancedFilters.tags.has(tag) ? "active" : ""}" type="button" data-customer-advanced-tag="${escapeHtml(tag)}"><span>${escapeHtml(tag)}</span><iconify-icon icon="icon-park-outline:check"></iconify-icon></button>
+      `).join("") : `<div class="customer-filter-no-option">未找到匹配标签</div>`;
+    }
+
+    function renderCustomerStatusOptions() {
+      const host = $("#customerStatusFilterOptions");
+      if (!host) return;
+      host.innerHTML = customerFilterStatuses().map((status) => `
+        <button class="customer-filter-option ${customerAdvancedFilters.statuses.has(status) ? "active" : ""}" type="button" data-customer-status-option="${escapeHtml(status)}"><span>${escapeHtml(status)}</span><iconify-icon icon="icon-park-outline:check"></iconify-icon></button>
+      `).join("");
+    }
+
+    function renderCustomerAdvancedFilterControls() {
+      const ownerFilter = $("#customerOwnerFilter");
+      if (ownerFilter) {
+        ownerFilter.innerHTML = `<option value="">全部员工</option>${customerFilterOwners().map((owner) => `<option value="${escapeHtml(owner)}">${escapeHtml(owner)}</option>`).join("")}`;
+        ownerFilter.value = customerAdvancedFilters.owner;
+      }
+      if ($("#customerDateStart")) $("#customerDateStart").value = customerAdvancedFilters.dateStart;
+      if ($("#customerDateEnd")) $("#customerDateEnd").value = customerAdvancedFilters.dateEnd;
+      if ($("#customerTagFilterSearch")) $("#customerTagFilterSearch").value = customerTagFilterSearch;
+      if ($("#customerAdvancedTagLabel")) $("#customerAdvancedTagLabel").textContent = customerFilterLabel(customerAdvancedFilters.tags, "全部标签");
+      if ($("#customerStatusFilterLabel")) $("#customerStatusFilterLabel").textContent = customerFilterLabel(customerAdvancedFilters.statuses, "全部状态");
+      if ($("#customerSortField")) $("#customerSortField").value = customerSort.key;
+      if ($("#customerSortDirection")) $("#customerSortDirection").textContent = customerSort.direction === "asc" ? "升序" : "降序";
+      renderCustomerAdvancedTagOptions();
+      renderCustomerStatusOptions();
+    }
+
+    function resetCustomerAdvancedFilters({ resetSegment = true } = {}) {
+      customerAdvancedFilters = { tags: new Set(), owner: "", dateStart: "", dateEnd: "", statuses: new Set() };
+      customerTagFilterSearch = "";
+      customerSort = { key: "lastContactAt", direction: "desc" };
+      if ($("#customerSearch")) $("#customerSearch").value = "";
+      if (resetSegment) customerFilter = "全部潜客";
+      $("#customerAdvancedTagSelect")?.classList.remove("open");
+      $("#customerStatusFilterSelect")?.classList.remove("open");
+      renderCustomerAdvancedFilterControls();
+    }
+
     function filteredCustomers() {
       const keyword = ($("#customerSearch")?.value || "").trim();
-      const tagFilter = $("#tagFilter")?.value || "全部标签";
+      const { tags, owner, dateStart, dateEnd, statuses } = customerAdvancedFilters;
       return customers.map((item, index) => ({ ...item, index })).filter((item) => {
         const segmentMatch = customerFilter === "全部潜客"
           || (customerFilter === "高意向" && item.tags.some((tag) => tag.includes("高意向") || tag.includes("抗衰")))
           || (customerFilter === "待回访" && item.status.includes("待回访"));
-        const tagMatch = tagFilter === "全部标签" || item.tags.includes(tagFilter);
+        const tagMatch = !tags.size || [...tags].every((tag) => item.tags.includes(tag));
+        const ownerMatch = !owner || item.owner === owner;
+        const createdDate = customerCreatedAt(item).slice(0, 10);
+        const dateMatch = (!dateStart || createdDate >= dateStart) && (!dateEnd || createdDate <= dateEnd);
+        const statusMatch = !statuses.size || statuses.has(item.status);
         const blacklistMatch = !blacklist.some((blocked) => blocked.customer === item.name);
         const keywordMatch = !keyword || item.name.includes(keyword) || item.phone.includes(keyword) || item.time.includes(keyword) || item.tags.join("").includes(keyword);
-        return segmentMatch && tagMatch && blacklistMatch && keywordMatch;
+        return segmentMatch && tagMatch && ownerMatch && dateMatch && statusMatch && blacklistMatch && keywordMatch;
+      }).sort((left, right) => {
+        const leftValue = customerSort.key === "createdAt" ? customerCreatedAt(left) : customerLastContactAt(left, left.index);
+        const rightValue = customerSort.key === "createdAt" ? customerCreatedAt(right) : customerLastContactAt(right, right.index);
+        const order = leftValue.localeCompare(rightValue) || left.index - right.index;
+        return customerSort.direction === "asc" ? order : -order;
       });
     }
 
@@ -1134,6 +1507,7 @@
     }
 
     function renderCustomers(activeIndex = selectedCustomerIndex) {
+      renderCustomerAdvancedFilterControls();
       const allRows = filteredCustomers();
       const pageState = pagedCustomers(allRows);
       const rows = pageState.rows;
@@ -1149,13 +1523,18 @@
           <td>${item.time}</td>
           <td><span class="chip ${chipClass(item.status)}">${item.status}</span></td>
         </tr>
-      `).join("") : `<tr><td colspan="6"><div class="empty"><strong>未找到匹配潜客</strong><span>请调整客户分组、标签或搜索条件。</span></div></td></tr>`;
+      `).join("") : `<tr><td colspan="6"><div class="empty"><strong>未找到匹配的客户</strong><span>修改筛选条件后重新查询，或<a href="#" data-reset-customer-filters>重置全部条件</a>。</span></div></td></tr>`;
       const visibleIndexes = rows.map((item) => item.index);
       $("#selectAll").checked = visibleIndexes.length > 0 && visibleIndexes.every((index) => checkedCustomerIndexes.has(index));
       updateCustomerPager(allRows.length, rows, pageState.totalPages, pageState.start);
       selectedCustomerIndex = visibleActiveIndex;
       updateBatchbar();
       $$("[data-customer-filter]").forEach((button) => button.classList.toggle("active", button.dataset.customerFilter === customerFilter));
+      const filterSummary = $("#customerFilterResultSummary");
+      if (filterSummary) {
+        const conditionCount = Number(Boolean(($("#customerSearch")?.value || "").trim())) + customerAdvancedFilters.tags.size + Number(Boolean(customerAdvancedFilters.owner)) + Number(Boolean(customerAdvancedFilters.dateStart || customerAdvancedFilters.dateEnd)) + customerAdvancedFilters.statuses.size + (customerFilter === "全部潜客" ? 0 : 1);
+        filterSummary.textContent = conditionCount ? `已应用 ${conditionCount} 个筛选条件 · 共 ${allRows.length} 位客户` : `显示全部客户 · 共 ${allRows.length} 位客户`;
+      }
       refreshAssistantMini();
     }
 
@@ -1307,6 +1686,7 @@
       const pageRows = filtered.slice(start, start + groupPageSize);
       $("#groupRows").innerHTML = pageRows.length ? pageRows.map((group) => `
         <tr data-group-row="${group.id}" class="${group.id === selectedGroupId ? "group-selected" : ""}">
+          <td><input type="checkbox" class="groupCheck" data-group-check="${group.id}" aria-label="选择${group.name}" ${checkedGroupIds.has(group.id) ? "checked" : ""}></td>
           <td>
             <div class="group-cell">
               <span class="group-avatar ${groupAvatarClass(group)}"><iconify-icon icon="icon-park-outline:peoples"></iconify-icon></span>
@@ -1322,7 +1702,7 @@
           <td>${group.active}</td>
           <td><div class="group-action-cell"><button class="btn small ghost" data-group-detail="${group.id}">查看详情</button><button class="btn small" data-open-thread="${group.id}"><iconify-icon icon="icon-park-outline:message"></iconify-icon>进群回复</button></div></td>
         </tr>
-      `).join("") : `<tr><td colspan="6"><div class="empty"><strong>未找到群聊</strong><span>请调整群名称或群标签筛选。</span></div></td></tr>`;
+      `).join("") : `<tr><td colspan="7"><div class="empty"><strong>未找到群聊</strong><span>请调整群名称或群标签筛选。</span></div></td></tr>`;
       const from = filtered.length ? start + 1 : 0;
       const to = filtered.length ? start + pageRows.length : 0;
       if ($("#groupCountText")) $("#groupCountText").textContent = `共 ${filtered.length} 个群聊`;
@@ -3484,6 +3864,9 @@
       if ($("#sidebarAccountAvatar")) $("#sidebarAccountAvatar").textContent = account.name.slice(0, 1);
       if ($("#sidebarAccountName")) $("#sidebarAccountName").textContent = account.name;
       if ($("#sidebarAccountRole")) $("#sidebarAccountRole").textContent = `${account.role} · 当前账号`;
+      if ($("#topbarAccountAvatar")) $("#topbarAccountAvatar").textContent = account.name.slice(0, 1);
+      if ($("#topbarAccountName")) $("#topbarAccountName").textContent = account.name;
+      if ($("#topbarAccountRole")) $("#topbarAccountRole").textContent = account.role;
       applyAccountPermissionsToNav(account);
     }
 
@@ -3825,7 +4208,7 @@
       const activeScreen = $(".screen.active")?.id?.replace("screen-", "") || "dashboard";
       const activeSubscreen = $(`#screen-${activeScreen} .subscreen.active`)?.dataset.subscreen || "";
       const map = {
-        dashboard: "工作台 · 优先处理风险会话、复购提醒和审批中群发",
+        dashboard: "经营总览 · 优先处理风险会话、复购提醒和审批中群发",
         customers: activeSubscreen === "conversations"
           ? "客户运营 · 基于当前会话生成回复、风险摘要和待办"
           : activeSubscreen === "groups"
@@ -3835,7 +4218,7 @@
         assets: activeSubscreen === "tag-system"
           ? "素材与标签 · 生成标签治理建议和客户打标方案"
           : "素材与标签 · 基于素材生成文案、摘要和投放建议",
-        ai: "AI能力中心 · 配置模型能力、复核阈值和防刷策略",
+        ai: "AI 能力中心 · 配置模型能力、复核阈值和防刷策略",
         data: "数据中心 · 总结数据异常和可执行运营建议",
         system: "系统管理 · 检查账号权限、数据范围和配置风险"
       };
@@ -4003,7 +4386,7 @@
 
       if (screen === "dashboard") {
         return {
-          context: "工作台 · 4 项待办 · 1 项逾期",
+          context: "经营总览 · 4 项待办 · 1 项逾期",
           insightTitle: "待办优先级异常",
           insightText: "张女士术后风险会话已逾期，且水光复购群发计划临近 16:30，建议先处理风险再执行复购触达。",
           tags: ["风险优先", "水光复购"],
@@ -4113,7 +4496,7 @@
 
       if (screen === "ai") {
         return {
-          context: "AI能力中心 · 当前正在维护智能能力配置",
+          context: "AI 能力中心 · 当前正在维护智能能力配置",
           insightTitle: "当前配置会影响全局智能操作",
           insightText: "文案生成、风险识别和人工复核阈值会被客户运营、营销中心和素材标签模块调用。",
           tags: ["文案生成", "防刷任务"],
@@ -4133,7 +4516,7 @@
           tags: ["数据异常", "任务生成"],
           actions: [
             { command: "data-anomaly", title: "解释今日数据波动", desc: "生成异常原因和运营建议", icon: "icon-park-outline:trend" },
-            { command: "data-task", title: "生成运营待办", desc: "把数据建议写入工作台待办", icon: "icon-park-outline:alarm" },
+            { command: "data-task", title: "生成运营待办", desc: "把数据建议写入经营总览待办", icon: "icon-park-outline:alarm" },
             { command: "data-export", title: "生成数据报告", desc: "触发报表生成反馈", icon: "icon-park-outline:download" }
           ]
         };
@@ -4911,7 +5294,7 @@
       if (command === "data-task") {
         todos.unshift({ title: "数据异常跟进 - 高意向转化", desc: "补发皮肤检测引导，今日 18:00 前完成", tag: "高", type: "去处理", route: "intent-customers" });
         renderTodos();
-        updateAssistantOutput("已生成数据运营待办", "已把高意向转化异常写入工作台待办，可回到工作台查看并继续处理。", ["待办", "数据中心"]);
+        updateAssistantOutput("已生成数据运营待办", "已把高意向转化异常写入经营总览待办，可回到经营总览查看并继续处理。", ["待办", "数据中心"]);
         return;
       }
       if (command === "data-export") {
@@ -5073,6 +5456,31 @@
       });
     });
 
+    $("#globalSearchInput").addEventListener("input", (event) => {
+      const query = event.target.value.trim();
+      if (globalSearchTimer) window.clearTimeout(globalSearchTimer);
+      $("#globalSearchClear").hidden = !query;
+      globalSearchTimer = window.setTimeout(() => renderGlobalSearchResults(query), 300);
+    });
+    $("#globalSearchInput").addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      event.stopPropagation();
+      closeGlobalSearch({ clear: true });
+    });
+    $("#globalSearchClear").addEventListener("click", () => {
+      closeGlobalSearch({ clear: true });
+      $("#globalSearchInput").focus();
+    });
+    document.addEventListener("click", (event) => {
+      const result = event.target.closest("[data-global-search-result]");
+      if (result) {
+        navigateGlobalSearchResult(result.dataset.globalSearchResult, result.dataset.globalSearchKey);
+        return;
+      }
+      if (!event.target.closest("#globalSearch")) closeGlobalSearch();
+    });
+
     $("#workflowConfirm").addEventListener("click", async () => {
       const handler = pendingWorkflow;
       if (typeof handler !== "function") {
@@ -5097,7 +5505,8 @@
     });
 
     document.addEventListener("click", (event) => {
-      if (!event.target.closest("#tagFilterSelect")) $("#tagFilterSelect")?.classList.remove("open");
+      if (!event.target.closest("#customerAdvancedTagSelect")) $("#customerAdvancedTagSelect")?.classList.remove("open");
+      if (!event.target.closest("#customerStatusFilterSelect")) $("#customerStatusFilterSelect")?.classList.remove("open");
       if (!event.target.closest("#scopeSelectBox")) $("#scopeSelectBox")?.classList.remove("open");
       if (!event.target.closest("#broadcastTagSelector")) $("#broadcastTagMenu")?.setAttribute("hidden", "");
       if (!event.target.closest("#blacklistCustomerSelectBox") && !event.target.closest("#blacklistReasonSelectBox")) closeBlacklistSelects();
@@ -6357,7 +6766,11 @@
     });
     $("#assetSearchInput").addEventListener("input", renderAssets);
     $("#conversationSearch").addEventListener("input", renderConversationThread);
-    $("#accountSwitchBtn").addEventListener("click", () => {
+    $("#accountSwitchBtn")?.addEventListener("click", () => {
+      renderAccounts();
+      openModal("#accountSwitchModal");
+    });
+    $("#topAccountSwitch").addEventListener("click", () => {
       renderAccounts();
       openModal("#accountSwitchModal");
     });
@@ -6416,9 +6829,72 @@
 
     $("#categoryFilter").addEventListener("change", (event) => renderStores(event.target.value));
     $("#storeDataCategoryFilter").addEventListener("change", (event) => renderStores(event.target.value));
+    document.addEventListener("click", (event) => {
+      const target = event.target.closest("[data-toggle-customer-advanced-tags], [data-customer-advanced-tag], [data-toggle-customer-status-filter], [data-customer-status-option], [data-apply-customer-filters], [data-reset-customer-filters], [data-toggle-customer-sort-direction]");
+      if (!target) return;
+      if (target.matches("[data-toggle-customer-advanced-tags]")) {
+        const select = $("#customerAdvancedTagSelect");
+        const isOpen = select.classList.toggle("open");
+        target.setAttribute("aria-expanded", String(isOpen));
+        if (isOpen) $("#customerTagFilterSearch")?.focus();
+      }
+      if (target.matches("[data-customer-advanced-tag]")) {
+        const tag = target.dataset.customerAdvancedTag;
+        customerAdvancedFilters.tags.has(tag) ? customerAdvancedFilters.tags.delete(tag) : customerAdvancedFilters.tags.add(tag);
+        renderCustomerAdvancedFilterControls();
+      }
+      if (target.matches("[data-toggle-customer-status-filter]")) {
+        const select = $("#customerStatusFilterSelect");
+        const isOpen = select.classList.toggle("open");
+        target.setAttribute("aria-expanded", String(isOpen));
+      }
+      if (target.matches("[data-customer-status-option]")) {
+        const status = target.dataset.customerStatusOption;
+        customerAdvancedFilters.statuses.has(status) ? customerAdvancedFilters.statuses.delete(status) : customerAdvancedFilters.statuses.add(status);
+        renderCustomerAdvancedFilterControls();
+      }
+      if (target.matches("[data-apply-customer-filters]")) {
+        customerAdvancedFilters.owner = $("#customerOwnerFilter")?.value || "";
+        customerAdvancedFilters.dateStart = $("#customerDateStart")?.value || "";
+        customerAdvancedFilters.dateEnd = $("#customerDateEnd")?.value || "";
+        resetCustomerPage();
+        renderCustomers(selectedCustomerIndex);
+        showToast("已应用客户筛选条件");
+      }
+      if (target.matches("[data-reset-customer-filters]")) {
+        event.preventDefault();
+        resetCustomerAdvancedFilters();
+        resetCustomerPage();
+        renderCustomers(selectedCustomerIndex);
+        showToast("已重置客户筛选与排序");
+      }
+      if (target.matches("[data-toggle-customer-sort-direction]")) {
+        customerSort.direction = customerSort.direction === "asc" ? "desc" : "asc";
+        resetCustomerPage();
+        renderCustomers(selectedCustomerIndex);
+      }
+    });
     $("#customerSearch").addEventListener("input", () => {
       resetCustomerPage();
       renderCustomers(selectedCustomerIndex);
+    });
+    $("#customerOwnerFilter").addEventListener("change", (event) => {
+      customerAdvancedFilters.owner = event.target.value;
+    });
+    $("#customerDateStart").addEventListener("change", (event) => {
+      customerAdvancedFilters.dateStart = event.target.value;
+    });
+    $("#customerDateEnd").addEventListener("change", (event) => {
+      customerAdvancedFilters.dateEnd = event.target.value;
+    });
+    $("#customerSortField").addEventListener("change", (event) => {
+      customerSort.key = event.target.value;
+      resetCustomerPage();
+      renderCustomers(selectedCustomerIndex);
+    });
+    $("#customerTagFilterSearch").addEventListener("input", (event) => {
+      customerTagFilterSearch = event.target.value;
+      renderCustomerAdvancedTagOptions();
     });
     document.addEventListener("input", (event) => {
       if (event.target.matches("#riskNote")) {
@@ -6760,6 +7236,7 @@
     renderConversationThread();
     renderAccountChrome();
     renderAccounts();
+    setupUnifiedSelectControls();
     $$('[data-close-modal]:not([aria-label])').forEach((button) => button.setAttribute("aria-label", "关闭弹窗"));
     bindAssistantHover();
     bindAssistantRailReopenDrag();
